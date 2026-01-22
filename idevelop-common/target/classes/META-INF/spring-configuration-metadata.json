@@ -1,0 +1,37 @@
+{
+  "groups": [
+    {
+      "name": "msg",
+      "type": "com.lnsoft.common.msg.configure.ConfigProperties",
+      "sourceType": "com.lnsoft.common.msg.configure.ConfigProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "msg.account",
+      "type": "java.lang.String",
+      "sourceType": "com.lnsoft.common.msg.configure.ConfigProperties"
+    },
+    {
+      "name": "msg.content-type",
+      "type": "java.lang.String",
+      "sourceType": "com.lnsoft.common.msg.configure.ConfigProperties"
+    },
+    {
+      "name": "msg.password",
+      "type": "java.lang.String",
+      "sourceType": "com.lnsoft.common.msg.configure.ConfigProperties"
+    },
+    {
+      "name": "msg.title",
+      "type": "java.lang.String",
+      "sourceType": "com.lnsoft.common.msg.configure.ConfigProperties"
+    },
+    {
+      "name": "msg.url",
+      "type": "java.lang.String",
+      "sourceType": "com.lnsoft.common.msg.configure.ConfigProperties"
+    }
+  ],
+  "hints": []
+}

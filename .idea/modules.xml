@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/idevelop-ops/idevelop-admin/idevelop-admin.iml" filepath="$PROJECT_DIR$/idevelop-ops/idevelop-admin/idevelop-admin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/idevelop-auth/idevelop-auth.iml" filepath="$PROJECT_DIR$/idevelop-auth/idevelop-auth.iml" />
+      <module fileurl="file://$PROJECT_DIR$/idevelop-common/idevelop-common.iml" filepath="$PROJECT_DIR$/idevelop-common/idevelop-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/idevelop-service/idevelop-demo/idevelop-demo.iml" filepath="$PROJECT_DIR$/idevelop-service/idevelop-demo/idevelop-demo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/idevelop-service-api/idevelop-demo-api/idevelop-demo-api.iml" filepath="$PROJECT_DIR$/idevelop-service-api/idevelop-demo-api/idevelop-demo-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/idevelop-ops/idevelop-develop/idevelop-develop.iml" filepath="$PROJECT_DIR$/idevelop-ops/idevelop-develop/idevelop-develop.iml" />
+      <module fileurl="file://$PROJECT_DIR$/idevelop-service-api/idevelop-develop-api/idevelop-develop-api.iml" filepath="$PROJECT_DIR$/idevelop-service-api/idevelop-develop-api/idevelop-develop-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/idevelop-service-api/idevelop-dict-api/idevelop-dict-api.iml" filepath="$PROJECT_DIR$/idevelop-service-api/idevelop-dict-api/idevelop-dict-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/idevelop-gateway/idevelop-gateway.iml" filepath="$PROJECT_DIR$/idevelop-gateway/idevelop-gateway.iml" />
+      <module fileurl="file://$PROJECT_DIR$/idevelop-service/idevelop-ipc/idevelop-ipc.iml" filepath="$PROJECT_DIR$/idevelop-service/idevelop-ipc/idevelop-ipc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/idevelop-service/idevelop-log/idevelop-log.iml" filepath="$PROJECT_DIR$/idevelop-service/idevelop-log/idevelop-log.iml" />
+      <module fileurl="file://$PROJECT_DIR$/idevelop-ops/idevelop-ops.iml" filepath="$PROJECT_DIR$/idevelop-ops/idevelop-ops.iml" />
+      <module fileurl="file://$PROJECT_DIR$/idevelop-platform.iml" filepath="$PROJECT_DIR$/idevelop-platform.iml" />
+      <module fileurl="file://$PROJECT_DIR$/idevelop-ops/idevelop-report/idevelop-report.iml" filepath="$PROJECT_DIR$/idevelop-ops/idevelop-report/idevelop-report.iml" />
+      <module fileurl="file://$PROJECT_DIR$/idevelop-ops/idevelop-resource/idevelop-resource.iml" filepath="$PROJECT_DIR$/idevelop-ops/idevelop-resource/idevelop-resource.iml" />
+      <module fileurl="file://$PROJECT_DIR$/idevelop-service-api/idevelop-scope-api/idevelop-scope-api.iml" filepath="$PROJECT_DIR$/idevelop-service-api/idevelop-scope-api/idevelop-scope-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/idevelop-ops/idevelop-seata-order/idevelop-seata-order.iml" filepath="$PROJECT_DIR$/idevelop-ops/idevelop-seata-order/idevelop-seata-order.iml" />
+      <module fileurl="file://$PROJECT_DIR$/idevelop-ops/idevelop-seata-storage/idevelop-seata-storage.iml" filepath="$PROJECT_DIR$/idevelop-ops/idevelop-seata-storage/idevelop-seata-storage.iml" />
+      <module fileurl="file://$PROJECT_DIR$/idevelop-service/idevelop-service.iml" filepath="$PROJECT_DIR$/idevelop-service/idevelop-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/idevelop-service-api/idevelop-service-api.iml" filepath="$PROJECT_DIR$/idevelop-service-api/idevelop-service-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/idevelop-ops/idevelop-swagger/idevelop-swagger.iml" filepath="$PROJECT_DIR$/idevelop-ops/idevelop-swagger/idevelop-swagger.iml" />
+      <module fileurl="file://$PROJECT_DIR$/idevelop-service/idevelop-system/idevelop-system.iml" filepath="$PROJECT_DIR$/idevelop-service/idevelop-system/idevelop-system.iml" />
+      <module fileurl="file://$PROJECT_DIR$/idevelop-service-api/idevelop-system-api/idevelop-system-api.iml" filepath="$PROJECT_DIR$/idevelop-service-api/idevelop-system-api/idevelop-system-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/idevelop-service/idevelop-user/idevelop-user.iml" filepath="$PROJECT_DIR$/idevelop-service/idevelop-user/idevelop-user.iml" />
+      <module fileurl="file://$PROJECT_DIR$/idevelop-service-api/idevelop-user-api/idevelop-user-api.iml" filepath="$PROJECT_DIR$/idevelop-service-api/idevelop-user-api/idevelop-user-api.iml" />
+    </modules>
+  </component>
+</project>

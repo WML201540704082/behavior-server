@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.lnsoft</groupId>
+        <artifactId>idevelop-platform</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+    <artifactId>idevelop-service</artifactId>
+    <name>${project.artifactId}</name>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
+    <description>idevelop 微服务集合</description>
+
+    <modules>
+        <module>idevelop-log</module>
+        <module>idevelop-system</module>
+        <module>idevelop-user</module>
+        <module>idevelop-demo</module>
+        <module>idevelop-ipc</module>
+<!--        <module>idevelop-cmdb</module>-->
+<!--        <module>idevelop-device</module>-->
+<!--        <module>idevelop-data</module>-->
+<!--        <module>idevelop-control</module>-->
+<!--        <module>idevelop-endpoint</module>-->
+<!--        <module>idevelop-xcnanr</module>-->
+<!--        <module>idevelop-hidden</module>-->
+
+    </modules>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.lnsoft</groupId>
+            <artifactId>idevelop-common</artifactId>
+            <version>${idevelop.project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.lnsoft</groupId>
+            <artifactId>idevelop-scope-api</artifactId>
+            <version>${idevelop.project.version}</version>
+        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.lnsoft</groupId>-->
+<!--            <artifactId>cmdb-api-boot-starter</artifactId>-->
+<!--            <version>${cmdb.api.version}</version>-->
+<!--        </dependency>-->
+
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk15on</artifactId>
+            <version>${bcprov.jdk15on.version}</version>
+        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.nrxt.i6000.uas</groupId>-->
+<!--            <artifactId>uas-agent</artifactId>-->
+<!--            <version>${uas.agent.version}</version>-->
+<!--        </dependency>-->
+    </dependencies>
+</project>

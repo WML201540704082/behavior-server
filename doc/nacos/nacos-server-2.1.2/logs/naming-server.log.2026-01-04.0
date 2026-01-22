@@ -1,0 +1,92 @@
+2026-01-04 15:42:11,048 WARN naming.distro config will be removed, please use core.protocol.distro replace.
+
+2026-01-04 15:42:11,048 WARN Using naming.distro config to replace core.distro config
+
+2026-01-04 15:42:11,154 INFO open empty service auto clean job, initialDelay : 50000 ms, period : 30000 ms
+
+2026-01-04 15:42:11,155 INFO listen for service meta change
+
+2026-01-04 15:43:25,616 WARN naming.distro config will be removed, please use core.protocol.distro replace.
+
+2026-01-04 15:43:25,616 WARN Using naming.distro config to replace core.distro config
+
+2026-01-04 15:43:25,706 INFO open empty service auto clean job, initialDelay : 50000 ms, period : 30000 ms
+
+2026-01-04 15:43:25,706 INFO listen for service meta change
+
+2026-01-04 15:43:53,770 WARN naming.distro config will be removed, please use core.protocol.distro replace.
+
+2026-01-04 15:43:53,770 WARN Using naming.distro config to replace core.distro config
+
+2026-01-04 15:43:53,860 INFO open empty service auto clean job, initialDelay : 50000 ms, period : 30000 ms
+
+2026-01-04 15:43:53,860 INFO listen for service meta change
+
+2026-01-04 15:44:28,534 WARN naming.distro config will be removed, please use core.protocol.distro replace.
+
+2026-01-04 15:44:28,534 WARN Using naming.distro config to replace core.distro config
+
+2026-01-04 15:44:28,623 INFO open empty service auto clean job, initialDelay : 50000 ms, period : 30000 ms
+
+2026-01-04 15:44:28,623 INFO listen for service meta change
+
+2026-01-04 15:44:30,624 INFO [SelectorManager] Load SelectorContextBuilder(class com.alibaba.nacos.naming.selector.context.CmdbSelectorContextBuilder) contextType(CMDB) successfully.
+
+2026-01-04 15:44:30,624 INFO [SelectorManager] Load SelectorContextBuilder(class com.alibaba.nacos.naming.selector.context.NoneSelectorContextBuilder) contextType(NONE) successfully.
+
+2026-01-04 15:44:30,624 INFO [SelectorManager] Load Selector(class com.alibaba.nacos.naming.selector.LabelSelector) type(label) contextType(CMDB) successfully.
+
+2026-01-04 15:44:30,624 INFO [SelectorManager] Load Selector(class com.alibaba.nacos.naming.selector.NoneSelector) type(none) contextType(NONE) successfully.
+
+2026-01-04 15:44:31,851 INFO Load instance extension handler []
+
+2026-01-04 15:45:40,890 INFO Client connection 1767512740867_127.0.0.1_57959 connect
+
+2026-01-04 15:45:40,998 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-auth', ephemeral=true, revision=0}, 1767512740867_127.0.0.1_57959
+
+2026-01-04 15:45:53,595 INFO Client connection 1767512753581_127.0.0.1_56530 connect
+
+2026-01-04 15:45:53,705 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-ipc', ephemeral=true, revision=0}, 1767512753581_127.0.0.1_56530
+
+2026-01-04 15:45:55,804 INFO Client connection 1767512755795_127.0.0.1_56535 connect
+
+2026-01-04 15:45:55,910 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-gateway', ephemeral=true, revision=0}, 1767512755795_127.0.0.1_56535
+
+2026-01-04 15:46:00,168 INFO Client connection 1767512760161_127.0.0.1_53085 connect
+
+2026-01-04 15:46:00,277 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-system', ephemeral=true, revision=0}, 1767512760161_127.0.0.1_53085
+
+2026-01-04 15:46:00,696 INFO Client connection 1767512760689_127.0.0.1_53122 connect
+
+2026-01-04 15:46:00,807 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-user', ephemeral=true, revision=0}, 1767512760689_127.0.0.1_53122
+
+2026-01-04 17:15:05,156 INFO Client remove for service Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-auth', ephemeral=true, revision=1}, 1767512740867_127.0.0.1_57959
+
+2026-01-04 17:15:05,171 INFO Client connection 1767512740867_127.0.0.1_57959 disconnect, remove instances and subscribers
+
+2026-01-04 17:15:05,220 INFO Client remove for service Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-ipc', ephemeral=true, revision=1}, 1767512753581_127.0.0.1_56530
+
+2026-01-04 17:15:05,232 INFO Client connection 1767512753581_127.0.0.1_56530 disconnect, remove instances and subscribers
+
+2026-01-04 17:15:05,238 INFO Client remove for service Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-gateway', ephemeral=true, revision=1}, 1767512755795_127.0.0.1_56535
+
+2026-01-04 17:15:05,329 INFO Client remove for service Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-system', ephemeral=true, revision=1}, 1767512760161_127.0.0.1_53085
+
+2026-01-04 17:15:05,343 INFO Client connection 1767512760161_127.0.0.1_53085 disconnect, remove instances and subscribers
+
+2026-01-04 17:15:05,347 INFO Client remove for service Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-user', ephemeral=true, revision=1}, 1767512760689_127.0.0.1_53122
+
+2026-01-04 17:15:05,357 INFO Client connection 1767512760689_127.0.0.1_53122 disconnect, remove instances and subscribers
+
+2026-01-04 17:15:05,553 INFO Client connection 1767512755795_127.0.0.1_56535 disconnect, remove instances and subscribers
+
+2026-01-04 17:15:05,586 INFO Client connection 1767512725414_127.0.0.1_57278 disconnect, remove instances and subscribers
+
+2026-01-04 17:15:05,630 INFO Client connection 1767512735821_127.0.0.1_49624 disconnect, remove instances and subscribers
+
+2026-01-04 17:15:05,751 INFO Client connection 1767512743762_127.0.0.1_52891 disconnect, remove instances and subscribers
+
+2026-01-04 17:15:05,774 INFO Client connection 1767512747915_127.0.0.1_49770 disconnect, remove instances and subscribers
+
+2026-01-04 17:15:07,992 INFO Client connection 1767512739744_127.0.0.1_57919 disconnect, remove instances and subscribers
+

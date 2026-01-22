@@ -1,0 +1,270 @@
+2025-11-17 14:07:43,905 INFO Client remove for service Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-auth', ephemeral=true, revision=1}, 1763339920301_127.0.0.1_63191
+
+2025-11-17 14:07:44,239 INFO Client connection 1763339920301_127.0.0.1_63191 disconnect, remove instances and subscribers
+
+2025-11-17 14:07:44,768 INFO Client connection 1763339904294_127.0.0.1_52156 disconnect, remove instances and subscribers
+
+2025-11-17 14:08:13,757 INFO Client connection 1763359693752_127.0.0.1_50353 connect
+
+2025-11-17 14:08:13,865 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-auth', ephemeral=true, revision=2}, 1763359693752_127.0.0.1_50353
+
+2025-11-17 14:11:47,206 INFO Client remove for service Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-auth', ephemeral=true, revision=3}, 1763359693752_127.0.0.1_50353
+
+2025-11-17 14:11:47,218 INFO Client connection 1763359693752_127.0.0.1_50353 disconnect, remove instances and subscribers
+
+2025-11-17 14:11:47,697 INFO Client connection 1763359684305_127.0.0.1_50305 disconnect, remove instances and subscribers
+
+2025-11-17 14:12:08,109 INFO Client connection 1763359928103_127.0.0.1_52549 connect
+
+2025-11-17 14:12:08,218 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-auth', ephemeral=true, revision=4}, 1763359928103_127.0.0.1_52549
+
+2025-11-17 14:20:55,197 INFO Client connection 1763359928103_127.0.0.1_52549 disconnect, remove instances and subscribers
+
+2025-11-17 14:20:55,197 INFO Client connection 1763359918570_127.0.0.1_62016 disconnect, remove instances and subscribers
+
+2025-11-17 14:22:15,481 WARN namespace : public, [DEFAULT_GROUP@@idevelop-auth] services are automatically cleaned
+
+2025-11-17 14:23:16,361 INFO Client connection 1763360596353_127.0.0.1_61803 connect
+
+2025-11-17 14:23:16,474 INFO Client connection 1763360596469_127.0.0.1_61805 connect
+
+2025-11-17 14:23:16,586 INFO Client connection 1763360596353_127.0.0.1_61803 disconnect, remove instances and subscribers
+
+2025-11-17 14:23:16,616 INFO Client connection 1763360596375_127.0.0.1_61804 disconnect, remove instances and subscribers
+
+2025-11-17 14:23:19,301 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-auth', ephemeral=true, revision=0}, 1763360596469_127.0.0.1_61805
+
+2025-11-17 14:24:41,482 INFO Client connection 1763360596497_127.0.0.1_61806 disconnect, remove instances and subscribers
+
+2025-11-17 14:24:41,483 INFO Client connection 1763360596469_127.0.0.1_61805 disconnect, remove instances and subscribers
+
+2025-11-17 14:25:07,468 INFO Client connection 1763360707463_127.0.0.1_54551 connect
+
+2025-11-17 14:25:07,586 INFO Client connection 1763360707579_127.0.0.1_60748 connect
+
+2025-11-17 14:25:07,687 INFO Client connection 1763360707463_127.0.0.1_54552 disconnect, remove instances and subscribers
+
+2025-11-17 14:25:07,687 INFO Client connection 1763360707463_127.0.0.1_54551 disconnect, remove instances and subscribers
+
+2025-11-17 14:25:10,458 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-auth', ephemeral=true, revision=2}, 1763360707579_127.0.0.1_60748
+
+2025-11-17 14:31:22,090 INFO Client connection 1763360707579_127.0.0.1_60748 disconnect, remove instances and subscribers
+
+2025-11-17 14:31:22,090 INFO Client connection 1763360707579_127.0.0.1_60747 disconnect, remove instances and subscribers
+
+2025-11-17 14:31:29,767 INFO Client connection 1763361089761_127.0.0.1_60102 connect
+
+2025-11-17 14:31:29,880 INFO Client connection 1763361089876_127.0.0.1_60103 connect
+
+2025-11-17 14:31:29,995 INFO Client connection 1763361089761_127.0.0.1_60101 disconnect, remove instances and subscribers
+
+2025-11-17 14:31:29,995 INFO Client connection 1763361089761_127.0.0.1_60102 disconnect, remove instances and subscribers
+
+2025-11-17 14:31:32,755 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-auth', ephemeral=true, revision=4}, 1763361089876_127.0.0.1_60103
+
+2025-11-17 14:36:54,579 INFO Client remove for service Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-user', ephemeral=true, revision=1}, 1763339952899_127.0.0.1_53552
+
+2025-11-17 14:36:55,011 INFO Client connection 1763339952899_127.0.0.1_53552 disconnect, remove instances and subscribers
+
+2025-11-17 14:36:55,706 INFO Client connection 1763339940839_127.0.0.1_59526 disconnect, remove instances and subscribers
+
+2025-11-17 14:37:19,343 INFO Client connection 1763361436150_127.0.0.1_56416 disconnect, remove instances and subscribers
+
+2025-11-17 14:38:15,531 WARN namespace : public, [DEFAULT_GROUP@@idevelop-user] services are automatically cleaned
+
+2025-11-17 14:39:55,513 INFO Client connection 1763361592180_127.0.0.1_54838 disconnect, remove instances and subscribers
+
+2025-11-17 14:44:13,766 INFO Client connection 1763361853761_127.0.0.1_50158 connect
+
+2025-11-17 14:44:13,875 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-user', ephemeral=true, revision=0}, 1763361853761_127.0.0.1_50158
+
+2025-11-17 14:46:33,774 INFO Client remove for service Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-user', ephemeral=true, revision=1}, 1763361853761_127.0.0.1_50158
+
+2025-11-17 14:46:34,118 INFO Client connection 1763361853761_127.0.0.1_50158 disconnect, remove instances and subscribers
+
+2025-11-17 14:46:35,145 INFO Client connection 1763361842121_127.0.0.1_52220 disconnect, remove instances and subscribers
+
+2025-11-17 14:47:00,725 INFO Client connection 1763362020720_127.0.0.1_52297 connect
+
+2025-11-17 14:47:00,842 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-user', ephemeral=true, revision=2}, 1763362020720_127.0.0.1_52297
+
+2025-11-17 15:21:47,391 INFO Client remove for service Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-auth', ephemeral=true, revision=5}, 1763361089876_127.0.0.1_60103
+
+2025-11-17 15:21:47,586 INFO Client remove for service Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-user', ephemeral=true, revision=3}, 1763362020720_127.0.0.1_52297
+
+2025-11-17 15:21:47,606 INFO Client connection 1763362020720_127.0.0.1_52297 disconnect, remove instances and subscribers
+
+2025-11-17 15:21:47,652 INFO Client remove for service Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-gateway', ephemeral=true, revision=1}, 1763339926544_127.0.0.1_50097
+
+2025-11-17 15:21:47,710 INFO Client connection 1763361089876_127.0.0.1_60103 disconnect, remove instances and subscribers
+
+2025-11-17 15:21:47,912 INFO Client remove for service Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-system', ephemeral=true, revision=1}, 1763339947601_127.0.0.1_51201
+
+2025-11-17 15:21:47,935 INFO Client remove for service Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-develop', ephemeral=true, revision=1}, 1763343842303_127.0.0.1_56743
+
+2025-11-17 15:21:47,958 INFO Client connection 1763339947601_127.0.0.1_51201 disconnect, remove instances and subscribers
+
+2025-11-17 15:21:47,990 INFO Client connection 1763343842303_127.0.0.1_56743 disconnect, remove instances and subscribers
+
+2025-11-17 15:21:48,011 INFO Client connection 1763339926544_127.0.0.1_50097 disconnect, remove instances and subscribers
+
+2025-11-17 15:21:48,057 INFO Client connection 1763362009800_127.0.0.1_52280 disconnect, remove instances and subscribers
+
+2025-11-17 15:21:48,295 INFO Client connection 1763361089877_127.0.0.1_60104 disconnect, remove instances and subscribers
+
+2025-11-17 15:21:48,415 INFO Client connection 1763339932296_127.0.0.1_50145 disconnect, remove instances and subscribers
+
+2025-11-17 15:21:48,449 INFO Client connection 1763343834156_127.0.0.1_56692 disconnect, remove instances and subscribers
+
+2025-11-17 15:21:50,633 INFO Client connection 1763339907361_127.0.0.1_52211 disconnect, remove instances and subscribers
+
+2025-11-17 15:23:15,669 WARN namespace : public, [DEFAULT_GROUP@@idevelop-user] services are automatically cleaned
+
+2025-11-17 15:23:15,669 WARN namespace : public, [DEFAULT_GROUP@@idevelop-auth] services are automatically cleaned
+
+2025-11-17 15:23:15,669 WARN namespace : public, [DEFAULT_GROUP@@idevelop-gateway] services are automatically cleaned
+
+2025-11-17 15:23:15,669 WARN namespace : public, [DEFAULT_GROUP@@idevelop-develop] services are automatically cleaned
+
+2025-11-17 15:23:15,669 WARN namespace : public, [DEFAULT_GROUP@@idevelop-system] services are automatically cleaned
+
+2025-11-17 15:28:49,345 INFO Client connection 1763364529336_127.0.0.1_57558 connect
+
+2025-11-17 15:28:49,452 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-auth', ephemeral=true, revision=0}, 1763364529336_127.0.0.1_57558
+
+2025-11-17 15:29:03,260 INFO Client connection 1763364543249_127.0.0.1_58704 connect
+
+2025-11-17 15:29:03,374 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-develop', ephemeral=true, revision=0}, 1763364543249_127.0.0.1_58704
+
+2025-11-17 15:29:13,521 INFO Client connection 1763364553513_127.0.0.1_56743 connect
+
+2025-11-17 15:29:13,631 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-gateway', ephemeral=true, revision=0}, 1763364553513_127.0.0.1_56743
+
+2025-11-17 15:29:25,937 INFO Client connection 1763364565932_127.0.0.1_61637 connect
+
+2025-11-17 15:29:26,045 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-system', ephemeral=true, revision=0}, 1763364565932_127.0.0.1_61637
+
+2025-11-17 15:29:26,969 INFO Client connection 1763364566964_127.0.0.1_59630 connect
+
+2025-11-17 15:29:27,082 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-user', ephemeral=true, revision=0}, 1763364566964_127.0.0.1_59630
+
+2025-11-17 15:30:42,031 INFO Client remove for service Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-user', ephemeral=true, revision=1}, 1763364566964_127.0.0.1_59630
+
+2025-11-17 15:30:42,509 INFO Client connection 1763364566964_127.0.0.1_59630 disconnect, remove instances and subscribers
+
+2025-11-17 15:30:43,052 INFO Client connection 1763364555023_127.0.0.1_56751 disconnect, remove instances and subscribers
+
+2025-11-17 15:31:12,610 INFO Client connection 1763364672603_127.0.0.1_51478 connect
+
+2025-11-17 15:31:12,719 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-user', ephemeral=true, revision=2}, 1763364672603_127.0.0.1_51478
+
+2025-11-17 15:48:02,299 INFO Client connection 1763365679245_127.0.0.1_57121 disconnect, remove instances and subscribers
+
+2025-11-17 15:49:56,371 INFO Client connection 1763365796366_127.0.0.1_63266 connect
+
+2025-11-17 15:49:56,493 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-ipc', ephemeral=true, revision=0}, 1763365796366_127.0.0.1_63266
+
+2025-11-17 16:06:50,726 INFO Client remove for service Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-ipc', ephemeral=true, revision=1}, 1763365796366_127.0.0.1_63266
+
+2025-11-17 16:06:50,739 INFO Client connection 1763365796366_127.0.0.1_63266 disconnect, remove instances and subscribers
+
+2025-11-17 16:06:51,239 INFO Client connection 1763365786780_127.0.0.1_50200 disconnect, remove instances and subscribers
+
+2025-11-17 16:07:15,426 INFO Client connection 1763366835421_127.0.0.1_58114 connect
+
+2025-11-17 16:07:15,542 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-ipc', ephemeral=true, revision=2}, 1763366835421_127.0.0.1_58114
+
+2025-11-17 16:42:03,380 INFO Client remove for service Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-ipc', ephemeral=true, revision=3}, 1763366835421_127.0.0.1_58114
+
+2025-11-17 16:42:03,393 INFO Client connection 1763366835421_127.0.0.1_58114 disconnect, remove instances and subscribers
+
+2025-11-17 16:42:03,915 INFO Client connection 1763366825222_127.0.0.1_58056 disconnect, remove instances and subscribers
+
+2025-11-17 16:42:27,267 INFO Client connection 1763368947261_127.0.0.1_64891 connect
+
+2025-11-17 16:42:27,379 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-ipc', ephemeral=true, revision=4}, 1763368947261_127.0.0.1_64891
+
+2025-11-17 16:52:16,385 INFO Client remove for service Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-ipc', ephemeral=true, revision=5}, 1763368947261_127.0.0.1_64891
+
+2025-11-17 16:52:16,394 INFO Client connection 1763368947261_127.0.0.1_64891 disconnect, remove instances and subscribers
+
+2025-11-17 16:52:16,774 INFO Client connection 1763368936937_127.0.0.1_56788 disconnect, remove instances and subscribers
+
+2025-11-17 16:52:36,511 INFO Client connection 1763369556506_127.0.0.1_50332 connect
+
+2025-11-17 16:52:36,620 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-ipc', ephemeral=true, revision=6}, 1763369556506_127.0.0.1_50332
+
+2025-11-17 16:52:40,480 INFO Client remove for service Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-gateway', ephemeral=true, revision=1}, 1763364553513_127.0.0.1_56743
+
+2025-11-17 16:52:40,565 INFO Client remove for service Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-auth', ephemeral=true, revision=1}, 1763364529336_127.0.0.1_57558
+
+2025-11-17 16:52:40,611 INFO Client remove for service Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-develop', ephemeral=true, revision=1}, 1763364543249_127.0.0.1_58704
+
+2025-11-17 16:52:40,718 INFO Client remove for service Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-user', ephemeral=true, revision=3}, 1763364672603_127.0.0.1_51478
+
+2025-11-17 16:52:40,803 INFO Client connection 1763364553513_127.0.0.1_56743 disconnect, remove instances and subscribers
+
+2025-11-17 16:52:40,832 INFO Client remove for service Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-system', ephemeral=true, revision=1}, 1763364565932_127.0.0.1_61637
+
+2025-11-17 16:52:40,905 INFO Client connection 1763364529336_127.0.0.1_57558 disconnect, remove instances and subscribers
+
+2025-11-17 16:52:40,939 INFO Client connection 1763364543249_127.0.0.1_58704 disconnect, remove instances and subscribers
+
+2025-11-17 16:52:41,054 INFO Client connection 1763364672603_127.0.0.1_51478 disconnect, remove instances and subscribers
+
+2025-11-17 16:52:41,187 INFO Client connection 1763364565932_127.0.0.1_61637 disconnect, remove instances and subscribers
+
+2025-11-17 16:52:41,347 INFO Client connection 1763364526216_127.0.0.1_58940 disconnect, remove instances and subscribers
+
+2025-11-17 16:52:41,514 INFO Client connection 1763364515892_127.0.0.1_61399 disconnect, remove instances and subscribers
+
+2025-11-17 16:52:41,647 INFO Client connection 1763364551707_127.0.0.1_49934 disconnect, remove instances and subscribers
+
+2025-11-17 16:52:41,791 INFO Client connection 1763364659892_127.0.0.1_51381 disconnect, remove instances and subscribers
+
+2025-11-17 16:52:43,486 INFO Client connection 1763364535722_127.0.0.1_53310 disconnect, remove instances and subscribers
+
+2025-11-17 16:53:19,162 INFO Client connection 1763369599157_127.0.0.1_50655 connect
+
+2025-11-17 16:53:19,270 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-user', ephemeral=true, revision=4}, 1763369599157_127.0.0.1_50655
+
+2025-11-17 16:53:19,660 INFO Client connection 1763369599656_127.0.0.1_50726 connect
+
+2025-11-17 16:53:19,770 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-auth', ephemeral=true, revision=2}, 1763369599656_127.0.0.1_50726
+
+2025-11-17 16:53:24,266 INFO Client connection 1763369604259_127.0.0.1_55752 connect
+
+2025-11-17 16:53:24,379 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-develop', ephemeral=true, revision=2}, 1763369604259_127.0.0.1_55752
+
+2025-11-17 16:53:30,095 INFO Client connection 1763369610089_127.0.0.1_59375 connect
+
+2025-11-17 16:53:30,203 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-gateway', ephemeral=true, revision=2}, 1763369610089_127.0.0.1_59375
+
+2025-11-17 16:53:35,115 INFO Client connection 1763369615111_127.0.0.1_64361 connect
+
+2025-11-17 16:53:35,224 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-system', ephemeral=true, revision=2}, 1763369615111_127.0.0.1_64361
+
+2025-11-17 19:58:33,722 INFO Client connection 1763369604259_127.0.0.1_55752 disconnect, remove instances and subscribers
+
+2025-11-17 19:58:33,729 INFO Client connection 1763369599656_127.0.0.1_50726 disconnect, remove instances and subscribers
+
+2025-11-17 19:58:33,729 INFO Client connection 1763369601370_127.0.0.1_51232 disconnect, remove instances and subscribers
+
+2025-11-17 19:58:33,729 INFO Client connection 1763369588774_127.0.0.1_57299 disconnect, remove instances and subscribers
+
+2025-11-17 19:58:33,730 INFO Client connection 1763369583415_127.0.0.1_64951 disconnect, remove instances and subscribers
+
+2025-11-17 19:58:33,730 INFO Client connection 1763369599157_127.0.0.1_50655 disconnect, remove instances and subscribers
+
+2025-11-17 19:58:33,731 INFO Client connection 1763369556506_127.0.0.1_50332 disconnect, remove instances and subscribers
+
+2025-11-17 19:58:33,732 INFO Client connection 1763369595940_127.0.0.1_58643 disconnect, remove instances and subscribers
+
+2025-11-17 19:58:33,732 INFO Client connection 1763369615111_127.0.0.1_64361 disconnect, remove instances and subscribers
+
+2025-11-17 19:58:33,732 INFO Client connection 1763369546156_127.0.0.1_58706 disconnect, remove instances and subscribers
+
+2025-11-17 19:58:33,733 INFO Client connection 1763369578915_127.0.0.1_64106 disconnect, remove instances and subscribers
+
+2025-11-17 19:58:33,734 INFO Client connection 1763369610089_127.0.0.1_59375 disconnect, remove instances and subscribers
+

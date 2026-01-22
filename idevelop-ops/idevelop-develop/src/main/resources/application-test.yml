@@ -1,0 +1,10 @@
+#服务器端口
+server:
+  port: 17007
+
+#数据源配置
+spring:
+  datasource:
+    url: ${idevelop.datasource.test.url}
+    username: ${idevelop.datasource.test.username}
+    password: ${idevelop.datasource.test.password}

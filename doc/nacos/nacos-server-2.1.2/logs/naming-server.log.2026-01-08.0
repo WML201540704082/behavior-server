@@ -1,0 +1,62 @@
+2026-01-08 10:58:14,735 WARN naming.distro config will be removed, please use core.protocol.distro replace.
+
+2026-01-08 10:58:14,735 WARN Using naming.distro config to replace core.distro config
+
+2026-01-08 10:58:14,839 INFO open empty service auto clean job, initialDelay : 50000 ms, period : 30000 ms
+
+2026-01-08 10:58:14,840 INFO listen for service meta change
+
+2026-01-08 10:58:16,912 INFO [SelectorManager] Load SelectorContextBuilder(class com.alibaba.nacos.naming.selector.context.CmdbSelectorContextBuilder) contextType(CMDB) successfully.
+
+2026-01-08 10:58:16,912 INFO [SelectorManager] Load SelectorContextBuilder(class com.alibaba.nacos.naming.selector.context.NoneSelectorContextBuilder) contextType(NONE) successfully.
+
+2026-01-08 10:58:16,913 INFO [SelectorManager] Load Selector(class com.alibaba.nacos.naming.selector.LabelSelector) type(label) contextType(CMDB) successfully.
+
+2026-01-08 10:58:16,913 INFO [SelectorManager] Load Selector(class com.alibaba.nacos.naming.selector.NoneSelector) type(none) contextType(NONE) successfully.
+
+2026-01-08 10:58:17,757 INFO Load instance extension handler []
+
+2026-01-08 10:59:28,673 INFO Client connection 1767841168663_127.0.0.1_56090 connect
+
+2026-01-08 10:59:28,783 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-ipc', ephemeral=true, revision=0}, 1767841168663_127.0.0.1_56090
+
+2026-01-08 10:59:31,531 INFO Client connection 1767841171522_127.0.0.1_49517 connect
+
+2026-01-08 10:59:31,640 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-gateway', ephemeral=true, revision=0}, 1767841171522_127.0.0.1_49517
+
+2026-01-08 11:06:30,362 INFO Client remove for service Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-ipc', ephemeral=true, revision=1}, 1767841168663_127.0.0.1_56090
+
+2026-01-08 11:06:30,373 INFO Client connection 1767841168663_127.0.0.1_56090 disconnect, remove instances and subscribers
+
+2026-01-08 11:06:30,772 INFO Client connection 1767841156685_127.0.0.1_61431 disconnect, remove instances and subscribers
+
+2026-01-08 11:06:55,932 INFO Client connection 1767841615928_127.0.0.1_61206 connect
+
+2026-01-08 11:06:56,042 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-ipc', ephemeral=true, revision=2}, 1767841615928_127.0.0.1_61206
+
+2026-01-08 11:09:05,949 INFO Client remove for service Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-ipc', ephemeral=true, revision=3}, 1767841615928_127.0.0.1_61206
+
+2026-01-08 11:09:05,960 INFO Client connection 1767841615928_127.0.0.1_61206 disconnect, remove instances and subscribers
+
+2026-01-08 11:09:06,366 INFO Client connection 1767841604427_127.0.0.1_61160 disconnect, remove instances and subscribers
+
+2026-01-08 11:09:33,663 INFO Client connection 1767841773659_127.0.0.1_62653 connect
+
+2026-01-08 11:09:33,772 INFO Client change for service Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-ipc', ephemeral=true, revision=4}, 1767841773659_127.0.0.1_62653
+
+2026-01-08 11:20:23,053 INFO Client remove for service Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-gateway', ephemeral=true, revision=1}, 1767841171522_127.0.0.1_49517
+
+2026-01-08 11:20:23,080 INFO Client remove for service Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-ipc', ephemeral=true, revision=5}, 1767841773659_127.0.0.1_62653
+
+2026-01-08 11:20:23,095 INFO Client connection 1767841773659_127.0.0.1_62653 disconnect, remove instances and subscribers
+
+2026-01-08 11:20:23,459 INFO Client connection 1767841171522_127.0.0.1_49517 disconnect, remove instances and subscribers
+
+2026-01-08 11:20:23,504 INFO Client connection 1767841760860_127.0.0.1_61386 disconnect, remove instances and subscribers
+
+2026-01-08 11:20:25,909 INFO Client connection 1767841158986_127.0.0.1_64868 disconnect, remove instances and subscribers
+
+2026-01-08 11:21:47,624 WARN namespace : public, [DEFAULT_GROUP@@idevelop-ipc] services are automatically cleaned
+
+2026-01-08 11:21:47,624 WARN namespace : public, [DEFAULT_GROUP@@idevelop-gateway] services are automatically cleaned
+

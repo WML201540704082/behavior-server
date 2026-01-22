@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.system.user.mapper.UserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="userResultMap" type="com.lnsoft.system.user.entity.User">
+        <result column="id" property="id"/>
+        <result column="tenant_id" property="tenantId"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="status" property="status"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="code" property="code"/>
+        <result column="account" property="account"/>
+        <result column="password" property="password"/>
+        <result column="name" property="name"/>
+        <result column="real_name" property="realName"/>
+        <result column="email" property="email"/>
+        <result column="phone" property="phone"/>
+        <result column="birthday" property="birthday"/>
+        <result column="sex" property="sex"/>
+        <result column="role_id" property="roleId"/>
+        <result column="dept_id" property="deptId"/>
+        <result column="region_code" property="regionCode"/>
+        <result column="region_name" property="regionName"/>
+        <result column="region_full_name" property="regionFullName"/>
+        <result column="is_login" property="isLogin"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="baseColumnList">
+        select id,
+               create_user AS createUser,
+               create_time AS createTime,
+               update_user AS updateUser,
+               update_time AS updateTime,
+               status,
+               is_deleted  AS isDeleted,
+               account,
+               password,
+               name,
+               real_name,
+               email,
+               phone,
+               birthday,
+               sex,
+               role_id,
+               dept_id
+    </sql>
+
+    <select id="selectUserPage" resultMap="userResultMap">
+        select *
+        from idevelop_user
+        where is_deleted = 0
+    </select>
+
+
+    <select id="getUser" resultMap="userResultMap">
+        SELECT t_user.*,
+               t_region.short_name as region_name,
+               t_region.full_name  as region_full_name
+        FROM idevelop_user t_user
+                 LEFT JOIN idevelop_region t_region on t_user.region_code = t_region.code
+        WHERE t_user.tenant_id = #{param1}
+          and t_user.account = #{param2}
+          and t_user.password = #{param3}
+          and t_user.is_deleted = 0
+    </select>
+
+    <select id="getUserInfoById" resultType="com.lnsoft.system.user.entity.User">
+        SELECT t_user.*,
+               t_region.short_name as region_name,
+               t_region.full_name  as region_full_name
+        FROM idevelop_user t_user
+                 LEFT JOIN idevelop_region t_region on t_user.region_code = t_region.code
+        WHERE t_user.id = #{param1}
+          and is_deleted = 0
+    </select>
+
+
+    <select id="getUserInfo" resultMap="userResultMap">
+        SELECT t_user.*,
+               t_region.short_name as region_name,
+               t_region.full_name  as region_full_name
+        FROM idevelop_user t_user
+                 LEFT JOIN idevelop_region t_region on t_user.region_code = t_region.code
+        WHERE t_user.tenant_id = #{param1}
+          and t_user.account = #{param2}
+          and t_user.is_deleted = 0
+    </select>
+
+    <select id="getRoleName" resultType="java.lang.String">
+        SELECT
+        role_name
+        FROM
+        idevelop_role
+        WHERE
+        id IN
+        <foreach collection="array" item="ids" index="index" open="(" close=")" separator=",">
+            #{ids}
+        </foreach>
+        and is_deleted = 0
+    </select>
+
+    <select id="getRoleAlias" resultType="com.lnsoft.system.entity.Role">
+        SELECT
+        GROUP_CONCAT( role_alias ) AS role_alias,
+        GROUP_CONCAT( role_name ) AS role_name
+        FROM
+        idevelop_role
+        WHERE
+        id IN
+        <foreach collection="array" item="ids" index="index" open="(" close=")" separator=",">
+            #{ids}
+        </foreach>
+        and is_deleted = 0
+    </select>
+
+    <select id="getDeptName" resultType="java.lang.String">
+        SELECT
+        dept_name
+        FROM
+        idevelop_dept
+        WHERE
+        id IN
+        <foreach collection="array" item="ids" index="index" open="(" close=")" separator=",">
+            #{ids}
+        </foreach>
+        and is_deleted = 0
+    </select>
+
+    <select id="exportUser" resultType="com.lnsoft.system.user.excel.UserExcel">
+        SELECT id,
+               tenant_id,
+               account,
+               name,
+               real_name,
+               email,
+               phone,
+               birthday,
+               role_id,
+               dept_id,
+               post_id
+        FROM idevelop_user ${ew.customSqlSegment}
+    </select>
+    <select id="getUserByRole" resultType="com.lnsoft.system.user.entity.User">
+        select u.id, u.tenant_id, u.account, u.name, u.real_name, u.email, u.phone, u.birthday, u.role_id, u.dept_id,
+        u.post_id
+        from idevelop_user u
+        <if test="roleName != '' and roleName != null">
+            left join idevelop_role r on u.role_id = r.id and r.role_name = #{roleName}
+        </if>
+        <where>
+            <if test="userId != '' and userId != null">
+                u.id = #{userId}
+            </if>
+        </where>
+    </select>
+    <select id="selectUserListByDept" resultType="com.lnsoft.system.user.vo.BpmUserVO">
+        SELECT
+        id
+        FROM
+        idevelop_user
+        WHERE is_deleted = 0 AND find_in_set(#{orderDept},ancestors)
+        AND id IN
+        <foreach collection="hussarUserList" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+    <select id="getUserByIdCard" resultType="com.lnsoft.system.user.entity.UserDTO">
+        select
+        *
+        from idevelop_user u where u.is_deleted = 0
+        <if test="idcard != null and idcard != ''">
+            and u.idcard = #{idcard}
+        </if>
+        <if test="realName != null and realName != ''">
+            and u.real_name = #{realName}
+        </if>
+        <if test="deptId != null and deptId != ''">
+            and u.dept_id = #{deptId}
+        </if>
+    </select>
+    <select id="getRegionName" resultType="java.lang.String">
+        SELECT
+        name
+        FROM
+        idevelop_region
+        WHERE
+        code IN
+        <foreach collection="array" item="ids" index="index" open="(" close=")" separator=",">
+            #{ids}
+        </foreach>
+    </select>
+
+
+    <select id="getPermissions" resultType="java.lang.String">
+        select DISTINCT im.code
+        from idevelop_menu im
+                 left join idevelop_role_menu irm on im.id = irm.menu_id
+        where
+        irm.role_id IN
+        <foreach collection="array" item="ids" index="index" open="(" close=")" separator=",">
+            #{ids}
+        </foreach>
+    </select>
+
+</mapper>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>idevelop-platform</artifactId>
+        <groupId>com.lnsoft</groupId>
+        <version>1.0.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>idevelop-service-api</artifactId>
+    <name>${project.artifactId}</name>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
+    <description>idevelop 微服务API集合</description>
+
+    <modules>
+        <module>idevelop-dict-api</module>
+        <module>idevelop-system-api</module>
+        <module>idevelop-user-api</module>
+        <module>idevelop-scope-api</module>
+        <module>idevelop-demo-api</module>
+        <module>idevelop-develop-api</module>
+    </modules>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.lnsoft</groupId>
+            <artifactId>idevelop-core-mybatis</artifactId>
+            <version>${idevelop.tool.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.dreamlu</groupId>
+            <artifactId>mica-auto</artifactId>
+            <version>${mica.auto.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.lnsoft</groupId>
+            <artifactId>idevelop-common</artifactId>
+            <version>${idevelop.project.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                    <finalName>${project.name}</finalName>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

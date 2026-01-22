@@ -1,0 +1,6 @@
+#数据源配置
+spring:
+  datasource:
+    url: ${idevelop.datasource.test.url}
+    username: ${idevelop.datasource.test.username}
+    password: ${idevelop.datasource.test.password}

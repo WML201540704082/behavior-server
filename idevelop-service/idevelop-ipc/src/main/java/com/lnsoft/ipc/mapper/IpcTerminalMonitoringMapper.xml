@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.ipc.mapper.IpcTerminalMonitoringMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="ipcTerminalMonitoringResultMap" type="com.lnsoft.ipc.entity.IpcTerminalMonitoring">
+        <id column="id" property="id"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_dept" property="createDept"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="status" property="status"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="user_id" property="userId"/>
+        <result column="user_name" property="userName"/>
+        <result column="ip" property="ip"/>
+        <result column="open_time" property="openTime"/>
+        <result column="showdown_time" property="showdownTime"/>
+        <result column="online_length" property="onlineLength"/>
+        <result column="activity_length" property="activityLength"/>
+    </resultMap>
+
+
+    <select id="selectIpcTerminalMonitoringPage" resultMap="ipcTerminalMonitoringResultMap">
+        select * from ipc_terminal_monitoring where is_deleted = 0
+    </select>
+    <select id="deptRank" resultType="com.lnsoft.ipc.vo.RankVO">
+        SELECT sum(itm.online_length) as len,iu.department as dept
+        FROM `ipc_terminal_monitoring` itm
+        left join ipc_user iu on itm.user_name = iu.`name`
+        <where>
+            <if test="startTime != null and endTime != null and startTime != '' and endTime !=''">
+                itm.create_time between #{startTime} and #{endTime}
+            </if>
+        </where>
+        group by iu.department ORDER BY len desc
+    </select>
+    <select id="getOfDept" resultType="com.lnsoft.ipc.vo.IpcTerminalMonitoringVO">
+        SELECT  *
+        FROM `ipc_terminal_monitoring`
+        <where>
+            <if test="startTime != null and endTime != null and startTime != '' and endTime !=''">
+                create_time between #{startTime} and #{endTime}
+            </if>
+        </where>
+    </select>
+    <select id="getUserByIp" resultType="com.lnsoft.ipc.entity.IpcUser">
+        select * from ipc_user where terminal = #{ip} and is_deleted = 0
+    </select>
+
+
+</mapper>

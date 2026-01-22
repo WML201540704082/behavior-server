@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.ipc.mapper.IpcNetworkLogMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="ipcNetworkLogResultMap" type="com.lnsoft.ipc.entity.IpcNetworkLog">
+        <id column="id" property="id"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_dept" property="createDept"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="status" property="status"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="user_id" property="userId"/>
+        <result column="user_name" property="userName"/>
+        <result column="user_dept" property="userDept"/>
+        <result column="ip" property="ip"/>
+        <result column="url" property="url"/>
+        <result column="start_time" property="startTime"/>
+        <result column="end_time" property="endTime"/>
+        <result column="access_length" property="accessLength"/>
+        <result column="activity_length" property="activityLength"/>
+    </resultMap>
+
+
+    <select id="selectIpcNetworkLogPage" resultMap="ipcNetworkLogResultMap">
+        select * from ipc_network_log where is_deleted = 0
+    </select>
+    <select id="slaveList" resultType="com.lnsoft.ipc.entity.IpcNetworkLog">
+        select u.ip as ip,
+        a.name as businessName,
+        u.url as url,
+        u.addtime as startTime,
+        u.end_time as endTime
+        from (SELECT
+        ip,
+        addtime,
+        url,
+        IF(@prev_ip = ip, @prev_time, NULL) AS end_time,
+        @prev_time := addtime,
+        @prev_ip := ip
+        FROM
+        user_log,
+        (SELECT @prev_ip := NULL, @prev_time := NULL) AS vars
+        ORDER BY
+        ip,
+        addtime DESC) as u  left join app a
+        on u.url like concat(a.url, '%')
+        where u.ip in ('10.158.89.136','10.192.228.183','10.192.228.117','10.192.228.156','10.192.228.173','10.192.228.149','10.192.228.109','10.192.228.193')
+        <if test="ipc.businessName != null and ipc.businessName != ''">
+            and a.name = #{ipc.businessName}
+        </if>
+        limit #{pageNum}, #{pageSize}
+    </select>
+    <select id="slaveListTotal" resultType="java.lang.Integer">
+        select count(*)
+        from user_log u
+        left join app a
+        on u.url like concat(a.url, '%')
+        where 1 = 1
+        <if test="ip != null and ip != ''">
+            and u.ip = #{ip}
+        </if>
+        <if test="businessName != null and businessName != ''">
+            and a.name = #{businessName}
+        </if>
+    </select>
+    <select id="slaveListAll" resultType="com.lnsoft.ipc.entity.IpcNetworkLog">
+        select u.ip as ip,
+               a.name as businessName,
+               u.url as url,
+               u.addtime as startTime
+        FROM
+            user_log u  left join app a
+                                  on u.url like concat(a.url, '%')
+        where u.ip in ('10.158.89.136','10.192.228.183','10.192.228.117','10.192.228.156','10.192.228.173','10.192.228.149','10.192.228.109','10.192.228.193')
+        order by u.addtime,u.ip
+    </select>
+    <select id="countRank" resultType="com.lnsoft.ipc.vo.RankVO">
+        SELECT
+            a.NAME AS businessName,
+            u.url AS url,
+            count( u.url ) AS count
+        FROM
+            user_log u
+            LEFT JOIN app a ON u.url LIKE concat( a.url, '%' )
+        WHERE
+            u.ip IN ( '10.158.89.136', '10.192.228.183', '10.192.228.117', '10.192.228.156', '10.192.228.173', '10.192.228.149', '10.192.228.109', '10.192.228.193' )
+        <if test="start != null and end != null and start != '' and end !=''">
+            and u.addtime between #{start} and #{end}
+        </if>
+        GROUP BY
+            u.url
+        ORDER BY
+            count desc
+    </select>
+
+</mapper>

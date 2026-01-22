@@ -1,0 +1,4 @@
+2026-01-09 08:59:45,242 WARN [master-db] jdbc:mysql://127.0.0.1:3306/idevelop_nacos?characterEncoding=utf8&connectTimeout=10000&socketTimeout=30000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=UTC
+
+2026-01-09 08:59:45,327 WARN isQuickStart:false
+

@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.lnsoft:idevelop-core-loadbalancer:1.2.6">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../localRep/com/lnsoft/idevelop-core-loadbalancer/1.2.6/idevelop-core-loadbalancer-1.2.6.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/../localRep/com/lnsoft/idevelop-core-loadbalancer/1.2.6/idevelop-core-loadbalancer-1.2.6-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../localRep/com/lnsoft/idevelop-core-loadbalancer/1.2.6/idevelop-core-loadbalancer-1.2.6-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

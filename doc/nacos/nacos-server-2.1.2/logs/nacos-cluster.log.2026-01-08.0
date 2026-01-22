@@ -1,0 +1,6 @@
+2026-01-08 10:58:14,705 INFO Current addressing mode selection : StandaloneMemberLookup
+
+2026-01-08 10:58:15,659 WARN [ClusterRpcClientProxy] success to refresh cluster rpc client on start up,members =[] 
+
+2026-01-08 10:58:18,664 INFO This node is ready to provide external services
+

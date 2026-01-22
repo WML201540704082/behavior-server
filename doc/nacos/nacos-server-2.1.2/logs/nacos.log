@@ -1,0 +1,170 @@
+2026-01-09 08:59:41,304 INFO Starting Nacos v2.1.2 using Java 11 on DESKTOP-TA72NT6 with PID 13596 (G:\Develop\idevelop-platform-dev\doc\nacos\nacos-server-2.1.2\target\nacos-server.jar started by Dell in G:\Develop\idevelop-platform-dev\doc\nacos\nacos-server-2.1.2\bin)
+
+2026-01-09 08:59:41,306 INFO The following 1 profile is active: "standalone"
+
+2026-01-09 08:59:44,221 INFO Tomcat initialized with port(s): 8848 (http)
+
+2026-01-09 08:59:44,232 INFO Starting service [Tomcat]
+
+2026-01-09 08:59:44,233 INFO Starting Servlet engine: [Apache Tomcat/9.0.63]
+
+2026-01-09 08:59:44,318 INFO Initializing Spring embedded WebApplicationContext
+
+2026-01-09 08:59:44,318 INFO Root WebApplicationContext: initialization completed in 2964 ms
+
+2026-01-09 08:59:44,583 INFO Nacos-related cluster resource initialization
+
+2026-01-09 08:59:44,589 INFO Load com.alibaba.nacos.core.ability.RemoteAbilityInitializer for ServerAbilityInitializer
+
+2026-01-09 08:59:44,589 INFO Load com.alibaba.nacos.naming.ability.NamingAbilityInitializer for ServerAbilityInitializer
+
+2026-01-09 08:59:44,592 INFO The cluster resource is initialized
+
+2026-01-09 08:59:44,621 INFO Get Distro config from env, DistroConfig{syncDelayMillis=1000, syncTimeoutMillis=3000, syncRetryDelayMillis=3000, verifyIntervalMillis=5000, verifyTimeoutMillis=3000, loadDataRetryDelayMillis=30000}
+
+2026-01-09 08:59:45,049 INFO HikariPool-1 - Starting...
+
+2026-01-09 08:59:45,230 INFO HikariPool-1 - Start completed.
+
+2026-01-09 08:59:47,922 INFO Adding welcome page: class path resource [static/index.html]
+
+2026-01-09 08:59:48,263 WARN You are asking Spring Security to ignore Ant [pattern='/**']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+
+2026-01-09 08:59:48,263 INFO Will not secure Ant [pattern='/**']
+
+2026-01-09 08:59:48,299 INFO Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@9b5f3c7, org.springframework.security.web.context.SecurityContextPersistenceFilter@54b2fc58, org.springframework.security.web.header.HeaderWriterFilter@55b5cd2b, org.springframework.security.web.csrf.CsrfFilter@38ee7a9d, org.springframework.security.web.authentication.logout.LogoutFilter@1b0e9707, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@6cbbb9c4, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@5426cb36, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@74024f3, org.springframework.security.web.session.SessionManagementFilter@158e9f6e, org.springframework.security.web.access.ExceptionTranslationFilter@479ac2cb]
+
+2026-01-09 08:59:48,326 INFO Exposing 1 endpoint(s) beneath base path '/actuator'
+
+2026-01-09 08:59:48,374 INFO Tomcat started on port(s): 8848 (http) with context path '/nacos'
+
+2026-01-09 08:59:48,400 INFO Started Nacos in 8.492 seconds (JVM running for 9.012)
+
+2026-01-09 08:59:48,401 INFO Nacos started successfully in stand alone mode. use external storage
+
+2026-01-09 09:00:57,612 INFO Initializing Spring DispatcherServlet 'dispatcherServlet'
+
+2026-01-09 09:00:57,613 INFO Initializing Servlet 'dispatcherServlet'
+
+2026-01-09 09:00:57,615 INFO Completed initialization in 1 ms
+
+2026-01-09 09:00:58,257 WARN Creation of SecureRandom instance for session ID generation using [SHA1PRNG] took [371] milliseconds.
+
+2026-01-09 09:01:03,057 INFO [AuthPluginManager] Load AuthPluginService(class com.alibaba.nacos.plugin.auth.impl.NacosAuthPluginService) AuthServiceName(nacos) successfully.
+
+2026-01-09 09:01:03,057 INFO [AuthPluginManager] Load AuthPluginService(class com.alibaba.nacos.plugin.auth.impl.LdapAuthPluginService) AuthServiceName(ldap) successfully.
+
+2026-01-09 09:01:18,315 INFO Get Push config from env, PushConfig{pushTaskDelay=500, pushTaskTimeout=5000, pushTaskRetryDelay=1000}
+
+2026-01-09 09:09:45,395 WARN clearConfigHistory start
+
+2026-01-09 09:09:45,395 WARN clearConfigHistory, getBeforeStamp:2025-12-10 09:09:45.0, pageSize:1000
+
+2026-01-09 09:09:45,417 INFO [capacityManagement] start correct usage
+
+2026-01-09 09:09:45,424 INFO [capacityManagement] end correct usage, cost: 0.0045356s
+
+2026-01-09 09:19:45,412 WARN clearConfigHistory start
+
+2026-01-09 09:19:45,412 WARN clearConfigHistory, getBeforeStamp:2025-12-10 09:19:45.0, pageSize:1000
+
+2026-01-09 09:19:45,427 INFO [capacityManagement] start correct usage
+
+2026-01-09 09:19:45,431 INFO [capacityManagement] end correct usage, cost: 0.0051709s
+
+2026-01-09 09:29:45,416 WARN clearConfigHistory start
+
+2026-01-09 09:29:45,416 WARN clearConfigHistory, getBeforeStamp:2025-12-10 09:29:45.0, pageSize:1000
+
+2026-01-09 09:29:45,434 INFO [capacityManagement] start correct usage
+
+2026-01-09 09:29:45,438 INFO [capacityManagement] end correct usage, cost: 0.0052568s
+
+2026-01-09 09:39:45,420 WARN clearConfigHistory start
+
+2026-01-09 09:39:45,420 WARN clearConfigHistory, getBeforeStamp:2025-12-10 09:39:45.0, pageSize:1000
+
+2026-01-09 09:39:45,442 INFO [capacityManagement] start correct usage
+
+2026-01-09 09:39:45,448 INFO [capacityManagement] end correct usage, cost: 0.0060266s
+
+2026-01-09 09:49:45,423 WARN clearConfigHistory start
+
+2026-01-09 09:49:45,423 WARN clearConfigHistory, getBeforeStamp:2025-12-10 09:49:45.0, pageSize:1000
+
+2026-01-09 09:49:45,449 INFO [capacityManagement] start correct usage
+
+2026-01-09 09:49:45,461 INFO [capacityManagement] end correct usage, cost: 0.0124183s
+
+2026-01-09 09:59:45,426 WARN clearConfigHistory start
+
+2026-01-09 09:59:45,426 WARN clearConfigHistory, getBeforeStamp:2025-12-10 09:59:45.0, pageSize:1000
+
+2026-01-09 09:59:45,463 INFO [capacityManagement] start correct usage
+
+2026-01-09 09:59:45,472 INFO [capacityManagement] end correct usage, cost: 0.009328s
+
+2026-01-09 10:09:45,433 WARN clearConfigHistory start
+
+2026-01-09 10:09:45,433 WARN clearConfigHistory, getBeforeStamp:2025-12-10 10:09:45.0, pageSize:1000
+
+2026-01-09 10:09:45,472 INFO [capacityManagement] start correct usage
+
+2026-01-09 10:09:45,478 INFO [capacityManagement] end correct usage, cost: 0.0055464s
+
+2026-01-09 10:19:45,437 WARN clearConfigHistory start
+
+2026-01-09 10:19:45,437 WARN clearConfigHistory, getBeforeStamp:2025-12-10 10:19:45.0, pageSize:1000
+
+2026-01-09 10:19:45,479 INFO [capacityManagement] start correct usage
+
+2026-01-09 10:19:45,485 INFO [capacityManagement] end correct usage, cost: 0.0064437s
+
+2026-01-09 10:29:45,440 WARN clearConfigHistory start
+
+2026-01-09 10:29:45,440 WARN clearConfigHistory, getBeforeStamp:2025-12-10 10:29:45.0, pageSize:1000
+
+2026-01-09 10:29:45,486 INFO [capacityManagement] start correct usage
+
+2026-01-09 10:29:45,491 INFO [capacityManagement] end correct usage, cost: 0.0050245s
+
+2026-01-09 10:39:45,444 WARN clearConfigHistory start
+
+2026-01-09 10:39:45,444 WARN clearConfigHistory, getBeforeStamp:2025-12-10 10:39:45.0, pageSize:1000
+
+2026-01-09 10:39:45,492 INFO [capacityManagement] start correct usage
+
+2026-01-09 10:39:45,497 INFO [capacityManagement] end correct usage, cost: 0.0059987s
+
+2026-01-09 10:49:45,447 WARN clearConfigHistory start
+
+2026-01-09 10:49:45,447 WARN clearConfigHistory, getBeforeStamp:2025-12-10 10:49:45.0, pageSize:1000
+
+2026-01-09 10:49:45,499 INFO [capacityManagement] start correct usage
+
+2026-01-09 10:49:45,501 INFO [capacityManagement] end correct usage, cost: 0.0018505s
+
+2026-01-09 10:59:45,450 WARN clearConfigHistory start
+
+2026-01-09 10:59:45,451 WARN clearConfigHistory, getBeforeStamp:2025-12-10 10:59:45.0, pageSize:1000
+
+2026-01-09 10:59:45,505 INFO [capacityManagement] start correct usage
+
+2026-01-09 10:59:45,507 INFO [capacityManagement] end correct usage, cost: 0.0027441s
+
+2026-01-09 11:09:45,454 WARN clearConfigHistory start
+
+2026-01-09 11:09:45,454 WARN clearConfigHistory, getBeforeStamp:2025-12-10 11:09:45.0, pageSize:1000
+
+2026-01-09 11:09:45,510 INFO [capacityManagement] start correct usage
+
+2026-01-09 11:09:45,512 INFO [capacityManagement] end correct usage, cost: 0.0012515s
+
+2026-01-09 11:19:45,462 WARN clearConfigHistory start
+
+2026-01-09 11:19:45,462 WARN clearConfigHistory, getBeforeStamp:2025-12-10 11:19:45.0, pageSize:1000
+
+2026-01-09 11:19:45,524 INFO [capacityManagement] start correct usage
+
+2026-01-09 11:19:45,525 INFO [capacityManagement] end correct usage, cost: 0.0011422s
+

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.system.mapper.DeptMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="deptResultMap" type="com.lnsoft.system.entity.Dept">
+        <id column="id" property="id"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="dept_name" property="deptName"/>
+        <result column="full_name" property="fullName"/>
+        <result column="sort" property="sort"/>
+        <result column="erp_unit" property="erpUnit"/>
+        <result column="region_code" property="regionCode"/>
+        <result column="erp_unit_code" property="erpUnitCode"/>
+        <result column="erp_dept" property="erpDept"/>
+        <result column="erp_dept_code" property="erpDeptCode"/>
+        <result column="i6000_unit" property="i6000Unit"/>
+        <result column="i6000_unit_code" property="i6000UnitCode"/>
+        <result column="i6000_dept" property="i6000Dept"/>
+        <result column="i6000_dept_code" property="i6000DeptCode"/>
+        <result column="isc_dept_id" property="iscDeptId"/>
+        <result column="isc_parent_id" property="iscParentId"/>
+        <result column="remark" property="remark"/>
+        <result column="is_deleted" property="isDeleted"/>
+    </resultMap>
+
+    <resultMap id="treeNodeResultMap" type="com.lnsoft.core.tool.node.TreeNode">
+        <id column="id" property="id"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="title" property="title"/>
+        <result column="value" property="value"/>
+        <result column="key" property="key"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="baseColumnList">
+        select
+        id, parent_id, dept_name, full_name, sort, erp_unit, erp_unit_code, erp_dept, erp_dept_code, i6000_unit, i6000_unit_code,
+        i6000_dept, i6000_dept_code, isc_dept_id ,isc_parent_id, remark, is_deleted
+    </sql>
+
+    <select id="selectDeptPage" resultMap="deptResultMap">
+        select * from idevelop_dept where is_deleted = 0
+    </select>
+
+    <select id="tree" resultMap="treeNodeResultMap">
+        select id, parent_id, dept_name as title, region_code as 'value', id as 'key'  from idevelop_dept where is_deleted = 0
+        <if test="_parameter!=null">
+            and tenant_id = #{_parameter}
+        </if>
+        order by type asc,sort asc
+    </select>
+
+    <select id="treeByPid" resultMap="treeNodeResultMap" parameterType="com.lnsoft.system.dto.DeptDTO">
+        select id, parent_id, dept_name as title, id as 'value', id as 'key' from idevelop_dept where is_deleted = 0
+        <if test="tenantId!=null and tenantId!=''">
+            and tenant_id = #{tenantId}
+        </if>
+        <if test="parentId!=null and parentId!=''">
+            and parent_id = #{parentId}
+        </if>
+        order by type asc,sort asc
+    </select>
+
+    <select id="getDeptNames" resultType="java.lang.String">
+        SELECT
+        dept_name
+        FROM
+        idevelop_dept
+        WHERE
+        id IN
+        <foreach collection="array" item="ids" index="index" open="(" close=")" separator=",">
+            #{ids}
+        </foreach>
+        and is_deleted = 0
+    </select>
+    <select id="getAllCorp" resultType="com.lnsoft.system.entity.Dept">
+        select id,region_code,region_name,dept_name,full_name,type
+        from idevelop_dept
+        where type = 'CORP' and is_deleted = 0
+    </select>
+
+    <select id="getIscDict" parameterType="java.lang.String">
+        SELECT
+        isc_dept_id as iscDeptId,
+        isc_parent_id as iscParentId,
+        dept_name as deptName
+        FROM
+        sys_dept_0425
+        WHERE
+        1 = 1
+        <if test="type!=null and type!=''">
+            and (type is null or type = #{type})
+        </if>
+        <if test="iscDeptId!=null and iscDeptId!=''">
+            and isc_dept_id = #{iscDeptId}
+        </if>
+        <if test="iscParentId!=null and iscParentId!=''">
+            and isc_parent_id = #{iscParentId}
+        </if>
+    </select>
+
+
+</mapper>

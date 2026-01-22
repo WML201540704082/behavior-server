@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.system.mapper.CityCodeMapper">
+    <!-- 通用查询映射结果 -->
+    <resultMap id="cityCodeVOMap" type="com.lnsoft.system.vo.CityCodeVO">
+        <result property="id" column="id"/>
+        <result property="url" column="url"/>
+        <result property="selfCode" column="self_code"/>
+        <result property="selfName" column="self_name"/>
+        <result property="parentCode" column="parent_code"/>
+        <result property="parentName" column="parent_name"/>
+        <result property="type" column="type"/>
+    </resultMap>
+
+    <select id="getCityCodeList" resultMap="cityCodeVOMap" parameterType="java.util.Map">
+        SELECT id, url, self_code, self_name, parent_code, parent_name, `type`
+        FROM `idevelop_city_code`
+        where 1=1
+        <if test="id != null and id !=''">
+            and `id` = #{id}
+        </if>
+        <if test="parentCode != null and parentCode !=''">
+            and parent_code = #{parentCode}
+        </if>
+        <if test="selfCode != null and selfCode !=''">
+            and self_code = #{selfCode}
+        </if>
+        <if test="type != null and type !=''">
+            and `type` = #{type}
+        </if>
+        <if test="selfName != null and selfName !=''">
+            and self_name like concat('%',#{selfName},'%')
+        </if>
+        <if test="parentName != null and parentName !=''">
+            and parent_name like concat('%',#{parentName},'%')
+        </if>
+        order by self_code
+    </select>
+    <select id="getRegion" resultMap="cityCodeVOMap">
+        SELECT r.`code`        as `self_code`,
+               r.`name`        as `self_name`,
+               r.`parent_code` as `parent_code`,
+               r.`city_name`   as `parent_name`,
+               r.`level`       as `type`
+        FROM idevelop_region r
+        WHERE r.province_code = '37'
+    </select>
+
+    <insert id="insertList" parameterType="java.util.List">
+        INSERT INTO idevelop_city_code ( url, self_code, self_name, parent_code, parent_name, `type` )
+        values
+        <foreach collection="list" item="item" index="index" open="" close="" separator=",">
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                #{item.url,jdbcType=VARCHAR},
+                #{item.selfCode,jdbcType=VARCHAR},
+                #{item.selfName,jdbcType=VARCHAR},
+                #{item.parentCode,jdbcType=VARCHAR},
+                #{item.parentName,jdbcType=VARCHAR},
+                #{item.type,jdbcType=VARCHAR},
+            </trim>
+        </foreach>
+    </insert>
+    <update id="updateByCityCode" parameterType="com.lnsoft.system.entity.CityCode">
+        update idevelop_city_code set
+        <trim suffixOverrides=",">
+        <if test="url != null and url !=''">
+            url = #{url},
+        </if>
+        <if test="selfCode != null and selfCode !=''">
+            self_code = #{selfCode},
+        </if>
+        <if test="selfName != null and selfName !=''">
+            self_name = #{selfName},
+        </if>
+        <if test="parentCode != null and parentCode !=''">
+            parent_code = #{parentCode},
+        </if>
+        <if test="parentName != null and parentName !=''">
+            parent_name = #{parentName},
+        </if>
+        <if test="type != null and type !=''">
+            `type` = #{type},
+        </if>
+        </trim>
+        where id = #{id}
+    </update>
+    <delete id="deleteList" parameterType="java.util.List">
+        delete from idevelop_city_code
+        where id in
+        <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+                #{item.id}
+        </foreach>
+    </delete>
+</mapper>

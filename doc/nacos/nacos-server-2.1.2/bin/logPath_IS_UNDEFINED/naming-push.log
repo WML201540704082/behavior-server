@@ -1,0 +1,150 @@
+2025-11-17 14:05:42,859 INFO [PUSH-SUCC] 25ms, all delay time 576ms for subscriber 192.168.117.1, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-log', ephemeral=true, revision=0}, originalSize=0, DataSize=0
+
+2025-11-17 14:07:44,474 INFO [PUSH-SUCC] 13ms, all delay time 564ms, SLA 564ms, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-auth', ephemeral=true, revision=2}, originalSize=0, DataSize=0, target=192.168.117.1
+
+2025-11-17 14:08:14,425 INFO [PUSH-SUCC] 4ms, all delay time 560ms, SLA 560ms, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-auth', ephemeral=true, revision=3}, originalSize=1, DataSize=1, target=192.168.117.1
+
+2025-11-17 14:11:47,777 INFO [PUSH-SUCC] 4ms, all delay time 571ms, SLA 571ms, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-auth', ephemeral=true, revision=4}, originalSize=0, DataSize=0, target=192.168.117.1
+
+2025-11-17 14:12:08,742 INFO [PUSH-SUCC] 4ms, all delay time 524ms, SLA 524ms, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-auth', ephemeral=true, revision=5}, originalSize=1, DataSize=1, target=192.168.117.1
+
+2025-11-17 14:13:56,685 INFO [PUSH-SUCC] 21ms, all delay time 574ms for subscriber 192.168.117.1, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-user', ephemeral=true, revision=1}, originalSize=1, DataSize=1
+
+2025-11-17 14:13:57,586 INFO [PUSH-SUCC] 4ms, all delay time 564ms for subscriber 192.168.117.1, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-log', ephemeral=true, revision=0}, originalSize=0, DataSize=0
+
+2025-11-17 14:13:58,299 INFO [PUSH-SUCC] 4ms, all delay time 530ms for subscriber 192.168.117.1, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-log', ephemeral=true, revision=0}, originalSize=0, DataSize=0
+
+2025-11-17 14:20:55,771 INFO [PUSH-SUCC] 4ms, all delay time 574ms, SLA 574ms, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-auth', ephemeral=true, revision=6}, originalSize=0, DataSize=0, target=192.168.117.1
+
+2025-11-17 14:23:19,844 INFO [PUSH-SUCC] 3ms, all delay time 540ms for subscriber 192.168.117.1, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-log', ephemeral=true, revision=0}, originalSize=0, DataSize=0
+
+2025-11-17 14:23:19,848 INFO [PUSH-SUCC] 7ms, all delay time 541ms for subscriber 192.168.117.1, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-user', ephemeral=true, revision=1}, originalSize=1, DataSize=1
+
+2025-11-17 14:23:19,849 INFO [PUSH-SUCC] 8ms, all delay time 548ms, SLA 548ms, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-auth', ephemeral=true, revision=1}, originalSize=1, DataSize=1, target=192.168.117.1
+
+2025-11-17 14:24:42,078 INFO [PUSH-SUCC] 3ms, all delay time 594ms, SLA 594ms, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-auth', ephemeral=true, revision=2}, originalSize=0, DataSize=0, target=192.168.117.1
+
+2025-11-17 14:25:10,969 INFO [PUSH-SUCC] 4ms, all delay time 508ms for subscriber 192.168.117.1, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-log', ephemeral=true, revision=0}, originalSize=0, DataSize=0
+
+2025-11-17 14:25:10,970 INFO [PUSH-SUCC] 5ms, all delay time 512ms, SLA 512ms, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-auth', ephemeral=true, revision=3}, originalSize=1, DataSize=1, target=192.168.117.1
+
+2025-11-17 14:25:10,971 INFO [PUSH-SUCC] 6ms, all delay time 508ms for subscriber 192.168.117.1, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-user', ephemeral=true, revision=1}, originalSize=1, DataSize=1
+
+2025-11-17 14:31:22,607 INFO [PUSH-SUCC] 3ms, all delay time 517ms, SLA 517ms, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-auth', ephemeral=true, revision=4}, originalSize=0, DataSize=0, target=192.168.117.1
+
+2025-11-17 14:31:33,284 INFO [PUSH-SUCC] 4ms, all delay time 528ms for subscriber 192.168.117.1, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-log', ephemeral=true, revision=0}, originalSize=0, DataSize=0
+
+2025-11-17 14:31:33,286 INFO [PUSH-SUCC] 6ms, all delay time 526ms for subscriber 192.168.117.1, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-user', ephemeral=true, revision=1}, originalSize=1, DataSize=1
+
+2025-11-17 14:31:33,288 INFO [PUSH-SUCC] 8ms, all delay time 533ms, SLA 533ms, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-auth', ephemeral=true, revision=5}, originalSize=1, DataSize=1, target=192.168.117.1
+
+2025-11-17 14:36:55,141 INFO [PUSH-SUCC] 46ms, all delay time 562ms, SLA 562ms, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-user', ephemeral=true, revision=2}, originalSize=0, DataSize=0, target=192.168.117.1
+
+2025-11-17 14:36:55,156 INFO [PUSH-SUCC] 61ms, all delay time 577ms, SLA 577ms, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-user', ephemeral=true, revision=2}, originalSize=0, DataSize=0, target=192.168.117.1
+
+2025-11-17 14:44:14,414 INFO [PUSH-SUCC] 5ms, all delay time 539ms, SLA 539ms, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-user', ephemeral=true, revision=1}, originalSize=1, DataSize=1, target=192.168.117.1
+
+2025-11-17 14:44:14,414 INFO [PUSH-SUCC] 5ms, all delay time 539ms, SLA 539ms, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-user', ephemeral=true, revision=1}, originalSize=1, DataSize=1, target=192.168.117.1
+
+2025-11-17 14:44:41,901 INFO [PUSH-SUCC] 24ms, all delay time 555ms for subscriber 192.168.117.1, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-log', ephemeral=true, revision=0}, originalSize=0, DataSize=0
+
+2025-11-17 14:46:34,512 INFO [PUSH-SUCC] 120ms, all delay time 738ms, SLA 738ms, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-user', ephemeral=true, revision=2}, originalSize=0, DataSize=0, target=192.168.117.1
+
+2025-11-17 14:46:34,512 INFO [PUSH-SUCC] 121ms, all delay time 738ms, SLA 738ms, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-user', ephemeral=true, revision=2}, originalSize=0, DataSize=0, target=192.168.117.1
+
+2025-11-17 14:47:01,400 INFO [PUSH-SUCC] 4ms, all delay time 558ms, SLA 558ms, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-user', ephemeral=true, revision=3}, originalSize=1, DataSize=1, target=192.168.117.1
+
+2025-11-17 14:47:01,401 INFO [PUSH-SUCC] 5ms, all delay time 559ms, SLA 559ms, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-user', ephemeral=true, revision=3}, originalSize=1, DataSize=1, target=192.168.117.1
+
+2025-11-17 15:21:47,966 INFO [PUSH-SUCC] 8ms, all delay time 574ms, SLA 574ms, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-auth', ephemeral=true, revision=6}, originalSize=0, DataSize=0, target=192.168.117.1
+
+2025-11-17 15:29:13,716 INFO [PUSH] Task merge for Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-gateway', ephemeral=true, revision=1}
+
+2025-11-17 15:29:14,172 INFO [PUSH-SUCC] 20ms, all delay time 541ms, SLA 541ms, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-gateway', ephemeral=true, revision=1}, originalSize=1, DataSize=1, target=192.168.117.1
+
+2025-11-17 15:29:14,256 INFO [PUSH-SUCC] 3ms, all delay time 533ms for subscriber 192.168.117.1, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-auth', ephemeral=true, revision=1}, originalSize=1, DataSize=1
+
+2025-11-17 15:29:14,263 INFO [PUSH-SUCC] 10ms, all delay time 547ms for subscriber 192.168.117.1, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-develop', ephemeral=true, revision=1}, originalSize=1, DataSize=1
+
+2025-11-17 15:29:42,938 INFO [PUSH-SUCC] 5ms, all delay time 564ms for subscriber 192.168.117.1, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-user', ephemeral=true, revision=1}, originalSize=1, DataSize=1
+
+2025-11-17 15:29:42,943 INFO [PUSH-SUCC] 10ms, all delay time 569ms for subscriber 192.168.117.1, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-system', ephemeral=true, revision=1}, originalSize=1, DataSize=1
+
+2025-11-17 15:30:07,877 INFO [PUSH-SUCC] 20ms, all delay time 565ms for subscriber 192.168.117.1, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-user', ephemeral=true, revision=1}, originalSize=1, DataSize=1
+
+2025-11-17 15:30:12,132 INFO [PUSH-SUCC] 0ms, all delay time 512ms for subscriber 192.168.117.1, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-log', ephemeral=true, revision=0}, originalSize=0, DataSize=0
+
+2025-11-17 15:30:18,563 INFO [PUSH-SUCC] 16ms, all delay time 581ms for subscriber 192.168.117.1, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-user', ephemeral=true, revision=1}, originalSize=1, DataSize=1
+
+2025-11-17 15:30:19,376 INFO [PUSH-SUCC] 18ms, all delay time 540ms for subscriber 192.168.117.1, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-system', ephemeral=true, revision=1}, originalSize=1, DataSize=1
+
+2025-11-17 15:30:19,873 INFO [PUSH-SUCC] 4ms, all delay time 587ms for subscriber 192.168.117.1, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-log', ephemeral=true, revision=0}, originalSize=0, DataSize=0
+
+2025-11-17 15:30:42,602 INFO [PUSH-SUCC] 7ms, all delay time 571ms, SLA 571ms, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-user', ephemeral=true, revision=2}, originalSize=0, DataSize=0, target=192.168.117.1
+
+2025-11-17 15:30:42,602 INFO [PUSH-SUCC] 7ms, all delay time 571ms, SLA 571ms, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-user', ephemeral=true, revision=2}, originalSize=0, DataSize=0, target=192.168.117.1
+
+2025-11-17 15:30:42,602 INFO [PUSH-SUCC] 7ms, all delay time 571ms, SLA 571ms, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-user', ephemeral=true, revision=2}, originalSize=0, DataSize=0, target=192.168.117.1
+
+2025-11-17 15:31:13,273 INFO [PUSH-SUCC] 5ms, all delay time 554ms, SLA 554ms, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-user', ephemeral=true, revision=3}, originalSize=1, DataSize=1, target=192.168.117.1
+
+2025-11-17 15:31:13,304 INFO [PUSH-SUCC] 36ms, all delay time 585ms, SLA 585ms, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-user', ephemeral=true, revision=3}, originalSize=1, DataSize=1, target=192.168.117.1
+
+2025-11-17 15:31:13,304 INFO [PUSH-SUCC] 36ms, all delay time 585ms, SLA 585ms, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-user', ephemeral=true, revision=3}, originalSize=1, DataSize=1, target=192.168.117.1
+
+2025-11-17 15:32:01,023 INFO [PUSH-SUCC] 17ms, all delay time 591ms for subscriber 192.168.117.1, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-system', ephemeral=true, revision=1}, originalSize=1, DataSize=1
+
+2025-11-17 15:32:07,929 INFO [PUSH-SUCC] 0ms, all delay time 524ms for subscriber 192.168.117.1, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-system', ephemeral=true, revision=1}, originalSize=1, DataSize=1
+
+2025-11-17 15:50:15,166 INFO [PUSH-SUCC] 11ms, all delay time 1143ms for subscriber 192.168.117.1, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-ipc', ephemeral=true, revision=1}, originalSize=1, DataSize=1
+
+2025-11-17 15:53:17,469 INFO [PUSH-SUCC] 44ms, all delay time 604ms for subscriber 192.168.117.1, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-log', ephemeral=true, revision=0}, originalSize=0, DataSize=0
+
+2025-11-17 16:06:51,250 INFO [PUSH-SUCC] 4ms, all delay time 522ms, SLA 524ms, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-ipc', ephemeral=true, revision=2}, originalSize=0, DataSize=0, target=192.168.117.1
+
+2025-11-17 16:07:16,069 INFO [PUSH-SUCC] 5ms, all delay time 527ms, SLA 527ms, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-ipc', ephemeral=true, revision=3}, originalSize=1, DataSize=1, target=192.168.117.1
+
+2025-11-17 16:42:03,906 INFO [PUSH-SUCC] 6ms, all delay time 525ms, SLA 525ms, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-ipc', ephemeral=true, revision=4}, originalSize=0, DataSize=0, target=192.168.117.1
+
+2025-11-17 16:42:27,950 INFO [PUSH-SUCC] 5ms, all delay time 571ms, SLA 571ms, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-ipc', ephemeral=true, revision=5}, originalSize=1, DataSize=1, target=192.168.117.1
+
+2025-11-17 16:52:16,916 INFO [PUSH-SUCC] 4ms, all delay time 531ms, SLA 531ms, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-ipc', ephemeral=true, revision=6}, originalSize=0, DataSize=0, target=192.168.117.1
+
+2025-11-17 16:52:37,197 INFO [PUSH-SUCC] 4ms, all delay time 575ms, SLA 577ms, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-ipc', ephemeral=true, revision=7}, originalSize=1, DataSize=1, target=192.168.117.1
+
+2025-11-17 16:53:30,264 INFO [PUSH] Task merge for Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-gateway', ephemeral=true, revision=3}
+
+2025-11-17 16:53:30,821 INFO [PUSH-SUCC] 18ms, all delay time 618ms, SLA 618ms, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-gateway', ephemeral=true, revision=3}, originalSize=1, DataSize=1, target=192.168.117.1
+
+2025-11-17 16:53:30,824 INFO [PUSH-SUCC] 21ms, all delay time 560ms for subscriber 192.168.117.1, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-ipc', ephemeral=true, revision=7}, originalSize=1, DataSize=1
+
+2025-11-17 16:53:30,828 INFO [PUSH-SUCC] 26ms, all delay time 564ms for subscriber 192.168.117.1, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-user', ephemeral=true, revision=5}, originalSize=1, DataSize=1
+
+2025-11-17 16:53:30,830 INFO [PUSH-SUCC] 28ms, all delay time 566ms for subscriber 192.168.117.1, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-system', ephemeral=true, revision=2}, originalSize=0, DataSize=0
+
+2025-11-17 16:53:30,832 INFO [PUSH-SUCC] 27ms, all delay time 568ms for subscriber 192.168.117.1, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-develop', ephemeral=true, revision=3}, originalSize=1, DataSize=1
+
+2025-11-17 16:53:35,798 INFO [PUSH-SUCC] 4ms, all delay time 574ms, SLA 574ms, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-system', ephemeral=true, revision=3}, originalSize=1, DataSize=1, target=192.168.117.1
+
+2025-11-17 16:53:35,809 ERROR [PUSH-FAIL] 5003ms, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-auth', ephemeral=true, revision=3}, reason=Timeout After 5000 milliseconds,requestId =73, target=192.168.117.1
+
+2025-11-17 16:53:35,830 ERROR Reason detail: 
+
+java.util.concurrent.TimeoutException: Timeout After 5000 milliseconds,requestId =73
+	at com.alibaba.nacos.api.remote.DefaultRequestFuture$TimeoutHandler.run(DefaultRequestFuture.java:194)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+2025-11-17 16:53:36,846 INFO [PUSH-SUCC] 3ms, all delay time 1015ms for subscriber 192.168.117.1, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-auth', ephemeral=true, revision=3}, originalSize=1, DataSize=1
+
+2025-11-17 16:54:03,805 INFO [PUSH-SUCC] 13ms, all delay time 587ms for subscriber 192.168.117.1, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-user', ephemeral=true, revision=5}, originalSize=1, DataSize=1
+
+2025-11-17 16:54:04,963 INFO [PUSH-SUCC] 52ms, all delay time 638ms for subscriber 192.168.117.1, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-system', ephemeral=true, revision=3}, originalSize=1, DataSize=1
+
+2025-11-17 16:54:05,326 INFO [PUSH-SUCC] 3ms, all delay time 541ms for subscriber 192.168.117.1, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-log', ephemeral=true, revision=0}, originalSize=0, DataSize=0
+
+2025-11-17 16:54:20,616 INFO [PUSH-SUCC] 0ms, all delay time 540ms for subscriber 192.168.117.1, Service{namespace='public', group='DEFAULT_GROUP', name='idevelop-system', ephemeral=true, revision=3}, originalSize=1, DataSize=1
+

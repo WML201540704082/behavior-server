@@ -1,0 +1,28 @@
+#服务器端口
+server:
+  port: 18202
+
+#数据源配置
+spring:
+  #排除DruidDataSourceAutoConfigure
+  autoconfigure:
+    exclude: com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure
+  datasource:
+    dynamic:
+      #设置默认的数据源或者数据源组,默认值即为master
+      primary: master
+      datasource:
+        master:
+#          url: ${idevelop.datasource.demo.master.url}
+#          username: ${idevelop.datasource.demo.master.username}
+#          password: ${idevelop.datasource.demo.master.password}
+          url: jdbc:mysql://127.0.0.1:3306/idevelop?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&tinyInt1isBit=false&allowMultiQueries=true&serverTimezone=GMT%2B8
+          username: root
+          password: 1234
+        slave:
+#          url: ${idevelop.datasource.demo.slave.url}
+#          username: ${idevelop.datasource.demo.slave.username}
+#          password: ${idevelop.datasource.demo.slave.password}
+          url: jdbc:mysql://127.0.0.1:3306/idevelop?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&tinyInt1isBit=false&allowMultiQueries=true&serverTimezone=GMT%2B8
+          username: root
+          password: 1234

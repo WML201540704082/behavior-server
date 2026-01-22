@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.system.mapper.RemindMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="remindResultMap" type="com.lnsoft.system.entity.Remind">
+        <id column="id" property="id"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_time" property="createTime"/>
+        <result column="status" property="status"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="title" property="title"/>
+        <result column="remind" property="remind"/>
+    </resultMap>
+
+
+    <select id="selectRemindPage" resultMap="remindResultMap">
+        select * from idevelop_remind where is_deleted = 0 order by create_time DESC
+    </select>
+    <select id="getList" resultType="com.lnsoft.system.vo.RemindVO">
+        select * from idevelop_remind ir left join idevelop_remind_user iru on ir.id = iru.remind_id where iru.user_id = #{userId} and ir.id = #{id}
+    </select>
+
+</mapper>

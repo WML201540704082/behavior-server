@@ -1,0 +1,8 @@
+${AnsiColor.BRIGHT_CYAN} _      _   _  _____  ____  ______ _______
+${AnsiColor.BRIGHT_CYAN}| |    | \ | |/ ____|/ __ \|  ____|__   __|
+${AnsiColor.BRIGHT_CYAN}| |    |  \| | (___ | |  | | |__     | |
+${AnsiColor.BRIGHT_CYAN}| |    | . ` |\___ \| |  | |  __|    | |
+${AnsiColor.BRIGHT_CYAN}| |____| |\  |____) | |__| | |       | |
+${AnsiColor.BRIGHT_CYAN}|______|_| \_|_____/ \____/|_|       |_|
+
+${AnsiColor.BLUE}:: Idevelop :: ${spring.application.name}:${AnsiColor.RED}${idevelop.env}${AnsiColor.BLUE} :: Running SpringBoot ${spring-boot.version} :: ${AnsiColor.BRIGHT_BLACK}

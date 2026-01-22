@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.system.mapper.FeedbackMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="feedbackResultMap" type="com.lnsoft.system.entity.Feedback">
+        <id column="id" property="id"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="back_num" property="backNum"/>
+        <result column="back_detail" property="backDetail"/>
+        <result column="is_accept" property="isAccept"/>
+        <result column="dept" property="dept"/>
+        <result column="user_id" property="userId"/>
+        <result column="user_name" property="userName"/>
+        <result column="img" property="img"/>
+        <result column="remark" property="remark"/>
+        <result column="no_accept_detail" property="noAcceptDetail"/>
+        <result column="back_status" property="backStatus"/>
+    </resultMap>
+
+
+    <select id="selectFeedbackPage" resultMap="feedbackResultMap">
+        select * from idevelop_feedback where is_deleted = 0
+    </select>
+
+</mapper>
