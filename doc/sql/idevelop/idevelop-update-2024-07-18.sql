@@ -1,7 +1,0 @@
--- ---------------------------------------------------------------------------------------------------------------------
--- Date: 2024-07-15 已完成
--- SQL语句:
-UPDATE `idevelop`.`idevelop_menu` SET `parent_id` = 0, `code` = 'innovation', `name` = '信创设备管理', `alias` = 'menu', `path` = '/assets/itaiDevice', `source` = 'iconfont icon-caidan', `sort` = 3, `category` = 1, `action` = 1, `is_open` = 1, `remark` = '', `is_deleted` = 0, `keep_alive` = 1 WHERE `id` = 1813404898778652674;
-UPDATE `idevelop`.`idevelop_menu` SET `parent_id` = 0, `code` = 'desk', `name` = '工作台', `alias` = 'menu', `path` = '/desk', `source` = 'iconfont iconicon_airplay', `sort` = 1, `category` = 1, `action` = 0, `is_open` = 1, `remark` = '', `is_deleted` = 1, `keep_alive` = 1 WHERE `id` = 1123598815738675201;
-UPDATE `idevelop`.`idevelop_menu` SET `parent_id` = 0, `code` = 'assets', `name` = '台账管理', `alias` = 'menu', `path` = '/assets/devStandingBook', `source` = 'iconfont iconicon_compile', `sort` = 2, `category` = 1, `action` = 1, `is_open` = 1, `remark` = '', `is_deleted` = 0, `keep_alive` = 1 WHERE `id` = 1759825352884785153;
-UPDATE `idevelop`.`idevelop_menu` SET `parent_id` = 0, `code` = 'desk2', `name` = '个人工作台1', `alias` = 'desk2', `path` = '/personalDesk/desk2', `source` = 'iconfont iconicon_work', `sort` = 0, `category` = 1, `action` = 2, `is_open` = 1, `remark` = '', `is_deleted` = 0, `keep_alive` = 1 WHERE `id` = 1813517008821002242;
