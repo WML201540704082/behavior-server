@@ -1,0 +1,9 @@
+com/lnsoft/system/cache/DataScopeCache.class
+META-INF/spring.factories
+com/lnsoft/system/feign/IDataScopeClient.class
+META-INF/spring-autoconfigure-metadata.properties
+META-INF/spring-devtools.properties
+com/lnsoft/system/handler/DataScopeModelHandler.class
+com/lnsoft/system/feign/IDataScopeClientFallback.class
+com/lnsoft/system/config/ScopeConfiguration.class
+META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports

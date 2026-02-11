@@ -1,0 +1,12 @@
+com/lnsoft/system/user/entity/User.class
+META-INF/spring.factories
+com/lnsoft/system/user/entity/UserDTO$UserDTOBuilder.class
+com/lnsoft/system/user/entity/UserInfo.class
+com/lnsoft/system/user/vo/UserVO.class
+com/lnsoft/system/user/feign/IUserClient.class
+com/lnsoft/system/user/feign/IUserClientFallback.class
+com/lnsoft/system/user/vo/BpmUserVO.class
+com/lnsoft/system/user/entity/UserDTO.class
+com/lnsoft/system/user/entity/UserOauth.class
+META-INF/spring-devtools.properties
+META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports

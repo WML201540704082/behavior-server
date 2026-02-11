@@ -1,7 +1,9 @@
 package com.lnsoft.ipc.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.lnsoft.core.tool.constant.IdevelopConstant;
 import com.lnsoft.core.tool.utils.ObjectUtil;
+import com.lnsoft.ipc.dto.IpcTerminalMonitoringDTO;
 import com.lnsoft.ipc.dto.IpcUserDTO;
 import com.lnsoft.ipc.entity.IpcUserTime;
 import com.lnsoft.ipc.service.IIpcUserTimeService;
@@ -27,6 +29,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * 工控机管控--用户表 控制器
@@ -75,7 +79,21 @@ public class IpcUserController extends IdevelopController {
 		}
 		return R.data(pages);
 	}
-
+	@GetMapping("/dictList")
+	public R<List<String>> dictList(){
+		List<IpcUser> list = ipcUserService.list(new LambdaQueryWrapper<IpcUser>().eq(IpcUser::getIsDeleted, IdevelopConstant.DB_NOT_DELETED));
+		List<IpcUser> uniqueUsers = list.stream()
+			.collect(Collectors.toMap(
+				IpcUser::getName,
+				Function.identity(),
+				(u1, u2) -> u1 // 保留第一个
+			))
+			.values()
+			.stream()
+			.collect(Collectors.toList());
+		List<String> collect = list.stream().map(IpcUser::getName).collect(Collectors.toList());
+		return R.data(collect);
+	}
 
 	/**
 	 * 新增 工控机管控--用户表
@@ -131,8 +149,8 @@ public class IpcUserController extends IdevelopController {
 	@GetMapping("/userRank")
 	@ApiOperationSupport(order = 7)
 	@ApiOperation(value = "用户使用时间排名", notes = "")
-	public R<List<IpcUserVO>> userRank(IpcUserDTO ipcUserDTO) throws IOException {
-		return ipcUserService.userRank(ipcUserDTO);
+	public R<List<IpcUserVO>> userRank(IpcTerminalMonitoringDTO ipcTerminalMonitoringDTO) throws IOException {
+		return ipcUserService.userRank(ipcTerminalMonitoringDTO);
 	}
 
 }

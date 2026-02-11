@@ -1,0 +1,6 @@
+com/lnsoft/seata/storage/service/impl/StorageServiceImpl.class
+com/lnsoft/seata/storage/SeataStorageApplication.class
+com/lnsoft/seata/storage/entity/Storage.class
+com/lnsoft/seata/storage/controller/StorageController.class
+com/lnsoft/seata/storage/mapper/StorageMapper.class
+com/lnsoft/seata/storage/service/IStorageService.class

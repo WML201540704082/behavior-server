@@ -1,0 +1,7 @@
+com/lnsoft/devicelop/feign/IDatasourceClientFallback$1.class
+com/lnsoft/devicelop/feign/IDatasourceClientFallback.class
+META-INF/spring.factories
+com/lnsoft/devicelop/feign/IDatasourceClient.class
+META-INF/spring-devtools.properties
+com/lnsoft/devicelop/entity/DatasourceLop.class
+META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports

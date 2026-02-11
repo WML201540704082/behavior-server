@@ -1,0 +1,5 @@
+/Users/wangminglei/Desktop/behavior-server/idevelop-service-api/idevelop-scope-api/src/main/java/com/lnsoft/system/config/ScopeConfiguration.java
+/Users/wangminglei/Desktop/behavior-server/idevelop-service-api/idevelop-scope-api/src/main/java/com/lnsoft/system/handler/DataScopeModelHandler.java
+/Users/wangminglei/Desktop/behavior-server/idevelop-service-api/idevelop-scope-api/src/main/java/com/lnsoft/system/feign/IDataScopeClient.java
+/Users/wangminglei/Desktop/behavior-server/idevelop-service-api/idevelop-scope-api/src/main/java/com/lnsoft/system/cache/DataScopeCache.java
+/Users/wangminglei/Desktop/behavior-server/idevelop-service-api/idevelop-scope-api/src/main/java/com/lnsoft/system/feign/IDataScopeClientFallback.java

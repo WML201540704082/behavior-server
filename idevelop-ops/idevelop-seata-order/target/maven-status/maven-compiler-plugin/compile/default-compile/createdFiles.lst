@@ -1,0 +1,8 @@
+com/lnsoft/seata/order/mapper/OrderMapper.class
+com/lnsoft/seata/order/service/impl/OrderServiceImpl.class
+com/lnsoft/seata/order/SeataOrderApplication.class
+com/lnsoft/seata/order/controller/OrderController.class
+com/lnsoft/seata/order/feign/IStorageClient.class
+com/lnsoft/seata/order/feign/StorageClientFallback.class
+com/lnsoft/seata/order/entity/Order.class
+com/lnsoft/seata/order/service/IOrderService.class

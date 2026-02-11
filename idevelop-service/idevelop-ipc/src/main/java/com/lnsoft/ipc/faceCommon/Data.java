@@ -17,4 +17,9 @@ public class Data {
 	private List<FaceLog> logList;
 	@JsonProperty("timeList")
 	private List<FaceOnOffTime> timeList;
+	@JsonProperty("networkDataList")
+	private List<networkData> networkDataList;
+
+
+
 }

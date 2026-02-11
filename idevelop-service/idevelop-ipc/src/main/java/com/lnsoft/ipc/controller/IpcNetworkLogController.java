@@ -1,5 +1,6 @@
 package com.lnsoft.ipc.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.lnsoft.ipc.dto.IpcNetworkLogDTO;
 import com.lnsoft.ipc.vo.RankVO;
 import io.swagger.annotations.Api;
@@ -55,7 +56,9 @@ public class IpcNetworkLogController extends IdevelopController {
 	@ApiOperationSupport(order = 2)
 	@ApiOperation(value = "分页（主数据源）", notes = "传入ipcNetworkLog")
 	public R<IPage<IpcNetworkLog>> list(IpcNetworkLog ipcNetworkLog, Query query) {
-		IPage<IpcNetworkLog> pages = ipcNetworkLogService.page(Condition.getPage(query), Condition.getQueryWrapper(ipcNetworkLog));
+		QueryWrapper<IpcNetworkLog> queryWrapper = Condition.getQueryWrapper(ipcNetworkLog);
+		queryWrapper.orderByDesc("access_length");
+		IPage<IpcNetworkLog> pages = ipcNetworkLogService.page(Condition.getPage(query), queryWrapper);
 		return R.data(pages);
 	}
 	/**

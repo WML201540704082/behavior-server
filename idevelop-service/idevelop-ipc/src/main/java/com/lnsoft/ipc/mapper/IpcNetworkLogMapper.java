@@ -62,7 +62,7 @@ public interface IpcNetworkLogMapper extends BaseMapper<IpcNetworkLog> {
 	 * 查询所有数据
 	 * @return
 	 */
-    List<IpcNetworkLog> slaveListAll();
+    List<IpcNetworkLog> slaveListAll(List<String> ipList);
 
 	List<RankVO> countRank(IpcNetworkLogDTO ipcNetworkLogDTO);
 

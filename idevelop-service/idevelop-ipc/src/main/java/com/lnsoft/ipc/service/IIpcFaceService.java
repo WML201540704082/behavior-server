@@ -47,4 +47,12 @@ public interface IIpcFaceService {
 	 * @return
 	 */
 	Response uploadTimeList(UserRequest userRequest, HttpServletRequest request);
+
+	/**
+	 * 上传网络访问日志
+	 * @param userRequest
+	 * @param request
+	 * @return
+	 */
+	Response uploadNetwork(UserRequest userRequest, HttpServletRequest request);
 }

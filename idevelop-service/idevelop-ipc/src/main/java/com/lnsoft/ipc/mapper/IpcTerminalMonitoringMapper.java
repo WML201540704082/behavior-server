@@ -57,4 +57,11 @@ public interface IpcTerminalMonitoringMapper extends BaseMapper<IpcTerminalMonit
 	 * @return
 	 */
 	List<IpcUser> getUserByIp(String ip);
+
+	/**
+	 * 获取开关机时间列表
+	 * @param ipcTerminalMonitoringDTO
+	 * @return
+	 */
+	List<IpcTerminalMonitoringVO> getOfUser(IpcTerminalMonitoringDTO ipcTerminalMonitoringDTO);
 }

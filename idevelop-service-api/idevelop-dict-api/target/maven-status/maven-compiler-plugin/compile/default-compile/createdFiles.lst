@@ -1,0 +1,8 @@
+com/lnsoft/system/feign/IDictClient.class
+META-INF/spring.factories
+com/lnsoft/system/entity/Dict.class
+META-INF/spring-devtools.properties
+com/lnsoft/system/feign/IDictClientFallback.class
+com/lnsoft/system/dto/DictDTO.class
+META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports
+com/lnsoft/system/vo/DictVO.class

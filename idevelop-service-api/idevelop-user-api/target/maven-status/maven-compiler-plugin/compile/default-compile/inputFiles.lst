@@ -1,0 +1,8 @@
+/Users/wangminglei/Desktop/behavior-server/idevelop-service-api/idevelop-user-api/src/main/java/com/lnsoft/system/user/feign/IUserClient.java
+/Users/wangminglei/Desktop/behavior-server/idevelop-service-api/idevelop-user-api/src/main/java/com/lnsoft/system/user/vo/UserVO.java
+/Users/wangminglei/Desktop/behavior-server/idevelop-service-api/idevelop-user-api/src/main/java/com/lnsoft/system/user/vo/BpmUserVO.java
+/Users/wangminglei/Desktop/behavior-server/idevelop-service-api/idevelop-user-api/src/main/java/com/lnsoft/system/user/entity/UserOauth.java
+/Users/wangminglei/Desktop/behavior-server/idevelop-service-api/idevelop-user-api/src/main/java/com/lnsoft/system/user/entity/UserInfo.java
+/Users/wangminglei/Desktop/behavior-server/idevelop-service-api/idevelop-user-api/src/main/java/com/lnsoft/system/user/entity/User.java
+/Users/wangminglei/Desktop/behavior-server/idevelop-service-api/idevelop-user-api/src/main/java/com/lnsoft/system/user/feign/IUserClientFallback.java
+/Users/wangminglei/Desktop/behavior-server/idevelop-service-api/idevelop-user-api/src/main/java/com/lnsoft/system/user/entity/UserDTO.java

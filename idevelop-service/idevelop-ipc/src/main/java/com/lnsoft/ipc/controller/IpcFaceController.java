@@ -135,4 +135,9 @@ public class IpcFaceController {
 		Response response = iIpcFaceService.uploadTimeList(userRequest,request);
 		return response;
 	}
+	@PostMapping("/uploadNetworkData")
+	public Response uploadNetwork(@RequestBody UserRequest userRequest, HttpServletRequest request){
+		Response response  = iIpcFaceService.uploadNetwork(userRequest,request);
+		return response;
+	}
 }

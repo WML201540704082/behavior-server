@@ -1,0 +1,16 @@
+/Users/wangminglei/Desktop/behavior-server/idevelop-auth/src/main/java/com/lnsoft/auth/granter/NoPasswordTokenGranter.java
+/Users/wangminglei/Desktop/behavior-server/idevelop-auth/src/main/java/com/lnsoft/auth/controller/TestController.java
+/Users/wangminglei/Desktop/behavior-server/idevelop-auth/src/main/java/com/lnsoft/auth/granter/TokenParameter.java
+/Users/wangminglei/Desktop/behavior-server/idevelop-auth/src/main/java/com/lnsoft/auth/granter/PasswordTokenGranter.java
+/Users/wangminglei/Desktop/behavior-server/idevelop-auth/src/main/java/com/lnsoft/auth/utils/TokenUtil.java
+/Users/wangminglei/Desktop/behavior-server/idevelop-auth/src/main/java/com/lnsoft/auth/granter/TokenGranterBuilder.java
+/Users/wangminglei/Desktop/behavior-server/idevelop-auth/src/main/java/com/lnsoft/auth/granter/ITokenGranter.java
+/Users/wangminglei/Desktop/behavior-server/idevelop-auth/src/main/java/com/lnsoft/auth/granter/RefreshTokenGranter.java
+/Users/wangminglei/Desktop/behavior-server/idevelop-auth/src/main/java/com/lnsoft/auth/controller/IscController.java
+/Users/wangminglei/Desktop/behavior-server/idevelop-auth/src/main/java/com/lnsoft/auth/granter/CaptchaTokenGranter.java
+/Users/wangminglei/Desktop/behavior-server/idevelop-auth/src/main/java/com/lnsoft/auth/controller/SocialController.java
+/Users/wangminglei/Desktop/behavior-server/idevelop-auth/src/main/java/com/lnsoft/auth/granter/SocialTokenGranter.java
+/Users/wangminglei/Desktop/behavior-server/idevelop-auth/src/main/java/com/lnsoft/auth/domain/LoginParam.java
+/Users/wangminglei/Desktop/behavior-server/idevelop-auth/src/main/java/com/lnsoft/auth/enums/IdevelopUserEnum.java
+/Users/wangminglei/Desktop/behavior-server/idevelop-auth/src/main/java/com/lnsoft/auth/AuthApplication.java
+/Users/wangminglei/Desktop/behavior-server/idevelop-auth/src/main/java/com/lnsoft/auth/controller/AuthController.java

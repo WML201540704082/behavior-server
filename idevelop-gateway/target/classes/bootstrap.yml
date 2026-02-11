@@ -3,6 +3,9 @@ server:
 
 spring:
   cloud:
+    nacos:
+      discovery:
+        ip: 127.0.0.1
     gateway:
       discovery:
         locator:

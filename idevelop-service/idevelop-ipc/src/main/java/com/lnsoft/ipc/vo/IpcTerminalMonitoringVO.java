@@ -32,4 +32,6 @@ import io.swagger.annotations.ApiModel;
 public class IpcTerminalMonitoringVO extends IpcTerminalMonitoring {
 	private static final long serialVersionUID = 1L;
 	private String dept;
+	private Integer totalUseMinutes;
+	private String name;
 }

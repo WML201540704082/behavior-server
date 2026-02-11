@@ -1,0 +1,5 @@
+com/lnsoft/ipc/demo/vo/NoticeVO.class
+META-INF/spring.factories
+META-INF/spring-devtools.properties
+com/lnsoft/ipc/demo/feign/INoticeClient.class
+com/lnsoft/ipc/demo/entity/Notice.class

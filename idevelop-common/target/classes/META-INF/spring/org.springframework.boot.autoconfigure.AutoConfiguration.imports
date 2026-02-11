@@ -1,4 +1,4 @@
-com.lnsoft.common.config.IdevelopCommonConfiguration
-com.lnsoft.common.msg.configure.ConfigProperties
 com.lnsoft.common.config.WebConfig
 com.lnsoft.common.msg.service.MessageSendService
+com.lnsoft.common.msg.configure.ConfigProperties
+com.lnsoft.common.config.IdevelopCommonConfiguration

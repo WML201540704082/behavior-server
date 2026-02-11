@@ -15,10 +15,13 @@
  */
 package com.lnsoft.ipc.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.lnsoft.core.mp.base.BaseEntity;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import io.swagger.annotations.ApiModel;
@@ -93,6 +96,7 @@ public class IpcNetworkLog extends BaseEntity {
      */
     @ApiModelProperty(value = "活动时长")
     private Integer activityLength;
-
+	@TableField(exist = false)
+	private List<String> ips;
 
 }

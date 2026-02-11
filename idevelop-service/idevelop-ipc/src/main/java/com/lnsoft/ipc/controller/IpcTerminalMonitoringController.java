@@ -5,8 +5,10 @@ import com.lnsoft.core.tool.constant.IdevelopConstant;
 import com.lnsoft.core.tool.utils.CollectionUtil;
 import com.lnsoft.core.tool.utils.StringUtil;
 import com.lnsoft.ipc.dto.IpcTerminalMonitoringDTO;
+import com.lnsoft.ipc.entity.IpcTerminalMonitoringBak;
 import com.lnsoft.ipc.entity.IpcUser;
 import com.lnsoft.ipc.service.IIpcUserService;
+import com.lnsoft.ipc.service.IpcTerminalMonitoringBakService;
 import com.lnsoft.ipc.vo.RankVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -48,14 +50,16 @@ public class IpcTerminalMonitoringController extends IdevelopController {
 
 	private IIpcUserService iIpcUserService;
 
+	private IpcTerminalMonitoringBakService ipcTerminalMonitoringBakService;
+
 	/**
 	 * 详情
 	 */
 	@GetMapping("/detail")
 	@ApiOperationSupport(order = 1)
 	@ApiOperation(value = "详情", notes = "传入ipcTerminalMonitoring")
-	public R<IpcTerminalMonitoring> detail(IpcTerminalMonitoring ipcTerminalMonitoring) {
-		IpcTerminalMonitoring detail = ipcTerminalMonitoringService.getOne(Condition.getQueryWrapper(ipcTerminalMonitoring));
+	public R<IpcTerminalMonitoringBak> detail(IpcTerminalMonitoringBak ipcTerminalMonitoring) {
+		IpcTerminalMonitoringBak detail = ipcTerminalMonitoringBakService.getOne(Condition.getQueryWrapper(ipcTerminalMonitoring));
 		return R.data(detail);
 	}
 
@@ -65,14 +69,14 @@ public class IpcTerminalMonitoringController extends IdevelopController {
 	@GetMapping("/list")
 	@ApiOperationSupport(order = 2)
 	@ApiOperation(value = "分页", notes = "传入ipcTerminalMonitoring")
-	public R<IPage<IpcTerminalMonitoring>> list(IpcTerminalMonitoring ipcTerminalMonitoring, Query query) {
-		LambdaQueryWrapper<IpcTerminalMonitoring> queryWrapper = new LambdaQueryWrapper<>();
-		queryWrapper.like(StringUtils.isNotBlank(ipcTerminalMonitoring.getIp()),IpcTerminalMonitoring::getIp,ipcTerminalMonitoring.getIp())
-			.like(StringUtils.isNotBlank(ipcTerminalMonitoring.getUserName()),IpcTerminalMonitoring::getUserName,ipcTerminalMonitoring.getUserName())
-			.orderByDesc(IpcTerminalMonitoring::getOpenTime);
-		IPage<IpcTerminalMonitoring> pages = ipcTerminalMonitoringService.page(Condition.getPage(query), queryWrapper);
-		List<IpcTerminalMonitoring> records = pages.getRecords();
-		for (IpcTerminalMonitoring record : records) {
+	public R<IPage<IpcTerminalMonitoringBak>> list(IpcTerminalMonitoringBak ipcTerminalMonitoring, Query query) {
+		LambdaQueryWrapper<IpcTerminalMonitoringBak> queryWrapper = new LambdaQueryWrapper<>();
+		queryWrapper.like(StringUtils.isNotBlank(ipcTerminalMonitoring.getIp()),IpcTerminalMonitoringBak::getIp,ipcTerminalMonitoring.getIp())
+			.like(StringUtils.isNotBlank(ipcTerminalMonitoring.getUserName()),IpcTerminalMonitoringBak::getUserName,ipcTerminalMonitoring.getUserName())
+			.orderByDesc(IpcTerminalMonitoringBak::getOpenTime);
+		IPage<IpcTerminalMonitoringBak> pages = ipcTerminalMonitoringBakService.page(Condition.getPage(query), queryWrapper);
+		List<IpcTerminalMonitoringBak> records = pages.getRecords();
+		for (IpcTerminalMonitoringBak record : records) {
 			String ip = record.getIp();
 			LambdaQueryWrapper<IpcUser> wrapper = new LambdaQueryWrapper<>();
 			wrapper.eq(IpcUser::getUserType,"管理员").eq(IpcUser::getTerminal,ip).eq(IpcUser::getIsDeleted, IdevelopConstant.DB_NOT_DELETED);

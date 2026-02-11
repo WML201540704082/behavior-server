@@ -1,0 +1,29 @@
+# IDEA 编辑器相关（编译/缓存/配置）
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+target/
+classes/
+resources/_generated/
+
+# Maven/Gradle 编译产物
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# 系统/缓存文件
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+*.bak
+*.swp
+*.swo

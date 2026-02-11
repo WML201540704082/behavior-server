@@ -13,7 +13,7 @@ public class IpcFilterConfig {
     public FilterRegistrationBean<IpcDataCryptoFilter> ipcCryptoFilterRegistration() {
         FilterRegistrationBean<IpcDataCryptoFilter> registrationBean = new FilterRegistrationBean<>();
         registrationBean.setFilter(new IpcDataCryptoFilter());
-        registrationBean.addUrlPatterns("/*"); // 拦截ipc-service所有请求
+        registrationBean.addUrlPatterns("/face/*"); // 拦截ipc-service所有请求
         registrationBean.setOrder(Ordered.HIGHEST_PRECEDENCE); // 确保优先级最高，避免流被提前读取
         registrationBean.setName("ipcDataCryptoFilter");
         return registrationBean;

@@ -16,6 +16,7 @@
 package com.lnsoft.ipc.service;
 
 import com.lnsoft.core.tool.api.R;
+import com.lnsoft.ipc.dto.IpcTerminalMonitoringDTO;
 import com.lnsoft.ipc.dto.IpcUserDTO;
 import com.lnsoft.ipc.entity.IpcUser;
 import com.lnsoft.ipc.vo.IpcUserVO;
@@ -73,9 +74,8 @@ public interface IIpcUserService extends BaseService<IpcUser> {
 
 	/**
 	 * 用户使用时间排名
-	 * @param ipcUserDTO
 	 * @return
 	 */
-	R<List<IpcUserVO>> userRank(IpcUserDTO ipcUserDTO);
+	R<List<IpcUserVO>> userRank(IpcTerminalMonitoringDTO ipcTerminalMonitoringDTO);
 
 }

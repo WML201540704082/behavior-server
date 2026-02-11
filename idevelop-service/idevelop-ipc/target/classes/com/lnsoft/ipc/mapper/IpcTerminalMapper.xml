@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.ipc.mapper.IpcTerminalMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="ipcTerminalResultMap" type="com.lnsoft.ipc.entity.IpcTerminal">
+        <id column="id" property="id"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="status" property="status"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="ip" property="ip"/>
+        <result column="mac" property="mac"/>
+        <result column="gateway" property="gateway"/>
+    </resultMap>
+
+
+    <select id="selectIpcTerminalPage" resultMap="ipcTerminalResultMap">
+        select * from ipc_terminal where is_deleted = 0
+    </select>
+    <select id="terminalRank" resultType="com.lnsoft.ipc.vo.IpcTerminalVO">
+        SELECT
+            ip,
+            -- 汇总在线时长（统一转为分钟，优先用online_length，为空则计算开机到关机的分钟数）
+            SUM(
+                CASE
+                    -- 若online_length非空且有效，直接按分钟统计（假设原字段可能为秒/小时，此处按“原字段单位为秒”转换，若原单位是分钟则去掉/60）
+                    WHEN online_length IS NOT NULL AND online_length > 0 THEN CEIL(online_length / 60) -- 秒转分钟（向上取整，避免丢失精度）
+                -- 若online_length为空，通过开机/关机时间计算分钟数
+                    WHEN open_time IS NOT NULL AND showdown_time IS NOT NULL AND showdown_time > open_time
+                        THEN TIMESTAMPDIFF(MINUTE, open_time, showdown_time)
+                    ELSE 0
+                    END
+                ) AS timeLength
+        FROM
+            ipc_terminal_monitoring
+        WHERE
+            is_deleted = 0
+          AND ip IS NOT NULL AND ip != ''
+          AND showdown_time between #{startTime} and #{endTime}
+        GROUP BY
+            ip -- 按终端IP分组
+        ORDER BY
+            timeLength DESC, ip ASC;
+    </select>
+
+</mapper>

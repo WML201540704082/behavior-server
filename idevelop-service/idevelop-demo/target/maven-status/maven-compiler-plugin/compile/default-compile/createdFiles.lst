@@ -1,0 +1,13 @@
+com/lnsoft/ipc/demo/service/impl/NoticeServiceImpl.class
+com/lnsoft/ipc/demo/controller/DynamicController.class
+com/lnsoft/ipc/demo/service/INoticeService.class
+com/lnsoft/ipc/demo/service/IDynamicService.class
+com/lnsoft/ipc/demo/config/DemoConfiguration.class
+com/lnsoft/ipc/demo/service/impl/DynamicServiceImpl.class
+com/lnsoft/ipc/demo/launcher/DemoLauncherServiceImpl.class
+com/lnsoft/ipc/demo/props/DemoProperties.class
+com/lnsoft/ipc/demo/DemoApplication.class
+com/lnsoft/ipc/demo/controller/DemoController.class
+com/lnsoft/ipc/demo/controller/NoticeController.class
+com/lnsoft/ipc/demo/feign/NoticeClient.class
+com/lnsoft/ipc/demo/mapper/NoticeMapper.class

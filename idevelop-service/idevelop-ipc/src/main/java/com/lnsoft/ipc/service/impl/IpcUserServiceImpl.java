@@ -15,18 +15,24 @@
  */
 package com.lnsoft.ipc.service.impl;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.lnsoft.core.tool.api.R;
 import com.lnsoft.core.tool.utils.ObjectUtil;
+import com.lnsoft.ipc.dto.IpcTerminalMonitoringDTO;
 import com.lnsoft.ipc.dto.IpcUserDTO;
 import com.lnsoft.ipc.entity.IpcUser;
 import com.lnsoft.ipc.entity.IpcUserTime;
 import com.lnsoft.ipc.mapper.IpcFaceLoginLogMapper;
+import com.lnsoft.ipc.mapper.IpcTerminalMonitoringMapper;
 import com.lnsoft.ipc.mapper.IpcUserTimeMapper;
+import com.lnsoft.ipc.vo.IpcTerminalMonitoringVO;
 import com.lnsoft.ipc.vo.IpcUserVO;
 import com.lnsoft.ipc.mapper.IpcUserMapper;
 import com.lnsoft.ipc.service.IIpcUserService;
 import com.lnsoft.core.mp.base.BaseServiceImpl;
+import com.lnsoft.ipc.vo.RankVO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -36,8 +42,8 @@ import javax.annotation.Resource;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Base64;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * 工控机管控--用户表 服务实现类
@@ -46,11 +52,14 @@ import java.util.List;
  * @since 2025-11-17
  */
 @Service
+@Slf4j
 public class IpcUserServiceImpl extends BaseServiceImpl<IpcUserMapper, IpcUser> implements IIpcUserService {
 	@Resource
 	private IpcUserTimeMapper ipcUserTimeMapper;
 	@Resource
 	private IpcFaceLoginLogMapper ipcFaceLoginLogMapper;
+	@Resource
+	private IpcTerminalMonitoringMapper ipcTerminalMonitoringMapper;
 
 	@Override
 	public IPage<IpcUserVO> selectIpcUserPage(IPage<IpcUserVO> page, IpcUserVO ipcUser) {
@@ -126,19 +135,63 @@ public class IpcUserServiceImpl extends BaseServiceImpl<IpcUserMapper, IpcUser> 
 		ipcUser.setIsSync("1");
 		baseMapper.updateById(ipcUser);
 		List<IpcUserTime> timeList = ipcUser.getTimeList();
-		for (IpcUserTime ipcUserTime : timeList) {
-			ipcUserTime.setIsSync("1");
-			ipcUserTime.setIsDeleted(1);
-			ipcUserTimeMapper.updateById(ipcUserTime);
+		if (CollectionUtil.isNotEmpty(timeList)){
+			for (IpcUserTime ipcUserTime : timeList) {
+				ipcUserTime.setIsSync("1");
+				ipcUserTime.setIsDeleted(1);
+				ipcUserTimeMapper.updateById(ipcUserTime);
+			}
 		}
 		baseMapper.deleteById(ipcUser);
 		return R.success("删除成功");
 	}
 
 	@Override
-	public R<List<IpcUserVO>> userRank(IpcUserDTO ipcUserDTO) {
-		List<IpcUserVO> list = ipcFaceLoginLogMapper.userRank(ipcUserDTO);
-		return R.data(list);
+	public R<List<IpcUserVO>> userRank(IpcTerminalMonitoringDTO ipcTerminalMonitoringDTO) {
+		List<IpcTerminalMonitoringVO> terminalMonitoringVOS = ipcTerminalMonitoringMapper.getOfUser(ipcTerminalMonitoringDTO);
+		for (IpcTerminalMonitoringVO monitoringVO : terminalMonitoringVOS) {
+			String ip = monitoringVO.getIp();
+			//根据ip
+			List<IpcUser> list = ipcTerminalMonitoringMapper.getUserByIp(ip);
+			if (CollectionUtil.isEmpty(list)){
+				//为空则为对应不上用户表
+				log.info("用户排名接口，根据终端ip查询用户信息为空："+ip);
+				continue;
+			}else {
+//				String name = list.get(0).getName();
+//				monitoringVO.setName(name);
+				for (IpcUser ipcUser : list) {
+					if ("管理员".equals(ipcUser.getUserType())){
+						monitoringVO.setName(ipcUser.getName());
+						break;
+					}
+				}
+			}
+		}
+		Map<String, Long> groupSumResult = terminalMonitoringVOS.stream().filter(vo -> vo.getName() != null) // 过滤null
+			// 分组：key=orderType，value=每组的Order列表
+			.collect(Collectors.groupingBy(
+				IpcTerminalMonitoringVO::getName,  // 分组字段（Function）
+				// 下游收集器：对每组的amount求和
+				Collectors.summingLong(IpcTerminalMonitoringVO::getOnlineLength)
+			));
+		List<IpcUserVO> ipcUserVOS = new ArrayList<>();
+		groupSumResult.forEach((name,len)->{
+			IpcUserVO userVO = new IpcUserVO();
+			userVO.setTotalUseMinutes(len);
+			userVO.setName(name);
+			ipcUserVOS.add(userVO);
+		});
+		for (IpcUserVO userVO : ipcUserVOS) {
+			Long len = userVO.getTotalUseMinutes();
+			if (len >0){
+				long l = len / 60;
+				userVO.setTotalUseMinutes(l);
+			}
+		}
+		List<IpcUserVO> collect = ipcUserVOS.stream().sorted(Comparator.comparing(IpcUserVO::getTotalUseMinutes).reversed()).collect(Collectors.toList());
+//		List<IpcUserVO> list = ipcFaceLoginLogMapper.userRank(ipcUserDTO);
+		return R.data(collect);
 	}
 
 }

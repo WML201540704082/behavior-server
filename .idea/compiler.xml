@@ -2,6 +2,7 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
@@ -10,7 +11,6 @@
         <module name="idevelop-seata-order" />
         <module name="idevelop-resource" />
         <module name="idevelop-dict-api" />
-        <module name="idevelop-user" />
         <module name="idevelop-log" />
         <module name="idevelop-demo-api" />
         <module name="idevelop-admin" />
@@ -23,6 +23,7 @@
         <module name="idevelop-report" />
         <module name="idevelop-seata-storage" />
         <module name="idevelop-auth" />
+        <module name="idevelop-user" />
         <module name="idevelop-develop-api" />
         <module name="idevelop-swagger" />
         <module name="idevelop-scope-api" />

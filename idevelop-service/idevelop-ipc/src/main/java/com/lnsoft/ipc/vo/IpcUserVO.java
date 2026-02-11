@@ -31,5 +31,5 @@ import io.swagger.annotations.ApiModel;
 @ApiModel(value = "IpcUserVO对象", description = "工控机管控--用户表")
 public class IpcUserVO extends IpcUser {
 	private static final long serialVersionUID = 1L;
-	private Integer totalUseMinutes;
+	private Long totalUseMinutes;
 }

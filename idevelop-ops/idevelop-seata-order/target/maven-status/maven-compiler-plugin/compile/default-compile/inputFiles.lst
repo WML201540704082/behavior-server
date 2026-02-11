@@ -1,0 +1,8 @@
+/Users/wangminglei/Desktop/behavior-server/idevelop-ops/idevelop-seata-order/src/main/java/com/lnsoft/seata/order/feign/IStorageClient.java
+/Users/wangminglei/Desktop/behavior-server/idevelop-ops/idevelop-seata-order/src/main/java/com/lnsoft/seata/order/service/IOrderService.java
+/Users/wangminglei/Desktop/behavior-server/idevelop-ops/idevelop-seata-order/src/main/java/com/lnsoft/seata/order/feign/StorageClientFallback.java
+/Users/wangminglei/Desktop/behavior-server/idevelop-ops/idevelop-seata-order/src/main/java/com/lnsoft/seata/order/controller/OrderController.java
+/Users/wangminglei/Desktop/behavior-server/idevelop-ops/idevelop-seata-order/src/main/java/com/lnsoft/seata/order/service/impl/OrderServiceImpl.java
+/Users/wangminglei/Desktop/behavior-server/idevelop-ops/idevelop-seata-order/src/main/java/com/lnsoft/seata/order/mapper/OrderMapper.java
+/Users/wangminglei/Desktop/behavior-server/idevelop-ops/idevelop-seata-order/src/main/java/com/lnsoft/seata/order/SeataOrderApplication.java
+/Users/wangminglei/Desktop/behavior-server/idevelop-ops/idevelop-seata-order/src/main/java/com/lnsoft/seata/order/entity/Order.java

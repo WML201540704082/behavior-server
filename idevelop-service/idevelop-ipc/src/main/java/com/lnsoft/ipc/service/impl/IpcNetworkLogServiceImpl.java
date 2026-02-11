@@ -19,12 +19,17 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lnsoft.core.mp.support.Query;
+import com.lnsoft.core.tool.constant.IdevelopConstant;
 import com.lnsoft.core.tool.utils.ObjectUtil;
 import com.lnsoft.core.tool.utils.StringUtil;
 import com.lnsoft.ipc.dto.IpcNetworkLogDTO;
 import com.lnsoft.ipc.entity.IpcBusinessSystem;
 import com.lnsoft.ipc.entity.IpcNetworkLog;
+import com.lnsoft.ipc.entity.IpcUser;
 import com.lnsoft.ipc.mapper.IpcBusinessSystemMapper;
+import com.lnsoft.ipc.mapper.IpcTerminalMapper;
+import com.lnsoft.ipc.mapper.IpcUserMapper;
+import com.lnsoft.ipc.service.IIpcUserService;
 import com.lnsoft.ipc.vo.IpcNetworkLogVO;
 import com.lnsoft.ipc.mapper.IpcNetworkLogMapper;
 import com.lnsoft.ipc.service.IIpcNetworkLogService;
@@ -38,8 +43,10 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * 工控机管控-网络访问记录表 服务实现类
@@ -52,6 +59,10 @@ import java.util.Objects;
 public class IpcNetworkLogServiceImpl extends BaseServiceImpl<IpcNetworkLogMapper, IpcNetworkLog> implements IIpcNetworkLogService {
 	@Resource
 	IpcBusinessSystemMapper ipcBusinessSystemMapper;
+	@Resource
+	IpcUserMapper ipcUserMapper;
+	@Resource
+	IIpcUserService ipcUserService;
 
 	@Override
 	public IPage<IpcNetworkLogVO> selectIpcNetworkLogPage(IPage<IpcNetworkLogVO> page, IpcNetworkLogVO ipcNetworkLog) {
@@ -69,12 +80,42 @@ public class IpcNetworkLogServiceImpl extends BaseServiceImpl<IpcNetworkLogMappe
 		if (size == null){
 			size = 10;
 		}
+		List<String> ipList = new ArrayList<>();
+		if (StringUtil.isNotBlank(ipcNetworkLog.getIp())){
+			ipList.add(ipcNetworkLog.getIp());
+		} else if (ObjectUtil.isNotEmpty(ipcNetworkLog.getIps())) {
+			List<String> ips = ipcNetworkLog.getIps();
+			ipList = ips;
+		}
+//		else if (StringUtil.isNotBlank(ipcNetworkLog.getUserName())){
+//			System.out.println("进入用户名分支---");
+//			//根据用户名查询ip列表
+//			String userName = ipcNetworkLog.getUserName();
+//			System.out.println("用户名--"+userName);
+//			LambdaQueryWrapper<IpcUser> queryWrapper = new LambdaQueryWrapper<>();
+//			queryWrapper.eq(IpcUser::getName,userName).eq(IpcUser::getIsDeleted, IdevelopConstant.DB_NOT_DELETED);
+////			List<IpcUser> list = ipcUserMapper.selectList(queryWrapper);
+//			List<IpcUser> list1 = ipcUserService.list(queryWrapper);
+//			System.out.println("查询完成用户列表，----");
+//			if (CollectionUtils.isNotEmpty(list1)){
+//				System.out.println("准备list.stream");
+//				List<String> collect = list1.stream()
+//				 .map(IpcUser::getTerminal).collect(Collectors.toList());
+//				System.out.println("list.stream完成");
+//				ipList = collect;
+//			}
+//		}
 		//查询所有的数据
-		List<IpcNetworkLog> allList = baseMapper.slaveListAll();
+		List<IpcNetworkLog> allList = baseMapper.slaveListAll(ipList);
 		int i = allList.size();
 		// 1. 先处理空列表或单条数据的场景，直接返回（无需后续循环）
 		if (allList == null || allList.size() <= 1) {
-			return null;
+			Page<IpcNetworkLog> page = new Page<>();
+			page.setRecords(null);
+			page.setCurrent(current);
+			page.setSize(size);
+			page.setTotal(0);
+			return page;
 		}
 
 		// 2. 循环遍历（j < 列表长度-1，避免 j+1 越界）
@@ -107,7 +148,6 @@ public class IpcNetworkLogServiceImpl extends BaseServiceImpl<IpcNetworkLogMappe
 				long secondsDiff = ChronoUnit.SECONDS.between(startTime, endTime);
 				networkLog.setAccessLength(secondsDiff);
 			}
-
 		}
 //		Integer total = baseMapper.slaveListTotal(ipcNetworkLog);
 		Page<IpcNetworkLog> page = new Page<>();

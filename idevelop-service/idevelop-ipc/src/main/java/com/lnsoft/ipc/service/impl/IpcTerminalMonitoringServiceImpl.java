@@ -24,6 +24,7 @@ import com.lnsoft.ipc.vo.IpcTerminalMonitoringVO;
 import com.lnsoft.ipc.mapper.IpcTerminalMonitoringMapper;
 import com.lnsoft.ipc.service.IIpcTerminalMonitoringService;
 import com.lnsoft.core.mp.base.BaseServiceImpl;
+import com.lnsoft.ipc.vo.IpcUserVO;
 import com.lnsoft.ipc.vo.RankVO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.formula.functions.Rank;
@@ -31,6 +32,7 @@ import org.springframework.stereotype.Service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -64,9 +66,15 @@ public class IpcTerminalMonitoringServiceImpl extends BaseServiceImpl<IpcTermina
 			}else {
 				String department = list.get(0).getDepartment();
 				ipcTerminalMonitoringVO.setDept(department);
+				for (IpcUser ipcUser : list) {
+					if ("管理员".equals(ipcUser.getUserType())){
+						ipcTerminalMonitoringVO.setDept(ipcUser.getDepartment());
+						break;
+					}
+				}
 			}
 		}
-		Map<String, Long> groupSumResult = ofDept.stream()
+		Map<String, Long> groupSumResult = ofDept.stream().filter(vo -> vo.getDept() != null) // 过滤null
 			// 分组：key=orderType，value=每组的Order列表
 			.collect(Collectors.groupingBy(
 				IpcTerminalMonitoringVO::getDept,  // 分组字段（Function）
@@ -87,7 +95,8 @@ public class IpcTerminalMonitoringServiceImpl extends BaseServiceImpl<IpcTermina
 				rankVO.setLen(l);
 			}
 		}
-		return R.data(rankVOS);
+		List<RankVO> collect = rankVOS.stream().sorted(Comparator.comparing(RankVO::getLen).reversed()).collect(Collectors.toList());
+		return R.data(collect);
 	}
 
 }
