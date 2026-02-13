@@ -18,6 +18,7 @@
 /Users/wangminglei/Desktop/behavior-server/idevelop-service/idevelop-ipc/src/main/java/com/lnsoft/ipc/vo/IpcUserVO.java
 /Users/wangminglei/Desktop/behavior-server/idevelop-service/idevelop-ipc/src/main/java/com/lnsoft/ipc/service/IIpcTerminalService.java
 /Users/wangminglei/Desktop/behavior-server/idevelop-service/idevelop-ipc/src/main/java/com/lnsoft/ipc/service/impl/IpcUserTimeServiceImpl.java
+/Users/wangminglei/Desktop/behavior-server/idevelop-service/idevelop-ipc/src/main/java/com/lnsoft/ipc/entity/IpcLocalAppLog.java
 /Users/wangminglei/Desktop/behavior-server/idevelop-service/idevelop-ipc/src/main/java/com/lnsoft/ipc/mapper/IpcUserTimeMapper.java
 /Users/wangminglei/Desktop/behavior-server/idevelop-service/idevelop-ipc/src/main/java/com/lnsoft/ipc/controller/IpcUserController.java
 /Users/wangminglei/Desktop/behavior-server/idevelop-service/idevelop-ipc/src/main/java/com/lnsoft/ipc/faceCommon/UserRequest.java
@@ -50,9 +51,11 @@
 /Users/wangminglei/Desktop/behavior-server/idevelop-service/idevelop-ipc/src/main/java/com/lnsoft/ipc/faceCommon/Data.java
 /Users/wangminglei/Desktop/behavior-server/idevelop-service/idevelop-ipc/src/main/java/com/lnsoft/ipc/service/impl/IpcTerminalServiceImpl.java
 /Users/wangminglei/Desktop/behavior-server/idevelop-service/idevelop-ipc/src/main/java/com/lnsoft/ipc/service/IIpcTerminalMonitoringService.java
+/Users/wangminglei/Desktop/behavior-server/idevelop-service/idevelop-ipc/src/main/java/com/lnsoft/ipc/mapper/IpcLocalAppLogMapper.java
 /Users/wangminglei/Desktop/behavior-server/idevelop-service/idevelop-ipc/src/main/java/com/lnsoft/ipc/entity/IpcBusinessSystem.java
 /Users/wangminglei/Desktop/behavior-server/idevelop-service/idevelop-ipc/src/main/java/com/lnsoft/ipc/controller/IpcFaceController.java
 /Users/wangminglei/Desktop/behavior-server/idevelop-service/idevelop-ipc/src/main/java/com/lnsoft/ipc/mapper/IpcBusinessSystemMapper.java
+/Users/wangminglei/Desktop/behavior-server/idevelop-service/idevelop-ipc/src/main/java/com/lnsoft/ipc/faceCommon/LocalAppData.java
 /Users/wangminglei/Desktop/behavior-server/idevelop-service/idevelop-ipc/src/main/java/com/lnsoft/ipc/contant/OperationTypeConstant.java
 /Users/wangminglei/Desktop/behavior-server/idevelop-service/idevelop-ipc/src/main/java/com/lnsoft/ipc/service/impl/IpcBusinessSystemServiceImpl.java
 /Users/wangminglei/Desktop/behavior-server/idevelop-service/idevelop-ipc/src/main/java/com/lnsoft/ipc/vo/IpcNetworkLogVO.java

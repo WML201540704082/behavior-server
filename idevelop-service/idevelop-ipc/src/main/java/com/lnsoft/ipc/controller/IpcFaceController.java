@@ -140,4 +140,10 @@ public class IpcFaceController {
 		Response response  = iIpcFaceService.uploadNetwork(userRequest,request);
 		return response;
 	}
+	
+	@PostMapping("/uploadLocalAppData")
+	public Response uploadLocalAppData(@RequestBody UserRequest userRequest, HttpServletRequest request){
+		Response response  = iIpcFaceService.uploadLocalAppData(userRequest,request);
+		return response;
+	}
 }

@@ -9,8 +9,10 @@ com/lnsoft/ipc/service/IIpcNetworkLogService.class
 com/lnsoft/ipc/vo/RankVO.class
 com/lnsoft/ipc/entity/IpcFaceLoginLog.class
 com/lnsoft/ipc/entity/IpcUser.class
+com/lnsoft/ipc/faceCommon/LocalAppData.class
 com/lnsoft/ipc/filter/IpcDataCryptoFilter$CryptoRequestWrapper.class
 com/lnsoft/ipc/dto/IpcBusinessSystemDTO.class
+com/lnsoft/ipc/mapper/IpcLocalAppLogMapper.class
 com/lnsoft/ipc/faceCommon/FaceLog.class
 com/lnsoft/ipc/service/IIpcTerminalMonitoringService.class
 com/lnsoft/ipc/entity/IpcTerminalMonitoring.class
@@ -40,6 +42,7 @@ com/lnsoft/ipc/controller/IpcNetworkLogController.class
 com/lnsoft/ipc/controller/IpcBusinessSystemController.class
 com/lnsoft/ipc/faceCommon/FaceTime.class
 com/lnsoft/ipc/vo/IpcTerminalMonitoringVO.class
+com/lnsoft/ipc/entity/IpcLocalAppLog.class
 com/lnsoft/ipc/faceCommon/networkData.class
 com/lnsoft/ipc/service/IIpcBusinessSystemService.class
 com/lnsoft/ipc/service/impl/IpcFaceServiceImpl.class

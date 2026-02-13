@@ -55,4 +55,12 @@ public interface IIpcFaceService {
 	 * @return
 	 */
 	Response uploadNetwork(UserRequest userRequest, HttpServletRequest request);
+
+	/**
+	 * 上传本地应用数据
+	 * @param userRequest
+	 * @param request
+	 * @return
+	 */
+	Response uploadLocalAppData(UserRequest userRequest, HttpServletRequest request);
 }

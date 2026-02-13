@@ -19,6 +19,14 @@ public class Data {
 	private List<FaceOnOffTime> timeList;
 	@JsonProperty("networkDataList")
 	private List<networkData> networkDataList;
+	@JsonProperty("localAppData")
+	private List<LocalAppData> localAppData;
+	@JsonProperty("username")
+	private String username;
+	@JsonProperty("department")
+	private String department;
+	@JsonProperty("ip")
+	private String ip;
 
 
 

@@ -45,6 +45,8 @@ public class IpcFaceServiceImpl implements IIpcFaceService {
 	private IpcNetworkLogMapper ipcNetworkLogMapper;
 	@Resource
 	private IpcTerminalMonitoringBakMapper ipcTerminalMonitoringBakMapper;
+	@Resource
+	private IpcLocalAppLogMapper ipcLocalAppLogMapper;
 	// 定义时间格式（与客户端约定的格式，可根据实际情况调整）
 	private static final DateTimeFormatter DEFAULT_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 	// 一天的总秒数（24*60*60）
@@ -410,6 +412,42 @@ public class IpcFaceServiceImpl implements IIpcFaceService {
 				ipcNetworkLog.setBusinessName(businessName);
 			}
 			ipcNetworkLogMapper.insert(ipcNetworkLog);
+		}
+		return Response.code(ResponseCodeConstant.SUCCESS);
+	}
+
+	@Override
+	public Response uploadLocalAppData(UserRequest userRequest, HttpServletRequest request) {
+		//所属终端字段，获取请求头中数据
+		String fingerPrint = request.getHeader("fingerPrint");
+		String nonce = request.getHeader("nonce");
+		String ip = SM4Util.decryptCBC(fingerPrint, nonce, "ad01c2b36421cc77ff120a0dec7b0e0f");
+		//根据ip获取终端信息
+		LambdaQueryWrapper<IpcTerminal> queryWrapper = new LambdaQueryWrapper<>();
+		queryWrapper.eq(IpcTerminal::getIp, ip).eq(IpcTerminal::getIsDeleted, IdevelopConstant.DB_NOT_DELETED);
+		if (ObjectUtil.isEmpty(userRequest.getData())) {
+			return Response.code(ResponseCodeConstant.REQUEST_DATA_EMPTY);
+		}
+		if (ObjectUtil.isEmpty(userRequest.getData().getLocalAppData())) {
+			return Response.code(ResponseCodeConstant.REQUEST_DATA_EMPTY);
+		}
+		List<LocalAppData> localAppDataList = userRequest.getData().getLocalAppData();
+		// 获取用户名和部门信息
+		String username = userRequest.getData().getUsername();
+		String department = userRequest.getData().getDepartment();
+		for (LocalAppData localAppData : localAppDataList) {
+			IpcLocalAppLog ipcLocalAppLog = new IpcLocalAppLog();
+			ipcLocalAppLog.setIp(ip);
+			ipcLocalAppLog.setAppName(localAppData.getLocalAppName());
+			ipcLocalAppLog.setAppStatus(localAppData.getStatus());
+			ipcLocalAppLog.setStartTime(localAppData.getStartTime());
+			ipcLocalAppLog.setEndTime(localAppData.getEndTime());
+			ipcLocalAppLog.setUserName(username);
+			ipcLocalAppLog.setUserDept(department);
+			ipcLocalAppLog.setCreateTime(new Date());
+			long secondsDiff = ChronoUnit.SECONDS.between(localAppData.getStartTime(), localAppData.getEndTime());
+			ipcLocalAppLog.setAccessLength(secondsDiff);
+			ipcLocalAppLogMapper.insert(ipcLocalAppLog);
 		}
 		return Response.code(ResponseCodeConstant.SUCCESS);
 	}
