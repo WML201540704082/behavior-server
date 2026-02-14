@@ -46,13 +46,16 @@ com/lnsoft/ipc/entity/IpcLocalAppLog.class
 com/lnsoft/ipc/faceCommon/networkData.class
 com/lnsoft/ipc/service/IIpcBusinessSystemService.class
 com/lnsoft/ipc/service/impl/IpcFaceServiceImpl.class
+com/lnsoft/ipc/service/IIpcLocalAppLogService.class
 com/lnsoft/ipc/mapper/IpcTerminalMonitoringMapper.class
 com/lnsoft/ipc/mapper/IpcTerminalMonitoringBakMapper.class
 com/lnsoft/ipc/entity/IpcUserTime.class
 com/lnsoft/ipc/dto/IpcNetworkLogDTO.class
 com/lnsoft/ipc/mapper/IpcTerminalMapper.class
+com/lnsoft/ipc/controller/IpcLocalAppLogController.class
 com/lnsoft/ipc/service/IIpcTerminalService.class
 com/lnsoft/ipc/faceCommon/Response.class
+com/lnsoft/ipc/service/impl/IpcLocalAppLogServiceImpl.class
 com/lnsoft/ipc/mapper/IpcUserMapper.class
 com/lnsoft/ipc/contant/MethodConstant.class
 com/lnsoft/ipc/service/impl/IpcTerminalMonitoringServiceImpl.class
