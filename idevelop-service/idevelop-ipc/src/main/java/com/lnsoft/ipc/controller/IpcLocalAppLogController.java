@@ -59,16 +59,7 @@ public class IpcLocalAppLogController extends IdevelopController {
 		IPage<IpcLocalAppLog> pages = ipcLocalAppLogService.page(Condition.getPage(query), queryWrapper);
 		return R.data(pages);
 	}
-	/**
-	 * 分页 工控机管控-本地应用访问记录表
-	 */
-	@GetMapping("/list/slave")
-	@ApiOperationSupport(order = 2)
-	@ApiOperation(value = "分页（辅数据源）", notes = "传入ipcLocalAppLog")
-	public R<IPage<IpcLocalAppLog>> slaveList(IpcLocalAppLog ipcLocalAppLog, Query query) {
-		IPage<IpcLocalAppLog> pages = ipcLocalAppLogService.slaveList(ipcLocalAppLog,query);
-		return R.data(pages);
-	}
+
 	/**
 	 * 访问次数排名
 	 */

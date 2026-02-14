@@ -31,13 +31,7 @@ import java.util.List;
  */
 public interface IIpcLocalAppLogService extends BaseService<IpcLocalAppLog> {
 
-	/**
-	 * 辅数据源分页
-	 * @param ipcLocalAppLog
-	 * @param query
-	 * @return
-	 */
-    IPage<IpcLocalAppLog> slaveList(IpcLocalAppLog ipcLocalAppLog, Query query);
+
 
 	/**
 	 * 访问次数排名

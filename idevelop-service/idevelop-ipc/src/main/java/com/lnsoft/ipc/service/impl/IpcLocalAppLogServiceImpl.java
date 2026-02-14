@@ -50,67 +50,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class IpcLocalAppLogServiceImpl extends BaseServiceImpl<IpcLocalAppLogMapper, IpcLocalAppLog> implements IIpcLocalAppLogService {
 
-	@Override
-	@DS("slave")
-	public IPage<IpcLocalAppLog> slaveList(IpcLocalAppLog ipcLocalAppLog, Query query) {
-		Integer current = query.getCurrent();
-		Integer size = query.getSize();
-		if (current==null){
-			current = 1;
-		}
-		if (size == null){
-			size = 10;
-		}
-		List<String> ipList = new ArrayList<>();
-		if (StringUtil.isNotBlank(ipcLocalAppLog.getIp())){
-			ipList.add(ipcLocalAppLog.getIp());
-		}
-		//查询所有的数据
-		List<IpcLocalAppLog> allList = baseMapper.selectList(new LambdaQueryWrapper<>());
-		int i = allList.size();
-		// 1. 先处理空列表或单条数据的场景，直接返回（无需后续循环）
-		if (allList == null || allList.size() <= 1) {
-			Page<IpcLocalAppLog> page = new Page<>();
-			page.setRecords(null);
-			page.setCurrent(current);
-			page.setSize(size);
-			page.setTotal(0);
-			return page;
-		}
 
-		// 2. 循环遍历（j < 列表长度-1，避免 j+1 越界）
-		for (int j = 0; j < allList.size() - 1; j++) {
-			IpcLocalAppLog currentLog = allList.get(j);
-			IpcLocalAppLog nextLog = allList.get(j + 1);
-
-			// 3. 用 Objects.equals 安全比较IP（自动处理null，避免空指针）
-			if (Objects.equals(currentLog.getIp(), nextLog.getIp())) {
-				currentLog.setEndTime(nextLog.getStartTime());
-			}
-		}
-		int total = allList.size();
-		int startIndex = (current - 1) * size;
-		int endIndex = Math.min(startIndex + size, total);
-
-		// 截取子列表
-		List<IpcLocalAppLog> ipcLocalAppLogs = allList.subList(startIndex, endIndex);
-
-		for (IpcLocalAppLog localAppLog : ipcLocalAppLogs) {
-			LocalDateTime startTime = localAppLog.getStartTime();
-			LocalDateTime endTime = localAppLog.getEndTime();
-			if (ObjectUtil.isNotEmpty(startTime) && ObjectUtil.isNotEmpty(endTime)){
-				long secondsDiff = ChronoUnit.SECONDS.between(startTime, endTime);
-				localAppLog.setAccessLength(secondsDiff);
-			}
-		}
-
-		Page<IpcLocalAppLog> page = new Page<>();
-		page.setRecords(ipcLocalAppLogs);
-		page.setCurrent(current);
-		page.setSize(size);
-		page.setTotal(total);
-		return page;
-	}
 
 	@Override
 	@DS("slave")
