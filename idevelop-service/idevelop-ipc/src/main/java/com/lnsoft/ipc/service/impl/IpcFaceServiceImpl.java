@@ -341,16 +341,23 @@ public class IpcFaceServiceImpl implements IIpcFaceService {
 		List<FaceOnOffTime> timeList = userRequest.getData().getTimeList();
 		//新增跨天时间不处理直接入表
 		for (FaceOnOffTime faceOnOffTime : timeList) {
-			IpcTerminalMonitoringBak ipcTerminalMonitoringBak = new IpcTerminalMonitoringBak();
-			ipcTerminalMonitoringBak.setIp(ip);
-			ipcTerminalMonitoringBak.setOpenTime(faceOnOffTime.getPowerOnTime());
-			ipcTerminalMonitoringBak.setShowdownTime(faceOnOffTime.getPowerOffTime());
-			long time = Duration.between(faceOnOffTime.getPowerOnTime(), faceOnOffTime.getPowerOffTime()).getSeconds();
-			ipcTerminalMonitoringBak.setOnlineLength(time);
-			ipcTerminalMonitoringBak.setActivityLength(time);
-			ipcTerminalMonitoringBak.setCreateTime(new Date());
-			ipcTerminalMonitoringBakMapper.insert(ipcTerminalMonitoringBak);
-
+			// 1. Bak表去重查询：按IP+原始开机时间+原始关机时间
+			LambdaQueryWrapper<IpcTerminalMonitoringBak> bakWrapper = new LambdaQueryWrapper<>();
+			bakWrapper.eq(IpcTerminalMonitoringBak::getIp, ip)
+				.eq(IpcTerminalMonitoringBak::getOpenTime, faceOnOffTime.getPowerOnTime())
+				.eq(IpcTerminalMonitoringBak::getShowdownTime, faceOnOffTime.getPowerOffTime());
+			List<IpcTerminalMonitoringBak> bakExistList = ipcTerminalMonitoringBakMapper.selectList(bakWrapper);
+			if (CollectionUtil.isEmpty(bakExistList)) {
+				IpcTerminalMonitoringBak ipcTerminalMonitoringBak = new IpcTerminalMonitoringBak();
+				ipcTerminalMonitoringBak.setIp(ip);
+				ipcTerminalMonitoringBak.setOpenTime(faceOnOffTime.getPowerOnTime());
+				ipcTerminalMonitoringBak.setShowdownTime(faceOnOffTime.getPowerOffTime());
+				long time = Duration.between(faceOnOffTime.getPowerOnTime(), faceOnOffTime.getPowerOffTime()).getSeconds();
+				ipcTerminalMonitoringBak.setOnlineLength(time);
+				ipcTerminalMonitoringBak.setActivityLength(time);
+				ipcTerminalMonitoringBak.setCreateTime(new Date());
+				ipcTerminalMonitoringBakMapper.insert(ipcTerminalMonitoringBak);
+			}
 			//处理跨天时间
 			IpcTerminalMonitoring monitoring = new IpcTerminalMonitoring();
 			monitoring.setIp(ip);

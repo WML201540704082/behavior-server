@@ -41,7 +41,7 @@
         FROM `ipc_terminal_monitoring`
         <where>
             <if test="startTime != null and endTime != null and startTime != '' and endTime !=''">
-                create_time between #{startTime} and #{endTime}
+                showdown_time between #{startTime} and #{endTime}
             </if>
         </where>
     </select>
@@ -53,7 +53,7 @@
         FROM `ipc_terminal_monitoring`
         <where>
             <if test="startTime != null and endTime != null and startTime != '' and endTime !=''">
-                create_time between #{startTime} and #{endTime}
+                showdown_time between #{startTime} and #{endTime}
             </if>
         </where>
     </select>

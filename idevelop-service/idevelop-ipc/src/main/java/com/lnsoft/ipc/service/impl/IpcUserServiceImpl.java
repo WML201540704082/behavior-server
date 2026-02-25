@@ -182,13 +182,13 @@ public class IpcUserServiceImpl extends BaseServiceImpl<IpcUserMapper, IpcUser> 
 			userVO.setName(name);
 			ipcUserVOS.add(userVO);
 		});
-		for (IpcUserVO userVO : ipcUserVOS) {
-			Long len = userVO.getTotalUseMinutes();
-			if (len >0){
-				long l = len / 60;
-				userVO.setTotalUseMinutes(l);
-			}
-		}
+//		for (IpcUserVO userVO : ipcUserVOS) {
+//			Long len = userVO.getTotalUseMinutes();
+//			if (len >0){
+//				long l = len / 60;
+//				userVO.setTotalUseMinutes(l);
+//			}
+//		}
 		List<IpcUserVO> collect = ipcUserVOS.stream().sorted(Comparator.comparing(IpcUserVO::getTotalUseMinutes).reversed()).collect(Collectors.toList());
 //		List<IpcUserVO> list = ipcFaceLoginLogMapper.userRank(ipcUserDTO);
 		return R.data(collect);

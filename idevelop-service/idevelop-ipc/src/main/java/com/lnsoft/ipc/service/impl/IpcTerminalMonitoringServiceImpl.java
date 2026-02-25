@@ -88,13 +88,13 @@ public class IpcTerminalMonitoringServiceImpl extends BaseServiceImpl<IpcTermina
 			rankVO.setLen(len);
 			rankVOS.add(rankVO);
 		});
-		for (RankVO rankVO : rankVOS) {
-			Long len = rankVO.getLen();
-			if (len >0){
-				long l = len / 60;
-				rankVO.setLen(l);
-			}
-		}
+//		for (RankVO rankVO : rankVOS) {
+//			Long len = rankVO.getLen();
+//			if (len >0){
+//				long l = len / 60;
+//				rankVO.setLen(l);
+//			}
+//		}
 		List<RankVO> collect = rankVOS.stream().sorted(Comparator.comparing(RankVO::getLen).reversed()).collect(Collectors.toList());
 		return R.data(collect);
 	}

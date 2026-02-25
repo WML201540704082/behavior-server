@@ -161,19 +161,21 @@ public class IpcNetworkLogServiceImpl extends BaseServiceImpl<IpcNetworkLogMappe
 	@Override
 	@DS("slave")
 	public List<RankVO> countRank(IpcNetworkLogDTO ipcNetworkLogDTO) {
+
 		List<RankVO> list = baseMapper.countRank(ipcNetworkLogDTO);
-		for (RankVO rankVO : list) {
-			String url = rankVO.getUrl();
-			LambdaQueryWrapper<IpcBusinessSystem> queryWrapper = new LambdaQueryWrapper<>();
-			queryWrapper.eq(IpcBusinessSystem::getUrl,url);
-			List<IpcBusinessSystem> ipcBusinessSystems = ipcBusinessSystemMapper.selectList(queryWrapper);
-			if (StringUtil.isBlank(rankVO.getBusinessName())){
-				if (CollectionUtils.isNotEmpty(ipcBusinessSystems)){
-					rankVO.setBusinessName(ipcBusinessSystems.get(0).getBusinessName());
-				}
-			}
-		}
-		return list;
+		List<RankVO> collect = list.stream().filter(item -> StringUtil.isNotBlank(item.getBusinessName())).collect(Collectors.toList());
+//		for (RankVO rankVO : list) {
+//			String url = rankVO.getUrl();
+//			LambdaQueryWrapper<IpcBusinessSystem> queryWrapper = new LambdaQueryWrapper<>();
+//			queryWrapper.eq(IpcBusinessSystem::getUrl,url);
+//			List<IpcBusinessSystem> ipcBusinessSystems = ipcBusinessSystemMapper.selectList(queryWrapper);
+//			if (StringUtil.isBlank(rankVO.getBusinessName())){
+//				if (CollectionUtils.isNotEmpty(ipcBusinessSystems)){
+//					rankVO.setBusinessName(ipcBusinessSystems.get(0).getBusinessName());
+//				}
+//			}
+//		}
+		return collect;
 	}
 
 }
