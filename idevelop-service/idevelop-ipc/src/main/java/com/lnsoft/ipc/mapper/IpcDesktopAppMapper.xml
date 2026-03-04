@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.ipc.mapper.IpcDesktopAppMapper">
+
+	<resultMap id="ipcDesktopAppMap" type="com.lnsoft.ipc.vo.IpcDesktopAppVO">
+		<id property="id" column="id" />
+		<result property="appName" column="app_name" />
+		<result property="mainFileName" column="main_file_name" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="createUser" column="create_user" />
+		<result property="updateUser" column="update_user" />
+	</resultMap>
+
+	<sql id="ipcDesktopAppColumns">
+		id, app_name, main_file_name, create_time, update_time, create_user, update_user
+	</sql>
+
+	<select id="selectIpcDesktopAppPage" resultMap="ipcDesktopAppMap">
+		SELECT
+		<include refid="ipcDesktopAppColumns" />
+		FROM ipc_desktop_app
+		<where>
+			<if test="appName != null and appName != ''">
+				AND app_name LIKE CONCAT('%', #{appName}, '%')
+			</if>
+		</where>
+	</select>
+
+</mapper>

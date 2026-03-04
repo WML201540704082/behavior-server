@@ -10,13 +10,17 @@ com/lnsoft/ipc/vo/RankVO.class
 com/lnsoft/ipc/entity/IpcFaceLoginLog.class
 com/lnsoft/ipc/entity/IpcUser.class
 com/lnsoft/ipc/faceCommon/LocalAppData.class
+com/lnsoft/ipc/controller/IpcDesktopAppController.class
 com/lnsoft/ipc/filter/IpcDataCryptoFilter$CryptoRequestWrapper.class
+com/lnsoft/ipc/entity/IpcDesktopApp.class
+com/lnsoft/ipc/service/impl/IpcDesktopAppServiceImpl.class
 com/lnsoft/ipc/dto/IpcBusinessSystemDTO.class
 com/lnsoft/ipc/mapper/IpcLocalAppLogMapper.class
 com/lnsoft/ipc/faceCommon/FaceLog.class
 com/lnsoft/ipc/service/IIpcTerminalMonitoringService.class
 com/lnsoft/ipc/entity/IpcTerminalMonitoring.class
 com/lnsoft/ipc/service/impl/IpcUserServiceImpl.class
+com/lnsoft/ipc/service/IIpcDesktopAppService.class
 com/lnsoft/ipc/faceCommon/Data.class
 com/lnsoft/ipc/service/impl/IpcTerminalMonitoringBakServiceImpl.class
 com/lnsoft/ipc/filter/IpcDataCryptoFilter.class
@@ -34,6 +38,7 @@ com/lnsoft/ipc/mapper/IpcUserTimeMapper.class
 com/lnsoft/ipc/dto/IpcTerminalDTO.class
 com/lnsoft/ipc/faceCommon/UserRequest.class
 com/lnsoft/ipc/contant/ResponseCodeConstant.class
+com/lnsoft/ipc/vo/IpcDesktopAppVO.class
 com/lnsoft/ipc/vo/IpcTerminalVO.class
 com/lnsoft/ipc/dto/Face.class
 com/lnsoft/ipc/filter/IpcDataCryptoFilter$CryptoRequestWrapper$1.class
@@ -43,6 +48,7 @@ com/lnsoft/ipc/controller/IpcBusinessSystemController.class
 com/lnsoft/ipc/faceCommon/FaceTime.class
 com/lnsoft/ipc/vo/IpcTerminalMonitoringVO.class
 com/lnsoft/ipc/entity/IpcLocalAppLog.class
+com/lnsoft/ipc/mapper/IpcDesktopAppMapper.class
 com/lnsoft/ipc/faceCommon/networkData.class
 com/lnsoft/ipc/service/IIpcBusinessSystemService.class
 com/lnsoft/ipc/service/impl/IpcFaceServiceImpl.class

@@ -20,11 +20,13 @@
 /Users/wangminglei/Desktop/behavior-server/idevelop-service/idevelop-ipc/src/main/java/com/lnsoft/ipc/service/impl/IpcUserTimeServiceImpl.java
 /Users/wangminglei/Desktop/behavior-server/idevelop-service/idevelop-ipc/src/main/java/com/lnsoft/ipc/entity/IpcLocalAppLog.java
 /Users/wangminglei/Desktop/behavior-server/idevelop-service/idevelop-ipc/src/main/java/com/lnsoft/ipc/mapper/IpcUserTimeMapper.java
+/Users/wangminglei/Desktop/behavior-server/idevelop-service/idevelop-ipc/src/main/java/com/lnsoft/ipc/mapper/IpcDesktopAppMapper.java
 /Users/wangminglei/Desktop/behavior-server/idevelop-service/idevelop-ipc/src/main/java/com/lnsoft/ipc/controller/IpcUserController.java
 /Users/wangminglei/Desktop/behavior-server/idevelop-service/idevelop-ipc/src/main/java/com/lnsoft/ipc/faceCommon/UserRequest.java
 /Users/wangminglei/Desktop/behavior-server/idevelop-service/idevelop-ipc/src/main/java/com/lnsoft/ipc/faceCommon/FaceOnOffTime.java
 /Users/wangminglei/Desktop/behavior-server/idevelop-service/idevelop-ipc/src/main/java/com/lnsoft/ipc/faceCommon/networkData.java
 /Users/wangminglei/Desktop/behavior-server/idevelop-service/idevelop-ipc/src/main/java/com/lnsoft/ipc/controller/IpcTerminalMonitoringController.java
+/Users/wangminglei/Desktop/behavior-server/idevelop-service/idevelop-ipc/src/main/java/com/lnsoft/ipc/controller/IpcDesktopAppController.java
 /Users/wangminglei/Desktop/behavior-server/idevelop-service/idevelop-ipc/src/main/java/com/lnsoft/ipc/launcher/ResourceLauncherServiceImpl.java
 /Users/wangminglei/Desktop/behavior-server/idevelop-service/idevelop-ipc/src/main/java/com/lnsoft/ipc/dto/IpcTerminalMonitoringDTO.java
 /Users/wangminglei/Desktop/behavior-server/idevelop-service/idevelop-ipc/src/main/java/com/lnsoft/ipc/entity/IpcUser.java
@@ -36,10 +38,12 @@
 /Users/wangminglei/Desktop/behavior-server/idevelop-service/idevelop-ipc/src/main/java/com/lnsoft/ipc/vo/IpcTerminalVO.java
 /Users/wangminglei/Desktop/behavior-server/idevelop-service/idevelop-ipc/src/main/java/com/lnsoft/ipc/entity/IpcUserTime.java
 /Users/wangminglei/Desktop/behavior-server/idevelop-service/idevelop-ipc/src/main/java/com/lnsoft/ipc/entity/IpcNetworkLog.java
+/Users/wangminglei/Desktop/behavior-server/idevelop-service/idevelop-ipc/src/main/java/com/lnsoft/ipc/service/IIpcDesktopAppService.java
 /Users/wangminglei/Desktop/behavior-server/idevelop-service/idevelop-ipc/src/main/java/com/lnsoft/ipc/service/IIpcLocalAppLogService.java
 /Users/wangminglei/Desktop/behavior-server/idevelop-service/idevelop-ipc/src/main/java/com/lnsoft/ipc/faceCommon/FaceUser.java
 /Users/wangminglei/Desktop/behavior-server/idevelop-service/idevelop-ipc/src/main/java/com/lnsoft/ipc/config/IpcFilterConfig.java
 /Users/wangminglei/Desktop/behavior-server/idevelop-service/idevelop-ipc/src/main/java/com/lnsoft/ipc/faceCommon/FaceLog.java
+/Users/wangminglei/Desktop/behavior-server/idevelop-service/idevelop-ipc/src/main/java/com/lnsoft/ipc/service/impl/IpcDesktopAppServiceImpl.java
 /Users/wangminglei/Desktop/behavior-server/idevelop-service/idevelop-ipc/src/main/java/com/lnsoft/ipc/service/IIpcUserService.java
 /Users/wangminglei/Desktop/behavior-server/idevelop-service/idevelop-ipc/src/main/java/com/lnsoft/ipc/vo/RankVO.java
 /Users/wangminglei/Desktop/behavior-server/idevelop-service/idevelop-ipc/src/main/java/com/lnsoft/ipc/service/impl/IpcTerminalMonitoringServiceImpl.java
@@ -56,6 +60,7 @@
 /Users/wangminglei/Desktop/behavior-server/idevelop-service/idevelop-ipc/src/main/java/com/lnsoft/ipc/service/IIpcTerminalMonitoringService.java
 /Users/wangminglei/Desktop/behavior-server/idevelop-service/idevelop-ipc/src/main/java/com/lnsoft/ipc/mapper/IpcLocalAppLogMapper.java
 /Users/wangminglei/Desktop/behavior-server/idevelop-service/idevelop-ipc/src/main/java/com/lnsoft/ipc/entity/IpcBusinessSystem.java
+/Users/wangminglei/Desktop/behavior-server/idevelop-service/idevelop-ipc/src/main/java/com/lnsoft/ipc/vo/IpcDesktopAppVO.java
 /Users/wangminglei/Desktop/behavior-server/idevelop-service/idevelop-ipc/src/main/java/com/lnsoft/ipc/controller/IpcFaceController.java
 /Users/wangminglei/Desktop/behavior-server/idevelop-service/idevelop-ipc/src/main/java/com/lnsoft/ipc/mapper/IpcBusinessSystemMapper.java
 /Users/wangminglei/Desktop/behavior-server/idevelop-service/idevelop-ipc/src/main/java/com/lnsoft/ipc/faceCommon/LocalAppData.java
@@ -63,6 +68,7 @@
 /Users/wangminglei/Desktop/behavior-server/idevelop-service/idevelop-ipc/src/main/java/com/lnsoft/ipc/service/impl/IpcBusinessSystemServiceImpl.java
 /Users/wangminglei/Desktop/behavior-server/idevelop-service/idevelop-ipc/src/main/java/com/lnsoft/ipc/vo/IpcNetworkLogVO.java
 /Users/wangminglei/Desktop/behavior-server/idevelop-service/idevelop-ipc/src/main/java/com/lnsoft/ipc/entity/IpcTerminalMonitoringBak.java
+/Users/wangminglei/Desktop/behavior-server/idevelop-service/idevelop-ipc/src/main/java/com/lnsoft/ipc/entity/IpcDesktopApp.java
 /Users/wangminglei/Desktop/behavior-server/idevelop-service/idevelop-ipc/src/main/java/com/lnsoft/ipc/service/IIpcBusinessSystemService.java
 /Users/wangminglei/Desktop/behavior-server/idevelop-service/idevelop-ipc/src/main/java/com/lnsoft/ipc/mapper/IpcNetworkLogMapper.java
 /Users/wangminglei/Desktop/behavior-server/idevelop-service/idevelop-ipc/src/main/java/com/lnsoft/ipc/vo/IpcTerminalMonitoringVO.java
