@@ -31,6 +31,10 @@ import java.io.InputStream;
 import java.util.Base64;
 import java.util.List;
 
+import com.lnsoft.core.mp.support.Query;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.lnsoft.ipc.entity.IpcDesktopApp;
+import com.lnsoft.ipc.service.IIpcDesktopAppService;
 /**
  * 人脸识别客户端对接
  */
@@ -41,6 +45,7 @@ import java.util.List;
 @Slf4j
 public class IpcFaceController {
 	private AliossTemplate aliossTemplate;
+	private IIpcDesktopAppService ipcDesktopAppService;
 
 	@Resource
 	private IIpcFaceService iIpcFaceService;
@@ -80,6 +85,17 @@ public class IpcFaceController {
 //			.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"image_" + "123" + ".png\"") // 建议文件名
 //			.body(resource);
 		return R.success(link);
+	}
+
+	/**
+	 * 分页 工控机管控--桌面应用维护表
+	 */
+	@GetMapping("/ipcdesktopapp/list")
+	@ApiOperationSupport(order = 2)
+	@ApiOperation(value = "分页", notes = "传入ipcDesktopApp")
+	public R<IPage<IpcDesktopApp>> list(IpcDesktopApp ipcDesktopApp, Query query) {
+		IPage<IpcDesktopApp> pages = ipcDesktopAppService.page(Condition.getPage(query), Condition.getQueryWrapper(ipcDesktopApp));
+		return R.data(pages);
 	}
 
 	@GetMapping("/time")

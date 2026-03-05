@@ -48,14 +48,14 @@ public class IpcLocalAppLogController extends IdevelopController {
 	}
 
 	/**
-	 * 分页 工控机管控-本地应用访问记录表 主数据源
+	 * 分页 工控机管控-本地应用访问记录表
 	 */
 	@GetMapping("/list")
 	@ApiOperationSupport(order = 2)
-	@ApiOperation(value = "分页（主数据源）", notes = "传入ipcLocalAppLog")
+	@ApiOperation(value = "分页", notes = "传入ipcLocalAppLog")
 	public R<IPage<IpcLocalAppLog>> list(IpcLocalAppLog ipcLocalAppLog, Query query) {
 		QueryWrapper<IpcLocalAppLog> queryWrapper = Condition.getQueryWrapper(ipcLocalAppLog);
-		queryWrapper.orderByDesc("access_length");
+		queryWrapper.orderByDesc("end_time");
 		IPage<IpcLocalAppLog> pages = ipcLocalAppLogService.page(Condition.getPage(query), queryWrapper);
 		return R.data(pages);
 	}
