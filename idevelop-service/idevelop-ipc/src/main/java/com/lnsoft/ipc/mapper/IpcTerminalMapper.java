@@ -40,6 +40,15 @@ public interface IpcTerminalMapper extends BaseMapper<IpcTerminal> {
 	List<IpcTerminalVO> selectIpcTerminalPage(IPage page, IpcTerminalVO ipcTerminal);
 
 	/**
+	 * 带部门信息的分页查询
+	 *
+	 * @param page
+	 * @param ipcTerminal
+	 * @return
+	 */
+	List<IpcTerminalVO> selectIpcTerminalPageWithDept(IPage page, IpcTerminalVO ipcTerminal);
+
+	/**
 	 * 终端在线时长排名
 	 * @param ipcTerminalDTO
 	 * @return

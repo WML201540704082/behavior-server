@@ -40,5 +40,14 @@ public interface IIpcTerminalService extends BaseService<IpcTerminal> {
 	 */
 	IPage<IpcTerminalVO> selectIpcTerminalPage(IPage<IpcTerminalVO> page, IpcTerminalVO ipcTerminal);
 
+	/**
+	 * 带部门信息的分页查询
+	 *
+	 * @param page
+	 * @param ipcTerminal
+	 * @return
+	 */
+	IPage<IpcTerminalVO> selectIpcTerminalPageWithDept(IPage<IpcTerminalVO> page, IpcTerminalVO ipcTerminal);
+
     List<IpcTerminalVO> terminalRank(IpcTerminalDTO id);
 }

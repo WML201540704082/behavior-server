@@ -57,6 +57,11 @@ public class IpcTerminal extends BaseEntity {
      */
     @ApiModelProperty(value = "网关")
     private String gateway;
+    /**
+     * 部门id
+     */
+    @ApiModelProperty(value = "部门id")
+    private String deptId;
 
 
 }

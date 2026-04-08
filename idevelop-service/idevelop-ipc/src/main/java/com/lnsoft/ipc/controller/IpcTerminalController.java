@@ -53,8 +53,8 @@ public class IpcTerminalController extends IdevelopController {
 	@GetMapping("/list")
 	@ApiOperationSupport(order = 2)
 	@ApiOperation(value = "分页", notes = "传入ipcTerminal")
-	public R<IPage<IpcTerminal>> list(IpcTerminal ipcTerminal, Query query) {
-		IPage<IpcTerminal> pages = ipcTerminalService.page(Condition.getPage(query), Condition.getQueryWrapper(ipcTerminal));
+	public R<IPage<IpcTerminalVO>> list(IpcTerminalVO ipcTerminal, Query query) {
+		IPage<IpcTerminalVO> pages = ipcTerminalService.selectIpcTerminalPageWithDept(Condition.getPage(query), ipcTerminal);
 		return R.data(pages);
 	}
 

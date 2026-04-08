@@ -41,6 +41,11 @@ public class IpcTerminalServiceImpl extends BaseServiceImpl<IpcTerminalMapper, I
 	}
 
 	@Override
+	public IPage<IpcTerminalVO> selectIpcTerminalPageWithDept(IPage<IpcTerminalVO> page, IpcTerminalVO ipcTerminal) {
+		return page.setRecords(baseMapper.selectIpcTerminalPageWithDept(page, ipcTerminal));
+	}
+
+	@Override
 	public List<IpcTerminalVO> terminalRank(IpcTerminalDTO ipcTerminalDTO) {
 		return baseMapper.terminalRank(ipcTerminalDTO);
 	}

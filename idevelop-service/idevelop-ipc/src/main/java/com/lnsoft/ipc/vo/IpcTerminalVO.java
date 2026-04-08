@@ -19,6 +19,7 @@ import com.lnsoft.ipc.entity.IpcTerminal;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * 工控机管控--终端管理表视图实体类
@@ -32,5 +33,15 @@ import io.swagger.annotations.ApiModel;
 public class IpcTerminalVO extends IpcTerminal {
 	private static final long serialVersionUID = 1L;
 	private Integer timeLength;
+	/**
+	 * 部门名称
+	 */
+	@ApiModelProperty(value = "部门名称")
+	private String deptName;
+	/**
+	 * 部门全称
+	 */
+	@ApiModelProperty(value = "部门全称")
+	private String fullName;
 
 }
