@@ -48,15 +48,20 @@ public class IpcBusinessSystem extends BaseEntity {
     @ApiModelProperty(value = "url地址")
     private String url;
     /**
-     * 业务系统名称
+     * 应用名称
      */
-    @ApiModelProperty(value = "业务系统名称")
-    private String businessName;
+    @ApiModelProperty(value = "应用名称")
+    private String appName;
     /**
-     * 域名
+     * 图标
      */
-    @ApiModelProperty(value = "域名")
-    private String domainName;
+    @ApiModelProperty(value = "图标")
+    private String icon;
+    /**
+     * 部门id
+     */
+    @ApiModelProperty(value = "部门id")
+    private String deptId;
 
 
 }

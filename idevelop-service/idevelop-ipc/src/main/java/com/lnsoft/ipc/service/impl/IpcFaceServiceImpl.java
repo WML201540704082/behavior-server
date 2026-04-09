@@ -411,13 +411,13 @@ public class IpcFaceServiceImpl implements IIpcFaceService {
 			long secondsDiff = ChronoUnit.SECONDS.between(networkData.getStartTime(), networkData.getEndTime());
 			ipcNetworkLog.setAccessLength(secondsDiff);
 			//业务系统名称
-			LambdaQueryWrapper<IpcBusinessSystem> wrapper = new LambdaQueryWrapper<>();
-			wrapper.like(IpcBusinessSystem::getUrl,networkData.getRemoteAddr()).eq(IpcBusinessSystem::getIsDeleted,IdevelopConstant.DB_NOT_DELETED);
-			List<IpcBusinessSystem> list = ipcBusinessSystemMapper.selectList(wrapper);
-			if (CollectionUtil.isNotEmpty(list)){
-				String businessName = list.get(0).getBusinessName();
-				ipcNetworkLog.setBusinessName(businessName);
-			}
+LambdaQueryWrapper<IpcBusinessSystem> wrapper = new LambdaQueryWrapper<>();
+wrapper.like(IpcBusinessSystem::getUrl,networkData.getRemoteAddr()).eq(IpcBusinessSystem::getIsDeleted,IdevelopConstant.DB_NOT_DELETED);
+List<IpcBusinessSystem> list = ipcBusinessSystemMapper.selectList(wrapper);
+if (CollectionUtil.isNotEmpty(list)){
+	String appName = list.get(0).getAppName();
+	ipcNetworkLog.setBusinessName(appName);
+}
 			ipcNetworkLogMapper.insert(ipcNetworkLog);
 		}
 		return Response.code(ResponseCodeConstant.SUCCESS);
