@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.ipc.mapper.IpcUserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="ipcUserResultMap" type="com.lnsoft.ipc.entity.IpcUser">
+        <id column="id" property="id"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_dept" property="createDept"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="status" property="status"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="terminal" property="terminal"/>
+        <result column="name" property="name"/>
+        <result column="user_type" property="userType"/>
+        <result column="login_begin_time" property="loginBeginTime"/>
+        <result column="login_end_time" property="loginEndTime"/>
+        <result column="face" property="face"/>
+    </resultMap>
+    <update id="editById">
+        UPDATE ipc_user
+        <set>
+            <!-- 所属终端（非空则更新） -->
+            <if test="terminal != null and terminal != ''">
+                terminal = #{terminal},
+            </if>
+            <!-- 用户名（非空则更新） -->
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <!-- 用户类型（非空则更新） -->
+            <if test="userType != null and userType != ''">
+                user_type = #{userType},
+            </if>
+            <!-- 人脸照片（允许为空，有值则更新） -->
+            <if test="face != null">
+                face = #{face},
+            </if>
+            <!-- 密码（非空则更新） -->
+            <if test="password != null and password != ''">
+                password = #{password},
+            </if>
+            <!-- 部门（非空则更新） -->
+            <if test="department != null and department != ''">
+                department = #{department},
+            </if>
+            <!-- 是否需要同步（非空则更新） -->
+            <if test="isSync != null and isSync != ''">
+                is_sync = #{isSync},
+            </if>
+        </set>
+        <!-- 主键条件：必传 -->
+        WHERE id = #{id}
+    </update>
+
+
+    <select id="selectIpcUserPage" resultMap="ipcUserResultMap">
+        select * from ipc_user where is_deleted = 0
+    </select>
+    <select id="getList" resultType="com.lnsoft.ipc.entity.IpcUser">
+        SELECT
+        *
+        FROM ipc_user
+        WHERE user_type = #{userType}
+        AND terminal = #{terminal} AND is_sync = #{isSync}
+    </select>
+
+</mapper>

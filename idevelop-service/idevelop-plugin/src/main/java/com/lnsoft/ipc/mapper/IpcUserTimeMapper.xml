@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.ipc.mapper.IpcUserTimeMapper">
+    <update id="editById">
+        update ipc_user_time set is_sync = #{isSync} WHERE id = #{id}
+    </update>
+
+
+    <select id="getList" resultType="com.lnsoft.ipc.entity.IpcUserTime">
+        select * from ipc_user_time where is_sync = #{isSync}
+    </select>
+</mapper>

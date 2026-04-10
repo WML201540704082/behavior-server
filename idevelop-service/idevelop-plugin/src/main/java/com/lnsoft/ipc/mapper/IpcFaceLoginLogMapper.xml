@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.ipc.mapper.IpcFaceLoginLogMapper">
+
+
+    <select id="userRank" resultType="com.lnsoft.ipc.vo.IpcUserVO">
+        SELECT
+            ifll.username as name,
+            -- 总使用时长（单位：分钟，可按需改为 SECOND/HOUR/DAY）
+            SUM(TIMESTAMPDIFF(MINUTE, login_time, logout_time)) AS total_use_minutes,
+            iu.department,
+            COUNT(*) AS login_count
+        FROM
+            ipc_face_login_log ifll left join ipc_user iu on ifll.username = iu.`name`
+        WHERE
+            ifll.is_deleted = 0 -- 排除已删除记录
+          AND ifll.login_time IS NOT NULL -- 排除无登录时间的记录
+          AND ifll.logout_time IS NOT NULL -- 排除无登出时间的记录
+          AND ifll.logout_time > ifll.login_time -- 排除登出时间早于登录时间的无效记录
+          AND ifll.logout_time between #{startTime} and #{endTime}
+        GROUP BY
+            ifll.username -- 按用户名分组
+        HAVING
+            total_use_minutes > 0 -- 排除总时长为0的用户（可选）
+        ORDER BY
+            total_use_minutes DESC, ifll.username ASC; -- 总时长降序，用户名升序（处理时长相同的排序）
+    </select>
+</mapper>
