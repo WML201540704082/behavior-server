@@ -20,7 +20,7 @@
 
 
     <select id="selectIpcBusinessSystemPage" resultMap="ipcBusinessSystemResultMap">
-        select * from ipc_business_system where is_deleted = 0
+        select * from llq_app_list where is_deleted = 0
     </select>
 
 </mapper>

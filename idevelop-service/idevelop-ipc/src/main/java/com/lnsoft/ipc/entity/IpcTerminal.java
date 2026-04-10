@@ -30,7 +30,7 @@ import io.swagger.annotations.ApiModelProperty;
  * @since 2025-11-17
  */
 @Data
-@TableName("ipc_terminal")
+@TableName("llq_terminal")
 @EqualsAndHashCode(callSuper = true)
 @ApiModel(value = "IpcTerminal对象", description = "工控机管控--终端管理表")
 public class IpcTerminal extends BaseEntity {

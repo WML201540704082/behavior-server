@@ -35,7 +35,7 @@
     </resultMap>
 
     <select id="selectIpcTerminalPage" resultMap="ipcTerminalResultMap">
-        select * from ipc_terminal where is_deleted = 0
+        select * from llq_terminal where is_deleted = 0
     </select>
 
     <!-- 带部门信息的分页查询 -->
@@ -54,7 +54,7 @@
             t.dept_id,
             d.dept_name,
             d.full_name
-        FROM ipc_terminal t
+        FROM llq_terminal t
         LEFT JOIN idevelop_dept d ON t.dept_id = d.id AND d.is_deleted = 0
         WHERE t.is_deleted = 0
         <if test="ipcTerminal.ip != null and ipcTerminal.ip != ''">

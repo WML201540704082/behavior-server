@@ -30,7 +30,7 @@ import io.swagger.annotations.ApiModelProperty;
  * @since 2025-11-17
  */
 @Data
-@TableName("ipc_business_system")
+@TableName("llq_app_list")
 @EqualsAndHashCode(callSuper = true)
 @ApiModel(value = "IpcBusinessSystem对象", description = "工控机管控--业务系统维护表")
 public class IpcBusinessSystem extends BaseEntity {
