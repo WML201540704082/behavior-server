@@ -11,10 +11,10 @@
       <module fileurl="file://$PROJECT_DIR$/idevelop-service-api/idevelop-develop-api/idevelop-develop-api.iml" filepath="$PROJECT_DIR$/idevelop-service-api/idevelop-develop-api/idevelop-develop-api.iml" />
       <module fileurl="file://$PROJECT_DIR$/idevelop-service-api/idevelop-dict-api/idevelop-dict-api.iml" filepath="$PROJECT_DIR$/idevelop-service-api/idevelop-dict-api/idevelop-dict-api.iml" />
       <module fileurl="file://$PROJECT_DIR$/idevelop-gateway/idevelop-gateway.iml" filepath="$PROJECT_DIR$/idevelop-gateway/idevelop-gateway.iml" />
-      <module fileurl="file://$PROJECT_DIR$/idevelop-service/idevelop-ipc/idevelop-ipc.iml" filepath="$PROJECT_DIR$/idevelop-service/idevelop-ipc/idevelop-ipc.iml" />
       <module fileurl="file://$PROJECT_DIR$/idevelop-service/idevelop-log/idevelop-log.iml" filepath="$PROJECT_DIR$/idevelop-service/idevelop-log/idevelop-log.iml" />
       <module fileurl="file://$PROJECT_DIR$/idevelop-ops/idevelop-ops.iml" filepath="$PROJECT_DIR$/idevelop-ops/idevelop-ops.iml" />
       <module fileurl="file://$PROJECT_DIR$/idevelop-platform.iml" filepath="$PROJECT_DIR$/idevelop-platform.iml" />
+      <module fileurl="file://$PROJECT_DIR$/idevelop-service/idevelop-plugin/idevelop-plugin.iml" filepath="$PROJECT_DIR$/idevelop-service/idevelop-plugin/idevelop-plugin.iml" />
       <module fileurl="file://$PROJECT_DIR$/idevelop-ops/idevelop-report/idevelop-report.iml" filepath="$PROJECT_DIR$/idevelop-ops/idevelop-report/idevelop-report.iml" />
       <module fileurl="file://$PROJECT_DIR$/idevelop-ops/idevelop-resource/idevelop-resource.iml" filepath="$PROJECT_DIR$/idevelop-ops/idevelop-resource/idevelop-resource.iml" />
       <module fileurl="file://$PROJECT_DIR$/idevelop-service-api/idevelop-scope-api/idevelop-scope-api.iml" filepath="$PROJECT_DIR$/idevelop-service-api/idevelop-scope-api/idevelop-scope-api.iml" />

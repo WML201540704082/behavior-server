@@ -7,4 +7,4 @@ knife4j:
     routes:
       - name: 设备模块
         uri: 127.0.0.1:18084
-        location: /idevelop-ipc/v2/api-docs
+        location: /idevelop-plugin/v2/api-docs

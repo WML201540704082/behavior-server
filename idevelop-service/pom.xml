@@ -21,7 +21,7 @@
         <module>idevelop-system</module>
         <module>idevelop-user</module>
         <module>idevelop-demo</module>
-        <module>idevelop-ipc</module>
+        <module>idevelop-plugin</module>
 <!--        <module>idevelop-cmdb</module>-->
 <!--        <module>idevelop-device</module>-->
 <!--        <module>idevelop-data</module>-->

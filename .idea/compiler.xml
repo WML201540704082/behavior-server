@@ -11,19 +11,19 @@
         <module name="idevelop-seata-order" />
         <module name="idevelop-resource" />
         <module name="idevelop-dict-api" />
+        <module name="idevelop-user" />
         <module name="idevelop-log" />
-        <module name="idevelop-demo-api" />
         <module name="idevelop-admin" />
-        <module name="idevelop-ipc" />
+        <module name="idevelop-plugin" />
         <module name="idevelop-gateway" />
         <module name="idevelop-system" />
-        <module name="idevelop-common" />
+        <module name="idevelop-demo-api" />
         <module name="idevelop-demo" />
         <module name="idevelop-system-api" />
         <module name="idevelop-report" />
         <module name="idevelop-seata-storage" />
         <module name="idevelop-auth" />
-        <module name="idevelop-user" />
+        <module name="idevelop-common" />
         <module name="idevelop-develop-api" />
         <module name="idevelop-swagger" />
         <module name="idevelop-scope-api" />
@@ -44,6 +44,7 @@
       <module name="idevelop-log" target="1.8" />
       <module name="idevelop-ops" target="1.8" />
       <module name="idevelop-platform" target="1.8" />
+      <module name="idevelop-plugin" target="1.8" />
       <module name="idevelop-report" target="1.8" />
       <module name="idevelop-resource" target="1.8" />
       <module name="idevelop-scope-api" target="1.8" />
@@ -71,6 +72,7 @@
       <module name="idevelop-gateway" options="-parameters" />
       <module name="idevelop-ipc" options="-parameters" />
       <module name="idevelop-log" options="-parameters" />
+      <module name="idevelop-plugin" options="-parameters" />
       <module name="idevelop-report" options="-parameters" />
       <module name="idevelop-resource" options="-parameters" />
       <module name="idevelop-scope-api" options="-parameters" />
