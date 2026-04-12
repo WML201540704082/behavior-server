@@ -29,9 +29,9 @@ import io.swagger.annotations.ApiModelProperty;
  * @since 2026-03-04
  */
 @Data
-@TableName("ipc_desktop_app")
+@TableName("llq_message_management")
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "IpcDesktopApp对象", description = "工控机管控--桌面应用维护表")
+@ApiModel(value = "IpcDesktopApp对象", description = "消息管理")
 public class IpcDesktopApp extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
@@ -42,14 +42,39 @@ public class IpcDesktopApp extends BaseEntity {
     @ApiModelProperty(value = "主键")
     private String id;
     /**
-     * 桌面应用名称
+     * 开始时间
      */
-    @ApiModelProperty(value = "桌面应用名称")
-    private String appName;
+    @ApiModelProperty(value = "开始时间")
+    private String startTime;
     /**
-     * 主程序文件名
+     * 结束时间
      */
-    @ApiModelProperty(value = "主程序文件名")
-    private String mainFileName;
+    @ApiModelProperty(value = "结束时间")
+    private String endTime;
+    /**
+     * 标题
+     */
+    @ApiModelProperty(value = "标题")
+    private String title;
+    /**
+     * 内容
+     */
+    @ApiModelProperty(value = "内容")
+    private String content;
+    /**
+     * url
+     */
+    @ApiModelProperty(value = "url")
+    private String url;
+    /**
+     * 状态
+     */
+    @ApiModelProperty(value = "状态")
+    private Integer status;
+    /**
+     * 是否删除
+     */
+    @ApiModelProperty(value = "是否删除")
+    private Integer isDeleted;
 
 }

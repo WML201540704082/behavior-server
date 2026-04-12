@@ -2,21 +2,30 @@ package com.lnsoft.ipc.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import com.lnsoft.core.mp.support.Condition;
+import com.lnsoft.core.mp.support.Query;
 import com.lnsoft.core.tool.api.R;
 import com.lnsoft.core.tool.utils.Func;
 import com.lnsoft.ipc.entity.IpcTerminal;
 import com.lnsoft.ipc.entity.IpcBusinessSystem;
+import com.lnsoft.ipc.entity.IpcDesktopApp;
 import com.lnsoft.ipc.service.IIpcTerminalService;
 import com.lnsoft.ipc.service.IIpcBusinessSystemService;
+import com.lnsoft.ipc.service.IIpcDesktopAppService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import javax.validation.Valid;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -35,6 +44,7 @@ public class IpcPluginController {
 
     private IIpcTerminalService ipcTerminalService;
     private IIpcBusinessSystemService ipcBusinessSystemService;
+    private IIpcDesktopAppService ipcDesktopAppService;
 
     /**
      * 获取公司导航数据
@@ -73,6 +83,58 @@ public class IpcPluginController {
 
         return R.data(businessSystems);
     }
+
+    /**
+     * 详情
+     */
+    @GetMapping("/message/detail")
+    @ApiOperationSupport(order = 2)
+    @ApiOperation(value = "详情", notes = "传入ipcDesktopApp")
+    public R<IpcDesktopApp> detail(IpcDesktopApp ipcDesktopApp) {
+        IpcDesktopApp detail = ipcDesktopAppService.getOne(Condition.getQueryWrapper(ipcDesktopApp));
+        return R.data(detail);
+    }
+
+    /**
+     * 分页 消息列表
+     */
+    @GetMapping("/message/list")
+    @ApiOperationSupport(order = 3)
+    @ApiOperation(value = "分页", notes = "传入ipcDesktopApp")
+    public R<IPage<IpcDesktopApp>> list(IpcDesktopApp ipcDesktopApp, Query query) {
+        IPage<IpcDesktopApp> pages = ipcDesktopAppService.page(Condition.getPage(query), Condition.getQueryWrapper(ipcDesktopApp));
+        return R.data(pages);
+    }
+
+    // /**
+    //  * 新增 消息
+    //  */
+    // @PostMapping("/message/save")
+    // @ApiOperationSupport(order = 4)
+    // @ApiOperation(value = "新增", notes = "传入ipcDesktopApp")
+    // public R save(@Valid @RequestBody IpcDesktopApp ipcDesktopApp) {
+    //     return R.status(ipcDesktopAppService.save(ipcDesktopApp));
+    // }
+
+    // /**
+    //  * 修改 消息
+    //  */
+    // @PostMapping("/update")
+    // @ApiOperationSupport(order = 5)
+    // @ApiOperation(value = "修改", notes = "传入ipcDesktopApp")
+    // public R update(@Valid @RequestBody IpcDesktopApp ipcDesktopApp) {
+    //     return R.status(ipcDesktopAppService.updateById(ipcDesktopApp));
+    // }
+
+    // /**
+    //  * 删除 消息
+    //  */
+    // @PostMapping("/message/remove")
+    // @ApiOperationSupport(order = 6)
+    // @ApiOperation(value = "逻辑删除", notes = "传入id")
+    // public R remove(@RequestBody IpcDesktopApp ipcDesktopApp) {
+    //     return R.status(ipcDesktopAppService.removeById(ipcDesktopApp.getId()));
+    // }
 
     /**
      * 获取客户端真实IP

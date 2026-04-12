@@ -1,5 +1,5 @@
 -- 工控机管控--桌面应用维护表
-CREATE TABLE `ipc_desktop_app` (
+CREATE TABLE `llq_message_management` (
   `id` varchar(32) NOT NULL COMMENT '主键',
   `app_name` varchar(255) DEFAULT NULL COMMENT '桌面应用名称',
   `main_file_name` varchar(255) DEFAULT NULL COMMENT '主程序文件名',

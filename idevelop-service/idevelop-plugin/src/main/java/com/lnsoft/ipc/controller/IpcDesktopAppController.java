@@ -24,7 +24,7 @@ import com.lnsoft.core.boot.ctrl.IdevelopController;
  */
 @RestController
 @AllArgsConstructor
-@RequestMapping("/ipcdesktopapp")
+@RequestMapping("/message")
 @Api(value = "工控机管控--桌面应用维护表", tags = "工控机管控--桌面应用维护表接口")
 public class IpcDesktopAppController extends IdevelopController {
 
@@ -42,7 +42,7 @@ public class IpcDesktopAppController extends IdevelopController {
 	}
 
 	/**
-	 * 分页 工控机管控--桌面应用维护表
+	 * 分页 消息列表
 	 */
 	@GetMapping("/list")
 	@ApiOperationSupport(order = 2)
@@ -54,7 +54,7 @@ public class IpcDesktopAppController extends IdevelopController {
 
 
 	/**
-	 * 新增 工控机管控--桌面应用维护表
+	 * 新增 消息
 	 */
 	@PostMapping("/save")
 	@ApiOperationSupport(order = 4)
@@ -64,7 +64,7 @@ public class IpcDesktopAppController extends IdevelopController {
 	}
 
 	/**
-	 * 修改 工控机管控--桌面应用维护表
+	 * 修改 消息
 	 */
 	@PostMapping("/update")
 	@ApiOperationSupport(order = 5)
@@ -76,7 +76,7 @@ public class IpcDesktopAppController extends IdevelopController {
 
 
 	/**
-	 * 删除 工控机管控--桌面应用维护表
+	 * 删除 消息
 	 */
 	@PostMapping("/remove")
 	@ApiOperationSupport(order = 7)

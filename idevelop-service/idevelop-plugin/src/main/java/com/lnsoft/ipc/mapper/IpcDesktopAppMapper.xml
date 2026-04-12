@@ -19,7 +19,7 @@
 	<select id="selectIpcDesktopAppPage" resultMap="ipcDesktopAppMap">
 		SELECT
 		<include refid="ipcDesktopAppColumns" />
-		FROM ipc_desktop_app
+		FROM llq_message_management
 		<where>
 			<if test="appName != null and appName != ''">
 				AND app_name LIKE CONCAT('%', #{appName}, '%')
