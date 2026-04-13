@@ -128,7 +128,7 @@ public class IpcPluginController {
     //     return R.status(ipcDesktopAppService.updateById(ipcDesktopApp));
     // }
 
-    // /**
+    /**
      * 删除 工控机管控--桌面应用维护表
      */
     @PostMapping("/remove")
