@@ -23,6 +23,7 @@ import com.lnsoft.ipc.entity.IpcDesktopApp;
 import com.lnsoft.ipc.service.IIpcTerminalService;
 import com.lnsoft.ipc.service.IIpcBusinessSystemService;
 import com.lnsoft.ipc.service.IIpcDesktopAppService;
+import com.lnsoft.ipc.service.IIpcTicketService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import javax.validation.Valid;
@@ -45,6 +46,7 @@ public class IpcPluginController {
     private IIpcTerminalService ipcTerminalService;
     private IIpcBusinessSystemService ipcBusinessSystemService;
     private IIpcDesktopAppService ipcDesktopAppService;
+    private IIpcTicketService ipcTicketService;
 
     /**
      * 获取公司导航数据
@@ -127,14 +129,35 @@ public class IpcPluginController {
     // }
 
     // /**
-    //  * 删除 消息
-    //  */
-    // @PostMapping("/message/remove")
-    // @ApiOperationSupport(order = 6)
-    // @ApiOperation(value = "逻辑删除", notes = "传入id")
-    // public R remove(@RequestBody IpcDesktopApp ipcDesktopApp) {
-    //     return R.status(ipcDesktopAppService.removeById(ipcDesktopApp.getId()));
-    // }
+     * 删除 工控机管控--桌面应用维护表
+     */
+    @PostMapping("/remove")
+    @ApiOperationSupport(order = 6)
+    @ApiOperation(value = "逻辑删除", notes = "传入id")
+    public R remove(@RequestBody IpcDesktopApp ipcDesktopApp) {
+        return R.status(ipcDesktopAppService.removeById(ipcDesktopApp.getId()));
+    }
+
+    /**
+     * 保存ticket和ip
+     */
+    @PostMapping("/saveTicket")
+    @ApiOperationSupport(order = 7)
+    @ApiOperation(value = "保存ticket和ip", notes = "传入ticket")
+    public R saveTicket(@RequestParam("ticket") String ticket) {
+        // 获取客户端IP
+        String clientIp = getClientIp();
+        if (Func.isBlank(clientIp)) {
+            return R.fail("无法获取客户端IP");
+        }
+
+        if (Func.isBlank(ticket)) {
+            return R.fail("ticket不能为空");
+        }
+
+        boolean result = ipcTicketService.saveTicket(ticket, clientIp);
+        return R.status(result);
+    }
 
     /**
      * 获取客户端真实IP
