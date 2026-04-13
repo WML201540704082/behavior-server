@@ -22,6 +22,13 @@ import com.lnsoft.core.tool.utils.crypto.sm2.SM2Key;
 import com.lnsoft.core.tool.utils.crypto.sm2.SM2Util;
 import com.lnsoft.system.user.entity.UserInfo;
 import com.lnsoft.system.user.feign.IUserClient;
+import com.sgcc.isc.core.orm.identity.User;
+import com.sgcc.isc.service.adapter.factory.AdapterFactory;
+import com.sgcc.isc.service.adapter.helper.IIdentityService;
+import com.sgcc.isc.framework.common.service.ServiceTicketValidator;
+import com.sgcc.isc.framework.common.service.ServiceResponse;
+import com.lnsoft.core.isc.domain.IscSSOUserBean;
+import com.lnsoft.common.tool.CommonUtil;
 
 import com.wf.captcha.SpecCaptcha;
 import io.swagger.annotations.Api;
@@ -56,7 +63,7 @@ public class AuthController {
 
 	@Resource
 	private RedisUtil redisUtil;
-//	private IIdentityService identityService = (IIdentityService) AdapterFactory.getIdentityService();
+	private IIdentityService identityService = (IIdentityService) AdapterFactory.getIdentityService();
 	@Resource
 	private IUserClient userClient;
 
@@ -129,56 +136,56 @@ public class AuthController {
 		return R.data(TokenUtil.createAuthInfo(userInfo));
 	}
 
-//	@PostMapping("/ssoIscLogin")
-//	@ApiOperation(value = "ISC-CAS单点登录票据验证接口", notes = "CAS票据:ticket")
-//	public R<AuthInfo> ssoIscLogin(@ApiParam(value = "CAS票据", required = true) @RequestParam("ticket") String ticket,
-//								   @ApiParam(value = "租户ID", required = true) @RequestParam(defaultValue = "000000", required = false) String tenantId) {
-//		// 验证票据
-//		ServiceTicketValidator sv = new ServiceTicketValidator();
-//		ServiceResponse sr = new ServiceResponse();
-//		User user = null;
-//		try {
-//			CommonUtil.casValidate(sv, sr, ticket);
-//			if (sv.isAuthenticationSuccesful()) {
-//				sr.read(sv.getResponse());
-//				IscSSOUserBean iscSsoUserBean = null;
-//				Map<String, Object> userMap = sr.getUserMap();
-//				if (userMap != null) {
-//					iscSsoUserBean = new IscSSOUserBean();
-//					BeanUtils.populate(iscSsoUserBean, userMap);
-//					String[] userId = {iscSsoUserBean.getIscUserId()};
-//					List<User> userList = identityService.getUserByIds(userId);
-//					if (null != userList.get(0)) {
-//						user = userList.get(0);
-//						// 账号
-//						String iscUserName = user.getUserName();
-//						log.info("ISC账号：{}", iscUserName);
-//						String userType = Func.toStr(WebUtil.getRequest().getHeader(TokenUtil.USER_TYPE_HEADER_KEY), TokenUtil.DEFAULT_USER_TYPE);
-//						String userName = user.getResExt().get("namecode").toString();
-//						log.info("ISC账号【namecode】：{}", userName);
-//
-//						TokenParameter tokenParameter = new TokenParameter();
-//						tokenParameter.getArgs().set("tenantId", tenantId)
-//							.set("account", userName)
-//							.set("grantType", "no-password")
-//							.set("userType", userType);
-//						ITokenGranter granter = TokenGranterBuilder.getGranter("no-password");
-//						UserInfo userInfo = granter.grant(tokenParameter);
-//						if (userInfo == null || userInfo.getUser() == null || userInfo.getUser().getId() == null) {
-//							return R.fail(TokenUtil.USER_NOT_FOUND);
-//						}
-//						return R.data(TokenUtil.createAuthInfo(userInfo));
-//					}
-//				}
-//			} else {
-//				return R.fail("票据验证失败");
-//			}
-//		} catch (Exception e) {
-//			log.error("票据验证失败：{}", e.getMessage(), e);
-//			throw new ServiceException("票据验证失败");
-//		}
-//		return R.data(null);
-//	}
+	@PostMapping("/ssoIscLogin")
+	@ApiOperation(value = "ISC-CAS单点登录票据验证接口", notes = "CAS票据:ticket")
+	public R<AuthInfo> ssoIscLogin(@ApiParam(value = "CAS票据", required = true) @RequestParam("ticket") String ticket,
+								   @ApiParam(value = "租户ID", required = true) @RequestParam(defaultValue = "000000", required = false) String tenantId) {
+		// 验证票据
+		ServiceTicketValidator sv = new ServiceTicketValidator();
+		ServiceResponse sr = new ServiceResponse();
+		User user = null;
+		try {
+			CommonUtil.casValidate(sv, sr, ticket);
+			if (sv.isAuthenticationSuccesful()) {
+				sr.read(sv.getResponse());
+				IscSSOUserBean iscSsoUserBean = null;
+				Map<String, Object> userMap = sr.getUserMap();
+				if (userMap != null) {
+					iscSsoUserBean = new IscSSOUserBean();
+					BeanUtils.populate(iscSsoUserBean, userMap);
+					String[] userId = {iscSsoUserBean.getIscUserId()};
+					List<User> userList = identityService.getUserByIds(userId);
+					if (null != userList.get(0)) {
+						user = userList.get(0);
+						// 账号
+						String iscUserName = user.getUserName();
+						log.info("ISC账号：{}", iscUserName);
+						String userType = Func.toStr(WebUtil.getRequest().getHeader(TokenUtil.USER_TYPE_HEADER_KEY), TokenUtil.DEFAULT_USER_TYPE);
+						String userName = user.getResExt().get("namecode").toString();
+						log.info("ISC账号【namecode】：{}", userName);
+
+						TokenParameter tokenParameter = new TokenParameter();
+						tokenParameter.getArgs().set("tenantId", tenantId)
+							.set("account", userName)
+							.set("grantType", "no-password")
+							.set("userType", userType);
+						ITokenGranter granter = TokenGranterBuilder.getGranter("no-password");
+						UserInfo userInfo = granter.grant(tokenParameter);
+						if (userInfo == null || userInfo.getUser() == null || userInfo.getUser().getId() == null) {
+							return R.fail(TokenUtil.USER_NOT_FOUND);
+						}
+						return R.data(TokenUtil.createAuthInfo(userInfo));
+					}
+				}
+			} else {
+				return R.fail("票据验证失败");
+			}
+		} catch (Exception e) {
+			log.error("票据验证失败：{}", e.getMessage(), e);
+			throw new ServiceException("票据验证失败");
+		}
+		return R.data(null);
+	}
 
 	@GetMapping("/captcha")
 	@ApiOperation(value = "获取验证码")
