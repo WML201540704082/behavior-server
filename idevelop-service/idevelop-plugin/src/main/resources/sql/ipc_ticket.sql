@@ -1,5 +1,5 @@
--- 创建ipc_ticket表
-CREATE TABLE `ipc_ticket` (
+-- 创建llq_ticket表
+CREATE TABLE `llq_ticket` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `ticket` varchar(255) NOT NULL COMMENT 'ticket',
   `ip` varchar(50) NOT NULL COMMENT '客户端IP',

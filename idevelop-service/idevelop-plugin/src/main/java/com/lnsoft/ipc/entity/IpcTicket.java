@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
  * @since 2026-04-13
  */
 @Data
-@TableName("ipc_ticket")
+@TableName("llq_ticket")
 public class IpcTicket implements Serializable {
 
     private static final long serialVersionUID = 1L;
