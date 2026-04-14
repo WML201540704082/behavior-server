@@ -2,5 +2,5 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.lnsoft.common.config.IdevelopCommonConfiguration,\
   com.lnsoft.common.msg.configure.ConfigProperties,\
-  com.lnsoft.common.msg.service.MessageSendService,\
-  com.lnsoft.common.config.WebConfig
+  com.lnsoft.common.config.WebConfig,\
+  com.lnsoft.common.msg.service.MessageSendService
