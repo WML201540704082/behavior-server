@@ -1,10 +1,7 @@
 
 package com.lnsoft.gateway;
 
-import com.lnsoft.core.launch.IdevelopApplication;
-import com.lnsoft.core.launch.config.IpFilter;
-import com.lnsoft.core.launch.config.IpFilterConfiguration;
-import com.lnsoft.core.launch.constant.AppConstant;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
@@ -14,11 +11,11 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  * @author guozhao
  */
 @EnableDiscoveryClient
-@SpringBootApplication(exclude = {IpFilterConfiguration.class})
+@SpringBootApplication
 public class GateWayApplication {
 
 	public static void main(String[] args) {
-		IdevelopApplication.run(AppConstant.APPLICATION_GATEWAY_NAME, GateWayApplication.class, args);
+		SpringApplication.run(GateWayApplication.class, args);
 	}
 
 }
