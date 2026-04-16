@@ -77,6 +77,11 @@
 <!--            <version>${idevelop.tool.version}</version>-->
 <!--        </dependency>-->
         <dependency>
+            <groupId>com.lnsoft</groupId>
+            <artifactId>idevelop-core-isc</artifactId>
+            <version>${idevelop.tool.version}</version>
+        </dependency>
+        <dependency>
             <groupId>commons-beanutils</groupId>
             <artifactId>commons-beanutils</artifactId>
             <version>1.9.3</version>
