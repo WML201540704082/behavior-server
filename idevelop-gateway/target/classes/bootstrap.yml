@@ -15,6 +15,10 @@ spring:
           uri: lb://idevelop-auth
           predicates:
             - Path=/idevelop-auth/**
+        - id: idevelop-auth-captcha
+          uri: lb://idevelop-auth
+          predicates:
+            - Path=/captcha/**
     loadbalancer:
       retry:
         enabled: true

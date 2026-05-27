@@ -1,4 +1,5 @@
 com/lnsoft/auth/granter/SocialTokenGranter.class
+com/lnsoft/auth/controller/AuthController.class
 com/lnsoft/auth/enums/IdevelopUserEnum.class
 com/lnsoft/auth/granter/TokenGranterBuilder.class
 com/lnsoft/auth/granter/RefreshTokenGranter.class
