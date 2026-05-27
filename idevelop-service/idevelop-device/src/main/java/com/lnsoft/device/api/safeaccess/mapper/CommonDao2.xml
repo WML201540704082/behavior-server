@@ -1,0 +1,786 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.safeaccess.mapper.CommonDao2">
+<!--    <resultMap id="BaseResultMap"-->
+<!--               type="com.lnsoft.hardwarebase.api.domain.HardwareBasic">-->
+<!--        <id column="DTHB_ID" property="dthbId" jdbcType="VARCHAR" />-->
+<!--        <result column="BASIC_DEVICE_CODE" property="basicDeviceCode"-->
+<!--                jdbcType="VARCHAR" />-->
+<!--        <result column="BASIC_DEVICE_NAME" property="basicDeviceName"-->
+<!--                jdbcType="VARCHAR" />-->
+<!--        <result column="BASIC_DEVICE_CLASS" property="basicDeviceClass"-->
+<!--                jdbcType="VARCHAR" />-->
+<!--        <result column="BASIC_DEVICE_TYPE" property="basicDeviceType"-->
+<!--                jdbcType="VARCHAR" />-->
+<!--        <result column="BASIC_UNIT_FIRST" property="basicUnitFirst"-->
+<!--                jdbcType="VARCHAR" />-->
+<!--        <result column="BASIC_UNIT_SECOND" property="basicUnitSecond"-->
+<!--                jdbcType="VARCHAR" />-->
+<!--        <result column="BASIC_UNIT_THIRD" property="basicUnitThird"-->
+<!--                jdbcType="VARCHAR" />-->
+<!--        <result column="BASIC_MAKE_COUNTRY" property="basicMakeCountry"-->
+<!--                jdbcType="VARCHAR" />-->
+<!--        <result column="BASIC_MAKER" property="basicMaker" jdbcType="VARCHAR" />-->
+<!--        <result column="BASIC_BRAND" property="basicBrand" jdbcType="VARCHAR" />-->
+<!--        <result column="BASIC_SERIAL" property="basicSerial" jdbcType="VARCHAR" />-->
+<!--        <result column="BASIC_MODEL" property="basicModel" jdbcType="VARCHAR" />-->
+<!--        <result column="BASIC_STATE" property="basicState" jdbcType="VARCHAR" />-->
+<!--        <result column="BASIC_PUT_DATE" property="basicPutDate"-->
+<!--                jdbcType="VARCHAR" />-->
+<!--        <result column="BASIC_RFID" property="basicRfid" jdbcType="VARCHAR" />-->
+<!--        <result column="APP_NETWORK" property="appNetwork" jdbcType="VARCHAR" />-->
+<!--        <result column="APP_IP" property="appIp" jdbcType="VARCHAR" />-->
+<!--        <result column="APP_MAC" property="appMac" jdbcType="VARCHAR" />-->
+<!--        <result column="BASIC_CPROOM" property="basicCproom" jdbcType="VARCHAR" />-->
+<!--        <result column="BASIC_CABINET_NO" property="basicCabinetNo"-->
+<!--                jdbcType="VARCHAR" />-->
+<!--        <result column="BASIC_RACK_NO" property="basicRackNo" jdbcType="VARCHAR" />-->
+<!--        <result column="BASIC_LOC_NO" property="basicLocNo" jdbcType="VARCHAR" />-->
+<!--        <result column="APP_DEV_LOCATION" property="appDevLocation"-->
+<!--                jdbcType="VARCHAR" />-->
+<!--        <result column="BASIC_REMARK" property="basicRemark" jdbcType="VARCHAR" />-->
+<!--        <result column="BASIC_USAGE" property="basicUsage" jdbcType="VARCHAR" />-->
+<!--        <result column="BASIC_SYNC_ERP" property="basicSyncErp"-->
+<!--                jdbcType="INTEGER" />-->
+<!--        <result column="ERP_SYNC_STATE" property="erpSyncState"-->
+<!--                jdbcType="VARCHAR" />-->
+<!--        <result column="ERP_SYNC_LASTDATE" property="erpSyncLastdate"-->
+<!--                jdbcType="VARCHAR" />-->
+<!--        <result column="BASIC_SGCC_CODE" property="basicSgccCode"-->
+<!--                jdbcType="VARCHAR" />-->
+<!--        <result column="DEV_T_TIME_INSERT" property="devTTimeInsert"-->
+<!--                jdbcType="VARCHAR" />-->
+<!--        <result column="DEV_T_TIME_UPDATE" property="devTTimeUpdate"-->
+<!--                jdbcType="VARCHAR" />-->
+<!--        <result column="DEV_VERSION" property="devVersion" jdbcType="VARCHAR" />-->
+<!--        <result column="VERSION_STATE" property="versionState"-->
+<!--                jdbcType="VARCHAR" />-->
+<!--    </resultMap>-->
+    <sql id="Base_Column_List">
+		DTHB_ID, BASIC_DEVICE_CODE, BASIC_DEVICE_NAME,
+		BASIC_DEVICE_CLASS,
+		BASIC_DEVICE_TYPE,
+		BASIC_UNIT_FIRST,
+		BASIC_UNIT_SECOND, BASIC_UNIT_THIRD, BASIC_MAKE_COUNTRY, BASIC_MAKER,
+		BASIC_BRAND, BASIC_SERIAL, BASIC_MODEL, BASIC_STATE, BASIC_PUT_DATE,
+		BASIC_RFID,
+		APP_NETWORK, APP_IP, APP_MAC, BASIC_CPROOM,
+		BASIC_CABINET_NO, BASIC_RACK_NO,
+		BASIC_LOC_NO,
+		APP_DEV_LOCATION,
+		BASIC_REMARK, BASIC_USAGE, BASIC_SYNC_ERP, ERP_SYNC_STATE,
+		ERP_SYNC_LASTDATE,
+		BASIC_SGCC_CODE, DEV_T_TIME_INSERT,
+		DEV_T_TIME_UPDATE, DEV_VERSION, VERSION_STATE
+	</sql>
+
+    <select id="getIpsCanUse" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        select t.ip label,t.ip value from ${tableName} t
+        where t.subnet =
+        #{subnet_id} and t.is_used = 0
+        <if test="devType=='52' or devType=='60'">
+            and ip_level &lt; 3
+        </if>
+        <if test="devType!='52' and devType!='60'">
+            and ip_level =1
+        </if>
+        order by order_no*1 asc
+    </select>
+
+
+    <insert id="insertHardwareBasic" parameterType="java.util.Map">
+        insert into dev_t_hardware_basic
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="equipmentId != null">
+                DTHB_ID,
+            </if>
+            <if test="basicDeviceCode != null">
+                BASIC_DEVICE_CODE,
+            </if>
+            <if test="basicDeviceName != null">
+                BASIC_DEVICE_NAME,
+            </if>
+            <if test="basicDeviceClass != null">
+                BASIC_DEVICE_CLASS,
+            </if>
+            <if test="caregory != null">
+                BASIC_DEVICE_TYPE,
+            </if>
+            <if test="basicUnitFirst != null">
+                BASIC_UNIT_FIRST,
+            </if>
+            <if test="basicUnitSecond != null">
+                BASIC_UNIT_SECOND,
+            </if>
+            <if test="basicUnitThird != null">
+                BASIC_UNIT_THIRD,
+            </if>
+            <if test="basicMakeCountry != null">
+                BASIC_MAKE_COUNTRY,
+            </if>
+            <if test="basicMaker != null">
+                BASIC_MAKER,
+            </if>
+            <if test="basicBrand != null">
+                BASIC_BRAND,
+            </if>
+            <if test="basicSerial != null">
+                BASIC_SERIAL,
+            </if>
+            <if test="basicModel != null">
+                BASIC_MODEL,
+            </if>
+            <if test="basicState != null">
+                BASIC_STATE,
+            </if>
+            <if test="basicPutDate != null">
+                BASIC_PUT_DATE,
+            </if>
+            <if test="basicRfid != null">
+                BASIC_RFID,
+            </if>
+            <if test="appNetwork != null">
+                APP_NETWORK,
+            </if>
+            <if test="appIp != null">
+                APP_IP,
+            </if>
+            <if test="appMac != null">
+                APP_MAC,
+            </if>
+            <if test="basicCproom != null">
+                BASIC_CPROOM,
+            </if>
+            <if test="basicCabinetNo != null">
+                BASIC_CABINET_NO,
+            </if>
+            <if test="basicRackNo != null">
+                BASIC_RACK_NO,
+            </if>
+            <if test="basicLocNo != null">
+                BASIC_LOC_NO,
+            </if>
+            <if test="appDevLocation != null">
+                APP_DEV_LOCATION,
+            </if>
+            <if test="basicRemark != null">
+                BASIC_REMARK,
+            </if>
+            <if test="basicUsage != null">
+                BASIC_USAGE,
+            </if>
+            <if test="basicSyncErp != null">
+                BASIC_SYNC_ERP,
+            </if>
+            <if test="erpSyncState != null">
+                ERP_SYNC_STATE,
+            </if>
+            <if test="erpSyncLastdate != null">
+                ERP_SYNC_LASTDATE,
+            </if>
+            <if test="basicSgccCode != null">
+                BASIC_SGCC_CODE,
+            </if>
+            <if test="devTTimeInsert != null">
+                DEV_T_TIME_INSERT,
+            </if>
+            <if test="devTTimeUpdate != null">
+                DEV_T_TIME_UPDATE,
+            </if>
+            <if test="devVersion != null">
+                DEV_VERSION,
+            </if>
+            <if test="versionState != null">
+                VERSION_STATE,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="equipmentId != null">
+                #{equipmentId,jdbcType=VARCHAR},
+            </if>
+            <if test="basicDeviceCode != null">
+                #{basicDeviceCode,jdbcType=VARCHAR},
+            </if>
+            <if test="basicDeviceName != null">
+                #{basicDeviceName,jdbcType=VARCHAR},
+            </if>
+            <if test="basicDeviceClass != null">
+                #{basicDeviceClass,jdbcType=VARCHAR},
+            </if>
+            <if test="caregory != null">
+                #{caregory,jdbcType=VARCHAR},
+            </if>
+            <if test="basicUnitFirst != null">
+                #{basicUnitFirst,jdbcType=VARCHAR},
+            </if>
+            <if test="basicUnitSecond != null">
+                #{basicUnitSecond,jdbcType=VARCHAR},
+            </if>
+            <if test="basicUnitThird != null">
+                #{basicUnitThird,jdbcType=VARCHAR},
+            </if>
+            <if test="basicMakeCountry != null">
+                #{basicMakeCountry,jdbcType=VARCHAR},
+            </if>
+            <if test="basicMaker != null">
+                #{basicMaker,jdbcType=VARCHAR},
+            </if>
+            <if test="basicBrand != null">
+                #{basicBrand,jdbcType=VARCHAR},
+            </if>
+            <if test="basicSerial != null">
+                #{basicSerial,jdbcType=VARCHAR},
+            </if>
+            <if test="basicModel != null">
+                #{basicModel,jdbcType=VARCHAR},
+            </if>
+            <if test="basicState != null">
+                #{basicState,jdbcType=VARCHAR},
+            </if>
+            <if test="basicPutDate != null">
+                #{basicPutDate,jdbcType=VARCHAR},
+            </if>
+            <if test="basicRfid != null">
+                #{basicRfid,jdbcType=VARCHAR},
+            </if>
+            <if test="appNetwork != null">
+                #{appNetwork,jdbcType=VARCHAR},
+            </if>
+            <if test="appIp != null">
+                #{appIp,jdbcType=VARCHAR},
+            </if>
+            <if test="appMac != null">
+                #{appMac,jdbcType=VARCHAR},
+            </if>
+            <if test="basicCproom != null">
+                #{basicCproom,jdbcType=VARCHAR},
+            </if>
+            <if test="basicCabinetNo != null">
+                #{basicCabinetNo,jdbcType=VARCHAR},
+            </if>
+            <if test="basicRackNo != null">
+                #{basicRackNo,jdbcType=VARCHAR},
+            </if>
+            <if test="basicLocNo != null">
+                #{basicLocNo,jdbcType=VARCHAR},
+            </if>
+            <if test="appDevLocation != null">
+                #{appDevLocation,jdbcType=VARCHAR},
+            </if>
+            <if test="basicRemark != null">
+                #{basicRemark,jdbcType=VARCHAR},
+            </if>
+            <if test="basicUsage != null">
+                #{basicUsage,jdbcType=VARCHAR},
+            </if>
+            <if test="basicSyncErp != null">
+                #{basicSyncErp,jdbcType=INTEGER},
+            </if>
+            <if test="erpSyncState != null">
+                #{erpSyncState,jdbcType=VARCHAR},
+            </if>
+            <if test="erpSyncLastdate != null">
+                #{erpSyncLastdate,jdbcType=VARCHAR},
+            </if>
+            <if test="basicSgccCode != null">
+                #{basicSgccCode,jdbcType=VARCHAR},
+            </if>
+            <if test="devTTimeInsert != null">
+                #{devTTimeInsert,jdbcType=VARCHAR},
+            </if>
+            <if test="devTTimeUpdate != null">
+                #{devTTimeUpdate,jdbcType=VARCHAR},
+            </if>
+            <if test="devVersion != null">
+                #{devVersion,jdbcType=VARCHAR},
+            </if>
+            <if test="versionState != null">
+                #{versionState,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateDevHardwareBasic" parameterType="java.util.Map">
+        update dev_t_hardware_basic
+        <trim prefix="set" suffixOverrides=",">
+            <if test="deviceIp != null">
+                APP_IP = #{deviceIp,jdbcType=VARCHAR},
+            </if>
+            <if test="deviceMac != null">
+                APP_MAC = #{deviceMac,jdbcType=VARCHAR},
+            </if>
+            <if test="remarks3 != null">
+                app_dev_location = #{remarks3,jdbcType=VARCHAR},
+            </if>
+            <if test="appNetwork != null">
+                APP_NETWORK = #{appNetwork,jdbcType=VARCHAR},
+            </if>
+            <if test="basicState != null">
+                BASIC_STATE = #{basicState,jdbcType=VARCHAR},
+            </if>
+            <if test="brand != null">
+                BASIC_BRAND = #{brand,jdbcType=VARCHAR},
+            </if>
+            <if test="series != null">
+                BASIC_SERIAL = #{series,jdbcType=VARCHAR},
+            </if>
+            <if test="model != null">
+                BASIC_MODEL = #{model,jdbcType=VARCHAR},
+            </if>
+            <if test="caregory != null">
+                BASIC_DEVICE_TYPE = #{caregory,jdbcType=VARCHAR},
+            </if>
+            <if test="basicDeviceClass != null">
+                basic_device_class =
+                #{basicDeviceClass,jdbcType=VARCHAR},
+            </if>
+            <if test="deviceNo != null">
+                basic_device_code = #{deviceNo,jdbcType=VARCHAR},
+            </if>
+            <if test="compCode3 != null">
+                BASIC_UNIT_THIRD = #{compCode3,jdbcType=VARCHAR},
+            </if>
+            <if test="compCode2 != null">
+                BASIC_UNIT_SECOND = #{compCode2,jdbcType=VARCHAR},
+            </if>
+            <if test="compCode1 != null">
+                BASIC_UNIT_FIRST = #{compCode1,jdbcType=VARCHAR},
+            </if>
+            <if test="basicPutDate != null">
+                BASIC_PUT_DATE = #{basicPutDate,jdbcType=VARCHAR},
+            </if>
+            <if test="devTimeInsert != null">
+                DEV_T_TIME_INSERT = #{devTimeInsert,jdbcType=VARCHAR},
+            </if>
+            <if test="devTimeUpdate != null">
+                DEV_T_TIME_UPDATE = #{devTimeUpdate,jdbcType=VARCHAR},
+            </if>
+
+        </trim>
+        where BASIC_DEVICE_CODE = #{deviceNo,jdbcType=VARCHAR}
+
+    </update>
+
+
+    <update id="updateDevTHardwareBasicByDeviceNo" parameterType="java.util.Map">
+		update DEV_T_HARDWARE_BASIC t set t.basic_unit_third = #{remarks6}
+		where t.basic_device_code = #{deviceNo}
+
+	</update>
+    <update id="updateDevTHardwareUseByDeviceNo" parameterType="java.util.Map">
+		update dev_t_hardware_use t set t.mi_use_dep
+		= #{remarks5}
+		where
+		t.basic_device_code = #{deviceNo}
+
+	</update>
+
+    <select id="findApplyJobTypeById" parameterType="java.lang.String"
+            resultType="java.lang.String">
+		select t.apply_job_type from CS_T_ACESS_NETWORK t
+		where
+		t.application_id = (select t2.application_id from cs_t_equipment t2
+		where t2.equipment_id = #{id})
+
+	</select>
+
+
+    <update id="updateDevTHardwareUse" parameterType="java.util.Map">
+        update DEV_T_HARDWARE_USE
+        <trim prefix="set" suffixOverrides=",">
+            <if test="responsiblePerson != null">
+                mi_user=#{responsiblePerson},
+            </if>
+            <if test="miUseDep != null">
+                mi_use_dep=#{miUseDep},
+            </if>
+            <if test="miUseDate!=null">
+                MI_USE_DATE=#{miUseDate},
+            </if>
+            <if test="miChargeUser!=null">
+                mi_charge_user=#{miChargeUser},
+            </if>
+        </trim>
+        where basic_device_code = #{deviceNo}
+    </update>
+
+    <update id="updateDevTHardwareContract" parameterType="java.util.Map">
+        update DEV_T_HARDWARE_CONTRACT
+        <trim prefix="set" suffixOverrides=",">
+            <if test="piMethod!=null">
+                PI_METHOD=#{piMethod},
+            </if>
+            <if test="piSuppliers != null">
+                PI_SUPPLIERS=#{piSuppliers},
+            </if>
+            <if test="piSuppliersContact != null">
+                PI_SUPPLIERS_CONTACT=#{piSuppliersContact},
+            </if>
+            <if test="piSuppliersPhone != null">
+                PI_SUPPLIERS_PHONE=#{piSuppliersPhone},
+            </if>
+            <if test=" 1 != 2">
+                remark='',
+            </if>
+        </trim>
+        where basic_device_code = #{deviceNo}
+    </update>
+
+    <select id="findWorkType" resultType="java.util.Map">
+		select t.type_code
+		type_code,
+		t.type_name type_name, t.CLASSIFY_ID parent_id from
+		DEV_T_HARDWARE_TYPE t
+		where t.type_id
+		&lt;&gt; '00052' order by
+		t.CLASSIFY_ID desc
+	</select>
+
+    <delete id="deleteDevTHardWare" parameterType="java.lang.String">
+		delete from
+		DEV_T_HARDWARE_BASIC where dthb_id=#{value}
+	</delete>
+
+    <delete id="deleteHardWareByCode" parameterType="java.lang.String">
+		delete from
+		DEV_T_HARDWARE_BASIC where BASIC_DEVICE_CODE=#{value}
+	</delete>
+
+
+    <select id="getSwModelByTypeId" parameterType="java.lang.String"
+            resultType="java.lang.String">
+		select type_name from dev_t_brand where type_id=#{swModel}
+	</select>
+
+    <select id="queryCodeClass" parameterType="java.lang.String"
+            resultType="java.lang.String">
+		SELECT
+		t.CLASSIFY_CODE
+		FROM
+		dev_t_hardware_classify t
+		WHERE
+		t.CLASSIFY_ID=(select
+		t.CLASSIFY_ID from dev_t_hardware_type t where
+		t.type_code=#{typeCode})
+	</select>
+
+    <!-- 查找设备类型 -->
+    <select id="findCategoryMap" resultType="java.util.Map">
+		select t.type_code
+		typeCode,
+		t.type_name typeName, t.CLASSIFY_ID parentId from
+		DEV_T_HARDWARE_TYPE t
+		where
+		(t.CLASSIFY_ID = '00007' or t.CLASSIFY_ID =
+		'00008' or
+		t.CLASSIFY_ID =
+		'00005') order by t.CLASSIFY_ID desc
+	</select>
+
+    <!-- 查询台账子表是否有数据 -->
+    <select id="findHardwareUse" parameterType="java.lang.String"
+            resultType="java.util.Map">
+		select * from dev_t_hardware_use t where
+		t.BASIC_DEVICE_CODE=#{deviceNumber}
+	</select>
+
+    <!-- 查询台账子表是否有数据 -->
+    <select id="findHardwareContract" parameterType="java.lang.String"
+            resultType="java.util.Map">
+		select * from dev_t_hardware_contract t where
+		t.BASIC_DEVICE_CODE=#{deviceNumber}
+	</select>
+
+    <!-- 查询台账子表是否有数据 -->
+<!--    <select id="selectHardwareContract" parameterType="java.lang.String"-->
+<!--            resultType="com.lnsoft.hardwarebase.api.domain.HardwareContract">-->
+<!--		select * from dev_t_hardware_contract t where-->
+<!--		t.BASIC_DEVICE_CODE=#{deviceNumber}-->
+<!--	</select>-->
+
+<!--    <select id="selectHardware" resultType="com.lnsoft.hardwarebase.api.domain.HardwareBasic" parameterType="string">-->
+<!--		select * from dev_t_hardware_basic where basic_device_code = #{deviceNo}-->
+<!--	</select>-->
+
+
+    <!-- 设备台账子表插入数据 -->
+    <insert id="insertHardwareContract" parameterType="java.util.Map">
+		INSERT INTO
+		dev_t_hardware_contract (
+		PURCHASE_ID ,
+		PI_METHOD ,
+		PI_DEV_ADD_METHOD ,
+		PI_DEV_EXCHANGE_METHOD ,
+		PI_ASSETS_PROPERTIES ,
+		PI_ASSETS_INITIAL_VALUE
+		,
+		PI_PROPERTY_OWNERSHIP ,
+		PI_ERP_MP ,
+		PI_ERP_WBS ,
+		PI_CONTRACT_CODE ,
+		PI_ORDER_DATE ,
+		PI_SUPPLIERS ,
+		PI_SUPPLIERS_CONTACT ,
+		PI_SUPPLIERS_PHONE
+		,
+		PI_FACTORY_NUMBER ,
+		PI_FACTORY_DATE ,
+		CREATE_DATE ,
+		UPDATE_DATE ,
+		BASIC_DEVICE_CODE ,
+		DEV_VERSION ,
+		VERSION_STATE
+		)
+		VALUES
+		(
+		#{equipmentId},
+		#{piMethod},
+		'',
+		'',
+		'',
+		'',
+		'',
+		'',
+		'',
+		'',
+		'',
+		#{piSuppliers},
+		#{piSuppliersContact},
+		#{piSuppliersPhone},
+		'',
+		'',
+		#{devTTimeInsert},
+		#{devTTimeUpdate},
+
+		#{basicDeviceCode},
+		'0',
+		'1'
+		);
+
+
+	</insert>
+
+    <insert id="insertHardwareUse" parameterType="java.util.Map">
+        INSERT INTO
+        dev_t_hardware_use (
+        <if test="miChargeUser != null">mi_charge_user,</if>
+        USE_ID,
+        MI_USE_DEP,
+        MI_RESERVE_DEP,
+        MI_USER,
+        MI_USE_DATE,
+        MI_OM_DEP,
+        MI_METERIAL_MANAGE_DEP,
+        MI_OM_RESPONSIBLE,
+        MI_OM_PHONE,
+        MI_LS_LOGO,
+        CREATE_DATE,
+        UPDATE_DATE,
+        BASIC_DEVICE_CODE,
+        DEV_VERSION,
+        VERSION_STATE
+        )
+        VALUES
+        (
+        <if test="miChargeUser != null">#{miChargeUser},</if>
+        #{equipmentId},
+        #{miUseDep},
+        '',
+        #{responsiblePerson},
+        #{miUseDate},
+        '',
+        '',
+        '',
+        '',
+        '',
+        #{devTTimeInsert},
+        #{devTTimeUpdate},
+        #{basicDeviceCode},
+        '0',
+        '1'
+        );
+
+
+
+    </insert>
+    <insert id="insertHardwareService" parameterType="java.util.Map">
+		INSERT INTO
+		dev_t_hardware_service (
+		SERVICE_ID,
+		SI_EXPIRATION_DATE,
+		SI_CONTRACT_CODE,
+		SI_SERVICER,
+		SI_SERVICE_CLASS,
+		SI_START_DATE,
+		SI_END_DATE,
+		SI_SERVICER_CONTACT,
+		SI_SERVICER_PHONE,
+		SI_AUDIT_STATUS,
+		SI_AUDIT_LASTDATE,
+		MI_USE_DEP,
+		CREATE_DATE,
+		UPDATE_DATE,
+		BASIC_DEVICE_CODE,
+		DEV_VERSION,
+		VERSION_STATE
+		)
+		VALUES
+		(
+		#{equipmentId},
+		'',
+		'',
+		'',
+		'',
+		'',
+		'',
+		'',
+		'',
+		'',
+		'',
+		'',
+		#{devTTimeInsert},
+		#{devTTimeUpdate},
+		#{basicDeviceCode},
+		'0',
+		'1'
+		);
+	</insert>
+    <insert id="insertHardwareRecord" parameterType="java.util.Map">
+		INSERT INTO
+		dev_t_hardware_record (
+		RECORD_ID,
+		FI_CODE,
+		BASIC_DEVICE_CODE,
+		FI_FIXEDASSETS_CODE,
+		FI_SEFEMANAGE_DEP,
+		FI_DEVMANAGE_DEP,
+		FI_SUPERVISION_DEP,
+		FI_DATABASE,
+		FI_MIDDLEWARE,
+		FI_IS_SCAN,
+		FI_SCAN_DATE,
+		FI_IS_SAFETY_REINFORCE,
+		FI_REINFORCE_DATE,
+		FI_ANTIVIRUS,
+		FI_VIRUSLIB_UPDATE_DATE,
+		FI_ANTIVIRUS_VERSION,
+		FI_IN_IMS,
+		FI_IS_HOTSTANDBY,
+		FI_IS_SAFECHECK,
+		FI_JOURNAL_DUMP,
+		FI_SAFECHECK_DATE,
+		FI_MONITOR_PLATFORM,
+		FI_SECURITY_BOUNDARY,
+		FI_SAFETY_FUNCTION,
+		FI_SAFETY_STAFF,
+		FI_IN_IMSISS,
+		FI_IS_STRICT_POLICY,
+		FI_MAC,
+		FI_RACK_NO,
+		CREATE_DATE,
+		UPDATE_DATE,
+		DEV_VERSION,
+		VERSION_STATE
+		)
+		VALUES
+		(
+		#{equipmentId},
+		'',
+		#{basicDeviceCode},
+		'',
+		'',
+		'',
+		'',
+		'',
+		'',
+		'',
+		'',
+		'',
+		'',
+		'',
+		'',
+		'',
+		'',
+		'',
+		'',
+		'',
+		'',
+		'',
+		'',
+		'',
+		'',
+		'',
+		'',
+		'',
+		'',
+		#{devTTimeInsert},
+		#{devTTimeUpdate},
+		'0',
+		'1'
+		);
+	</insert>
+    <insert id="insertHardwareApp" parameterType="java.util.Map">
+		INSERT INTO
+		dev_t_hardware_app (
+		APP_ID,
+		CREATE_DATE,
+		UPDATE_DATE,
+		BASIC_DEVICE_CODE,
+		DEV_VERSION,
+		VERSION_STATE
+		)
+		VALUES
+		(
+		#{equipmentId},
+		#{devTTimeInsert},
+		#{devTTimeUpdate},
+		#{basicDeviceCode},
+		'0',
+		'1'
+		);
+	</insert>
+
+    <!-- 删除设备台账主表数据 -->
+    <delete id="deleteHardwareBasic" parameterType="java.lang.String">
+		delete from
+		dev_t_hardware_basic where basic_device_code=#{deviceNo};
+	</delete>
+
+    <!-- 删除设备台账子表数据 -->
+    <delete id="deleteHardwareContract" parameterType="java.lang.String">
+		delete from
+		dev_t_hardware_contract where basic_device_code=#{deviceNo};
+	</delete>
+    <delete id="deleteHardwareUse" parameterType="java.lang.String">
+		delete from
+		dev_t_hardware_use where basic_device_code=#{deviceNo};
+	</delete>
+
+    <!-- 查询radius数据库链接信息 -->
+    <select id="fingMySqlSource" parameterType="java.lang.String"
+            resultType="com.lnsoft.device.api.safeaccess.entity.SysTRadiusConnection">
+		select t.STRC_ID strcId,
+		t.ORG_NO orgNo,
+		t.RADIUS_IP
+		radiusIp,
+		t.RADIUS_PORT radiusPort,
+		t.RADIUS_NAME radiusName,
+		t.RADIUS_USER radiusUser,
+		t.RADIUS_PASSWD radiusPasswd from
+		sys_t_radius_connection t where t.ORG_NO=#{orgNo}
+	</select>
+
+    <!-- 根据设别类型查询设备分类 -->
+    <select id="getCodeClass" parameterType="java.lang.String"
+            resultType="java.lang.String">
+		select t.CLASSIFY_CODE from dev_t_hardware_classify t where
+		t.CLASSIFY_ID=(select t.CLASSIFY_ID from dev_t_hardware_type t where
+		t.type_code=#{typeCode});
+	</select>
+
+    <update id="getRidOfMiChargeUser" parameterType="java.lang.String">
+		update dev_t_hardware_use set mi_charge_user = '' where
+		BASIC_DEVICE_CODE = #{deviceNo}
+	</update>
+</mapper>

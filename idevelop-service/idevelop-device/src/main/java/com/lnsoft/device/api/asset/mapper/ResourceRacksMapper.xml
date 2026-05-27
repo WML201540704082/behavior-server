@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.asset.mapper.ResourceRacksMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="resourceRacksResultMap" type="com.lnsoft.device.api.asset.entity.ResourceRacks">
+        <id column="id" property="id"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_dept" property="createDept"/>
+        <result column="create_time" property="createTime"/>
+        <result column="status" property="status"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="racks_name" property="racksName"/>
+        <result column="global_name" property="globalName"/>
+        <result column="abbreviation" property="abbreviation"/>
+        <result column="belong_racks" property="belongRacks"/>
+        <result column="produce_factory" property="produceFactory"/>
+        <result column="use_date" property="useDate"/>
+        <result column="racks_num" property="racksNum"/>
+        <result column="racks_occupancy" property="racksOccupancy"/>
+        <result column="running_status" property="runningStatus"/>
+        <result column="racks_location" property="racksLocation"/>
+        <result column="return_date" property="returnDate"/>
+        <result column="maintenance_unit" property="maintenanceUnit"/>
+        <result column="maintenance_unit_name" property="maintenanceUnitName"/>
+        <result column="maintenance_user" property="maintenanceUser"/>
+        <result column="remark" property="remark"/>
+        <result column="cabinets_id" property="cabinetsId"/>
+    </resultMap>
+
+
+    <select id="selectResourceRacksPage" resultMap="resourceRacksResultMap">
+        select
+        *
+        from idevelop_resource_racks where is_deleted = 0
+        <if test="resourceRacks.racksName != null and resourceRacks.racksName != ''">
+            and racks_name like concat('%',#{resourceRacks.racksName},'%')
+        </if>
+        <if test="resourceRacks.cabinetsId != null and resourceRacks.cabinetsId != ''">
+            and cabinets_id = #{resourceRacks.cabinetsId}
+        </if>
+    </select>
+    <select id="selectResourceRacksByCabinetsId" resultMap="resourceRacksResultMap">
+        select * from idevelop_resource_racks where 1=1
+        <if test="cabinetsIds != null and cabinetsIds.size > 0">
+            and id in
+            <foreach collection="cabinetsIds" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+    </select>
+
+    <select id="selectRacksById" resultType="com.lnsoft.device.api.asset.dto.ExportRacks">
+        select racks_name,global_name,abbreviation,belong_racks,produce_factory,use_date,racks_num,racks_occupancy,
+        running_status,racks_location,return_date,maintenance_unti,maintenance_user,remark
+        from idevelop_resource_racks  where is_deleted = 0 and id =#{id}
+    </select>
+    <select id="selectRacksList" resultType="com.lnsoft.device.api.asset.dto.ExportRacks">
+        select racks_name,global_name,abbreviation,belong_racks,produce_factory,use_date,racks_num,racks_occupancy,
+        running_status,racks_location,return_date,maintenance_unti,maintenance_user,remark
+        from idevelop_resource_racks  where is_deleted = 0
+        <if test="racksName!=null and racksName != ''">
+            and racks_name like concat('%',#{racksName},'%')
+        </if>
+        <if test="cabinetsId != null and cabinetsId != ''">
+            and cabinets_id = #{cabinetsId}
+        </if>
+    </select>
+    <select id="findByCabinetsId" resultType="com.lnsoft.device.api.asset.entity.ResourceRacks">
+        select * from idevelop_resource_racks where is_deleted = 0
+        <if test="cabinetsId != null and cabinetsId != ''">
+            and cabinets_id = #{cabinetsId}
+        </if>
+    </select>
+
+</mapper>

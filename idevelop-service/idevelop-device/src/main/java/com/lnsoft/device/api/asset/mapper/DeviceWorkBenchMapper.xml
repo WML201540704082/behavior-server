@@ -1,0 +1,946 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.asset.mapper.DeviceWorkBenchMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="deviceWorkBenchDoneMap" type="com.lnsoft.device.api.asset.entity.WorkBenchDone">
+        <result column="id" property="id"/>
+        <result column="business_id" property="businessId"/>
+        <result column="process_name" property="processName"/>
+        <result column="create_user" property="createUser"/>
+        <result column="process_id" property="processId"/>
+        <result column="process_status" property="processStatus"/>
+        <result column="description" property="description"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+
+    <select id="selectWorkTodoListCount" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM (SELECT
+        record.id AS id,
+        record.filing_no AS business_id,
+        '设备建档' AS process_name,
+        record.create_user AS create_user,
+        record.process_ins_id AS process_id,
+        record.process_status AS process_status,
+        record.create_time AS create_time,
+        CONCAT(record.device_num, record.unit_name, record.device_type_name) AS description
+        FROM idevelop_device_record record
+        WHERE is_deleted = 0 AND record.STATUS <![CDATA[<]]> 3
+        UNION ALL
+        SELECT
+        transfer.id AS id,
+        transfer.filing_no AS business_id,
+        '设备转资' AS process_name,
+        transfer.create_user AS create_user,
+        transfer.process_ins_id AS process_id,
+        transfer.process_status AS process_status,
+        transfer.create_time AS create_time,
+        '' AS description
+        FROM idevelop_device_transfer transfer
+        WHERE is_deleted = 0 AND transfer.STATUS <![CDATA[<]]> 3
+        UNION ALL
+        SELECT
+        apply.id AS id,
+        apply.apply_no AS business_id,
+        '设备申请' AS process_name,
+        apply.create_user AS create_user,
+        apply.process_ins_id AS process_id,
+        apply.process_status AS process_status,
+        apply.create_time AS create_time,
+        apply.apply_reason AS description
+        FROM idevelop_device_apply apply
+        WHERE is_deleted = 0 AND apply.STATUS <![CDATA[<]]> 6
+        UNION ALL
+        SELECT
+        outbound.id AS id,
+        outbound.outbound_no AS business_id,
+        '设备出库' AS process_name,
+        outbound.create_user AS create_user,
+        outbound.process_ins_id AS process_id,
+        outbound.process_status AS process_status,
+        outbound.create_time AS create_time,
+        CONCAT('申请数量: ', outbound.apply_num, ' ', '出库数量: ', outbound.outbound_num) AS description
+        FROM idevelop_device_outbound outbound
+        WHERE is_deleted = 0 AND outbound.STATUS <![CDATA[<]]> 5
+        UNION ALL
+        SELECT
+        operation.id AS id,
+        operation.operation_no AS business_id,
+        '设备投运' AS process_name,
+        operation.create_user AS create_user,
+        operation.process_ins_id AS process_id,
+        operation.process_status AS process_status,
+        operation.create_time AS create_time,
+        CONCAT(operation.device_type_name, operation.operation_num) AS description
+        FROM idevelop_device_operation operation
+        WHERE is_deleted = 0 AND operation_type = 0 AND operation.STATUS <![CDATA[<]]> 6
+        UNION ALL
+        SELECT
+        scrap.id AS id,
+        scrap.filing_no AS business_id,
+        '设备报废' AS process_name,
+        scrap.create_user AS create_user,
+        scrap.process_ins_id AS process_id,
+        scrap.process_status AS process_status,
+        scrap.create_time AS create_time,
+        CONCAT(scrap.scrap_reason, scrap.device_num) AS description
+        FROM idevelop_device_scrap scrap
+        WHERE is_deleted = 0 AND scrap.STATUS <![CDATA[<]]> 3
+        UNION ALL
+        SELECT
+        repairs.id AS id,
+        repairs.filing_no AS business_id,
+        '设备报修' AS process_name,
+        repairs.create_user AS create_user,
+        repairs.process_ins_id AS process_id,
+        repairs.process_status AS process_status,
+        repairs.create_time AS create_time,
+        CONCAT(repairs.repair_type, repairs.description) AS description
+        FROM idevelop_device_repair repairs
+        WHERE is_deleted = 0 AND repairs.ticket_status <![CDATA[<]]> 6
+        UNION ALL
+        SELECT
+        returned.id AS id,
+        returned.filing_no AS business_id,
+        '设备退运' AS process_name,
+        returned.create_user AS create_user,
+        returned.process_ins_id AS process_id,
+        returned.process_status AS process_status,
+        returned.create_time AS create_time,
+        returned.return_reason AS description
+        FROM idevelop_device_returned returned
+        WHERE is_deleted = 0 AND returned.STATUS <![CDATA[<]]> 3
+        UNION ALL
+        SELECT
+        changes.id AS id,
+        changes.filing_no AS business_id,
+        '设备变更' AS process_name,
+        changes.create_user AS create_user,
+        changes.process_ins_id AS process_id,
+        changes.process_status AS process_status,
+        changes.create_time AS create_time,
+        changes.change_type AS description
+        FROM idevelop_device_change changes
+        WHERE is_deleted = 0 AND changes.ticket_status <![CDATA[<]]> 3
+        UNION ALL
+        SELECT
+        t.id AS id,
+        t.code AS business_id,
+        t.type AS process_name,
+        t.create_user,
+        t.process_ins_id as process_id,
+        t.process_code as process_status,
+        t.initiateTime AS create_time,
+        '' as description
+        FROM
+        (
+        SELECT
+        id,
+        `code`,
+        '检修计划' AS type,
+        status_info,
+        create_time AS initiateTime,
+        create_user,
+        process_ins_id,
+        'nanrui_jihua' AS process_code,
+        is_deleted
+        FROM
+        info_repair_plan
+        WHERE
+        is_deleted = 0
+        UNION ALL
+        SELECT
+        id,
+        `code`,
+        '检修工单' AS type,
+        status_info,
+        create_time AS initiateTime,
+        create_user,
+        process_ins_id,
+        'nanrui_jxgd' AS process_code,
+        is_deleted
+        FROM
+        info_repair
+        WHERE
+        is_deleted = 0
+        ) t
+
+        WHERE
+        t.is_deleted = 0
+        AND status_info = 2
+        ) works
+        <where>
+            <if test="createUser != null and createUser != ''">
+                works.create_user = #{createUser}
+            </if>
+        </where>
+        ORDER BY works.create_time DESC
+    </select>
+
+    <select id="selectWorkTodoList" resultMap="deviceWorkBenchDoneMap">
+        SELECT works.id,
+        works.business_id,
+        works.process_name,
+        works.process_code,
+        works.create_user,
+        works.process_id,
+        works.process_status,
+        works.description,
+        works.create_time
+        FROM (SELECT
+        record.id AS id,
+        record.filing_no AS business_id,
+        '设备建档' AS process_name,
+        'bpm_sbjd' AS process_code,
+        record.create_user AS create_user,
+        record.process_ins_id AS process_id,
+        record.process_status AS process_status,
+        record.create_time AS create_time,
+        CONCAT(record.device_num, record.unit_name, record.device_type_name) AS description
+        FROM idevelop_device_record record
+        WHERE is_deleted = 0 AND record.STATUS <![CDATA[<]]> 3
+        UNION ALL
+        SELECT
+        transfer.id AS id,
+        transfer.filing_no AS business_id,
+        '设备转资' AS process_name,
+        'bpm_sbzz' AS process_code,
+        transfer.create_user AS create_user,
+        transfer.process_ins_id AS process_id,
+        transfer.process_status AS process_status,
+        transfer.create_time AS create_time,
+        '' AS description
+        FROM idevelop_device_transfer transfer
+        WHERE is_deleted = 0 AND transfer.STATUS <![CDATA[<]]> 3
+        UNION ALL
+        SELECT
+        apply.id AS id,
+        apply.apply_no AS business_id,
+        '设备申请' AS process_name,
+        'bpm_sbsqckty' AS process_code,
+        apply.create_user AS create_user,
+        apply.process_ins_id AS process_id,
+        apply.process_status AS process_status,
+        apply.create_time AS create_time,
+        apply.apply_reason AS description
+        FROM idevelop_device_apply apply
+        WHERE is_deleted = 0 AND apply.STATUS <![CDATA[<]]> 6
+        UNION ALL
+        SELECT
+        outbound.id AS id,
+        outbound.outbound_no AS business_id,
+        '设备出库' AS process_name,
+        'bpm_sbsqckty' AS process_code,
+        outbound.create_user AS create_user,
+        outbound.process_ins_id AS process_id,
+        outbound.process_status AS process_status,
+        outbound.create_time AS create_time,
+        CONCAT('申请数量: ', outbound.apply_num, ' ', '出库数量: ', outbound.outbound_num) AS description
+        FROM idevelop_device_outbound outbound
+        WHERE is_deleted = 0 AND outbound.STATUS <![CDATA[<]]> 5
+        UNION ALL
+        SELECT
+        operation.id AS id,
+        operation.operation_no AS business_id,
+        '设备投运' AS process_name,
+        'bpm_sbsqckty' AS process_code,
+        operation.create_user AS create_user,
+        operation.process_ins_id AS process_id,
+        operation.process_status AS process_status,
+        operation.create_time AS create_time,
+        CONCAT(operation.device_type_name, operation.operation_num) AS description
+        FROM idevelop_device_operation operation
+        WHERE is_deleted = 0 AND operation_type = 0 AND operation.STATUS <![CDATA[<]]> 6
+        UNION ALL
+        SELECT
+        scrap.id AS id,
+        scrap.filing_no AS business_id,
+        '设备报废' AS process_name,
+        'bpm_sbbf' AS process_code,
+        scrap.create_user AS create_user,
+        scrap.process_ins_id AS process_id,
+        scrap.process_status AS process_status,
+        scrap.create_time AS create_time,
+        CONCAT(scrap.scrap_reason, scrap.device_num) AS description
+        FROM idevelop_device_scrap scrap
+        WHERE is_deleted = 0 AND scrap.STATUS <![CDATA[<]]> 3
+        UNION ALL
+        SELECT
+        repairs.id AS id,
+        repairs.filing_no AS business_id,
+        '设备报修' AS process_name,
+        'bpm_sbbx' AS process_code,
+        repairs.create_user AS create_user,
+        repairs.process_ins_id AS process_id,
+        repairs.process_status AS process_status,
+        repairs.create_time AS create_time,
+        CONCAT(repairs.repair_type, repairs.description) AS description
+        FROM idevelop_device_repair repairs
+        WHERE is_deleted = 0 AND repairs.ticket_status <![CDATA[<]]> 6
+        UNION ALL
+        SELECT
+        returned.id AS id,
+        returned.filing_no AS business_id,
+        '设备退运' AS process_name,
+        'bpm_sbty' AS process_code,
+        returned.create_user AS create_user,
+        returned.process_ins_id AS process_id,
+        returned.process_status AS process_status,
+        returned.create_time AS create_time,
+        returned.return_reason AS description
+        FROM idevelop_device_returned returned
+        WHERE is_deleted = 0 AND returned.STATUS <![CDATA[<]]> 3
+        UNION ALL
+        SELECT
+        changes.id AS id,
+        changes.filing_no AS business_id,
+        '设备变更' AS process_name,
+        'bpm_sbbg' AS process_code,
+        changes.create_user AS create_user,
+        changes.process_ins_id AS process_id,
+        changes.process_status AS process_status,
+        changes.create_time AS create_time,
+        changes.change_type AS description
+        FROM idevelop_device_change changes
+        WHERE is_deleted = 0 AND changes.ticket_status <![CDATA[<]]> 3
+        UNION ALL
+        SELECT
+        t.id AS id,
+        t.code AS business_id,
+        t.type AS process_name,
+        'nanrui_jxjh' AS process_code,
+        t.create_user,
+        t.process_ins_id as process_id,
+        t.process_code as process_status,
+        t.initiateTime AS create_time,
+        '' as description
+        FROM
+        (
+        SELECT
+        id,
+        `code`,
+        '检修计划' AS type,
+        status_info,
+        create_time AS initiateTime,
+        create_user,
+        process_ins_id,
+        'nanrui_jihua' AS process_code,
+        is_deleted
+        FROM
+        info_repair_plan
+        WHERE
+        is_deleted = 0
+        UNION ALL
+        SELECT
+        id,
+        `code`,
+        '检修工单' AS type,
+        status_info,
+        create_time AS initiateTime,
+        create_user,
+        process_ins_id,
+        'nanrui_jxgd' AS process_code,
+        is_deleted
+        FROM
+        info_repair
+        WHERE
+        is_deleted = 0
+        ) t
+
+        WHERE
+        t.is_deleted = 0
+        AND status_info = 2
+        ) works
+        <where>
+            <if test="createUser != null and createUser != ''">
+                works.create_user = #{createUser}
+            </if>
+        </where>
+        ORDER BY works.create_time DESC
+        <if test="current !=null and size != null">
+            LIMIT #{current}, #{size}
+        </if>
+    </select>
+
+
+    <select id="selectWorkDoneListCount" resultType="java.lang.Integer">
+
+        SELECT COUNT(*)
+        FROM (SELECT
+        record.id AS id,
+        record.filing_no AS business_id,
+        '设备建档' AS process_name,
+        record.create_user AS create_user,
+        record.process_ins_id AS process_id,
+        record.process_status AS process_status,
+        record.create_time AS create_time,
+        CONCAT(record.device_num, record.unit_name, record.device_type_name) AS description
+        FROM idevelop_device_record record
+        WHERE is_deleted = 0 AND record.STATUS = 3
+        UNION ALL
+        SELECT
+        transfer.id AS id,
+        transfer.filing_no AS business_id,
+        '设备转资' AS process_name,
+        transfer.create_user AS create_user,
+        transfer.process_ins_id AS process_id,
+        transfer.process_status AS process_status,
+        transfer.create_time AS create_time,
+        '' AS description
+        FROM idevelop_device_transfer transfer
+        WHERE is_deleted = 0 AND transfer.STATUS = 3
+        UNION ALL
+        SELECT
+        apply.id AS id,
+        apply.apply_no AS business_id,
+        '设备申请' AS process_name,
+        apply.create_user AS create_user,
+        apply.process_ins_id AS process_id,
+        apply.process_status AS process_status,
+        apply.create_time AS create_time,
+        apply.apply_reason AS description
+        FROM idevelop_device_apply apply
+        WHERE is_deleted = 0 AND apply.STATUS = 6
+        UNION ALL
+        SELECT
+        outbound.id AS id,
+        outbound.outbound_no AS business_id,
+        '设备出库' AS process_name,
+        outbound.create_user AS create_user,
+        outbound.process_ins_id AS process_id,
+        outbound.process_status AS process_status,
+        outbound.create_time AS create_time,
+        CONCAT('申请数量: ', outbound.apply_num, ' ', '出库数量: ', outbound.outbound_num) AS description
+        FROM idevelop_device_outbound outbound
+        WHERE is_deleted = 0 AND outbound.STATUS <![CDATA[>]]> 4
+        UNION ALL
+        SELECT
+        operation.id AS id,
+        operation.operation_no AS business_id,
+        '设备投运' AS process_name,
+        operation.create_user AS create_user,
+        operation.process_ins_id AS process_id,
+        operation.process_status AS process_status,
+        operation.create_time AS create_time,
+        CONCAT(operation.device_type_name, operation.operation_num) AS description
+        FROM idevelop_device_operation operation
+        WHERE is_deleted = 0 AND ((operation_type = 0 AND operation.STATUS = 6) OR (operation_type = 1 AND operation.STATUS = 4))
+        UNION ALL
+        SELECT
+        scrap.id AS id,
+        scrap.filing_no AS business_id,
+        '设备报废' AS process_name,
+        scrap.create_user AS create_user,
+        scrap.process_ins_id AS process_id,
+        scrap.process_status AS process_status,
+        scrap.create_time AS create_time,
+        CONCAT(scrap.scrap_reason, scrap.device_num) AS description
+        FROM idevelop_device_scrap scrap
+        WHERE is_deleted = 0 AND scrap.STATUS = 3
+        UNION ALL
+        SELECT
+        repairs.id AS id,
+        repairs.filing_no AS business_id,
+        '设备报修' AS process_name,
+        repairs.create_user AS create_user,
+        repairs.process_ins_id AS process_id,
+        repairs.process_status AS process_status,
+        repairs.create_time AS create_time,
+        CONCAT(repairs.repair_type, repairs.description) AS description
+        FROM idevelop_device_repair repairs
+        WHERE is_deleted = 0 AND repairs.ticket_status = 6
+        UNION ALL
+        SELECT
+        returned.id AS id,
+        returned.filing_no AS business_id,
+        '设备退运' AS process_name,
+        returned.create_user AS create_user,
+        returned.process_ins_id AS process_id,
+        returned.process_status AS process_status,
+        returned.create_time AS create_time,
+        returned.return_reason AS description
+        FROM idevelop_device_returned returned
+        WHERE is_deleted = 0 AND returned.STATUS = 3
+        UNION ALL
+        SELECT
+        changes.id AS id,
+        changes.filing_no AS business_id,
+        '设备变更' AS process_name,
+        changes.create_user AS create_user,
+        changes.process_ins_id AS process_id,
+        changes.process_status AS process_status,
+        changes.create_time AS create_time,
+        changes.change_type AS description
+        FROM idevelop_device_change changes
+        WHERE is_deleted = 0 AND changes.ticket_status = 3
+        union all
+        SELECT
+        t.id,
+        t.code as business_id,
+        t.type as process_name,
+        t.create_user,
+        '' as process_id,
+        '' as process_status,
+        t.initiateTime as create_time,
+        t.description
+        FROM
+        (
+        SELECT
+        id,
+        no AS code,
+        '巡视计划' AS type,
+        status_info,
+        create_time AS initiateTime,
+        create_user,
+        '巡视计划' as description,
+        is_deleted
+        FROM
+        info_inspection_plan
+        where is_deleted=0
+        and (status_info=2 or status_info=3)
+        UNION ALL
+        SELECT
+        id,
+        code,
+        '巡视工单' AS type,
+        status_info,
+        create_time AS initiateTime,
+        create_user,
+        '巡视工单' as description,
+        is_deleted
+        FROM
+        info_inspection_workorder
+        where is_deleted=0
+        and status_info  <![CDATA[<>]]> 1
+        UNION ALL
+        SELECT
+        id,
+        code,
+        '检修计划' AS type,
+        status_info,
+        create_time AS initiateTime,
+        create_user,
+        '检修计划' as description,
+        is_deleted
+        FROM
+        info_repair_plan
+        where is_deleted=0
+        and status_info=3
+        UNION ALL
+        SELECT
+        id,
+        code,
+        '检修工单' AS type,
+        status_info,
+        create_time AS initiateTime,
+        create_user,
+        '检修工单' as description,
+        is_deleted
+        FROM
+        info_repair
+        where is_deleted=0
+        and status_info  <![CDATA[<>]]> 1
+        and status_info  <![CDATA[<>]]> 2
+        UNION ALL
+        SELECT
+        id,
+        code,
+        '维修工单' AS type,
+        status_info,
+        create_time AS initiateTime,
+        create_user,
+        '维修工单' as description,
+        is_deleted
+        FROM
+        info_maintance
+        where is_deleted=0
+        and status_info  <![CDATA[<>]]> 1
+        ) t
+        ) works
+        <where>
+            <if test="createUser != null and createUser != ''">
+                works.create_user = #{createUser}
+            </if>
+        </where>
+        ORDER BY works.create_time DESC
+    </select>
+
+    <select id="selectWorkDoneList" resultMap="deviceWorkBenchDoneMap">
+
+        SELECT works.business_id,
+        works.id,
+        works.process_name,
+        works.create_user,
+        works.process_id,
+        works.process_status,
+        works.description,
+        works.create_time
+        FROM (SELECT
+        record.id AS id,
+        record.filing_no AS business_id,
+        '设备建档' AS process_name,
+        record.create_user AS create_user,
+        record.process_ins_id AS process_id,
+        record.process_status AS process_status,
+        record.create_time AS create_time,
+        CONCAT(record.device_num, record.unit_name, record.device_type_name) AS description
+        FROM idevelop_device_record record
+        WHERE is_deleted = 0 AND record.STATUS = 3
+        UNION ALL
+        SELECT
+        transfer.id AS id,
+        transfer.filing_no AS business_id,
+        '设备转资' AS process_name,
+        transfer.create_user AS create_user,
+        transfer.process_ins_id AS process_id,
+        transfer.process_status AS process_status,
+        transfer.create_time AS create_time,
+        '' AS description
+        FROM idevelop_device_transfer transfer
+        WHERE is_deleted = 0 AND transfer.STATUS = 3
+        UNION ALL
+        SELECT
+        apply.id AS id,
+        apply.apply_no AS business_id,
+        '设备申请' AS process_name,
+        apply.create_user AS create_user,
+        apply.process_ins_id AS process_id,
+        apply.process_status AS process_status,
+        apply.create_time AS create_time,
+        apply.apply_reason AS description
+        FROM idevelop_device_apply apply
+        WHERE is_deleted = 0 AND apply.STATUS = 6
+        UNION ALL
+        SELECT
+        outbound.id AS id,
+        outbound.outbound_no AS business_id,
+        '设备出库' AS process_name,
+        outbound.create_user AS create_user,
+        outbound.process_ins_id AS process_id,
+        outbound.process_status AS process_status,
+        outbound.create_time AS create_time,
+        CONCAT('申请数量: ', outbound.apply_num, ' ', '出库数量: ', outbound.outbound_num) AS description
+        FROM idevelop_device_outbound outbound
+        WHERE is_deleted = 0 AND outbound.STATUS <![CDATA[>]]> 4
+        UNION ALL
+        SELECT
+        operation.id AS id,
+        operation.operation_no AS business_id,
+        '设备投运' AS process_name,
+        operation.create_user AS create_user,
+        operation.process_ins_id AS process_id,
+        operation.process_status AS process_status,
+        operation.create_time AS create_time,
+        CONCAT(operation.device_type_name, operation.operation_num) AS description
+        FROM idevelop_device_operation operation
+        WHERE is_deleted = 0 AND ((operation_type = 0 AND operation.STATUS = 6) OR (operation_type = 1 AND operation.STATUS = 4))
+        UNION ALL
+        SELECT
+        scrap.id AS id,
+        scrap.filing_no AS business_id,
+        '设备报废' AS process_name,
+        scrap.create_user AS create_user,
+        scrap.process_ins_id AS process_id,
+        scrap.process_status AS process_status,
+        scrap.create_time AS create_time,
+        CONCAT(scrap.scrap_reason, scrap.device_num) AS description
+        FROM idevelop_device_scrap scrap
+        WHERE is_deleted = 0 AND scrap.STATUS = 3
+        UNION ALL
+        SELECT
+        repairs.id AS id,
+        repairs.filing_no AS business_id,
+        '设备报修' AS process_name,
+        repairs.create_user AS create_user,
+        repairs.process_ins_id AS process_id,
+        repairs.process_status AS process_status,
+        repairs.create_time AS create_time,
+        CONCAT(repairs.repair_type, repairs.description) AS description
+        FROM idevelop_device_repair repairs
+        WHERE is_deleted = 0 AND repairs.ticket_status = 6
+        UNION ALL
+        SELECT
+        returned.id AS id,
+        returned.filing_no AS business_id,
+        '设备退运' AS process_name,
+        returned.create_user AS create_user,
+        returned.process_ins_id AS process_id,
+        returned.process_status AS process_status,
+        returned.create_time AS create_time,
+        returned.return_reason AS description
+        FROM idevelop_device_returned returned
+        WHERE is_deleted = 0 AND returned.STATUS = 3
+        UNION ALL
+        SELECT
+        changes.id AS id,
+        changes.filing_no AS business_id,
+        '设备变更' AS process_name,
+        changes.create_user AS create_user,
+        changes.process_ins_id AS process_id,
+        changes.process_status AS process_status,
+        changes.create_time AS create_time,
+        changes.change_type AS description
+        FROM idevelop_device_change changes
+        WHERE is_deleted = 0 AND changes.ticket_status = 3
+        union all
+        SELECT
+        t.id,
+        t.code as business_id,
+        t.type as process_name,
+        t.create_user,
+        '' as process_id,
+        '' as process_status,
+        t.initiateTime as create_time,
+        t.description
+        FROM
+        (
+        SELECT
+        id,
+        no AS code,
+        '巡视计划' AS type,
+        status_info,
+        create_time AS initiateTime,
+        create_user,
+        '巡视计划' as description,
+        is_deleted
+        FROM
+        info_inspection_plan
+        where is_deleted=0
+        and (status_info=2 or status_info=3)
+        UNION ALL
+        SELECT
+        id,
+        code,
+        '巡视工单' AS type,
+        status_info,
+        create_time AS initiateTime,
+        create_user,
+        '巡视工单' as description,
+        is_deleted
+        FROM
+        info_inspection_workorder
+        where is_deleted=0
+        and status_info  <![CDATA[<>]]> 1
+        UNION ALL
+        SELECT
+        id,
+        code,
+        '检修计划' AS type,
+        status_info,
+        create_time AS initiateTime,
+        create_user,
+        '检修计划' as description,
+        is_deleted
+        FROM
+        info_repair_plan
+        where is_deleted=0
+        and status_info=3
+        UNION ALL
+        SELECT
+        id,
+        code,
+        '检修工单' AS type,
+        status_info,
+        create_time AS initiateTime,
+        create_user,
+        '检修工单' as description,
+        is_deleted
+        FROM
+        info_repair
+        where is_deleted=0
+        and status_info  <![CDATA[<>]]> 1
+        and status_info  <![CDATA[<>]]> 2
+        UNION ALL
+        SELECT
+        id,
+        code,
+        '维修工单' AS type,
+        status_info,
+        create_time AS initiateTime,
+        create_user,
+        '维修工单' as description,
+        is_deleted
+        FROM
+        info_maintance
+        where is_deleted=0
+        and status_info  <![CDATA[<>]]> 1
+        ) t
+
+        ) works
+        <where>
+            <if test="createUser != null and createUser != ''">
+                works.create_user = #{createUser}
+            </if>
+        </where>
+        ORDER BY works.create_time DESC
+        <if test="current !=null and size != null">
+            LIMIT #{current}, #{size}
+        </if>
+    </select>
+    <select id="selectWorkDoneMyList" resultType="com.lnsoft.device.entity.ApproveRecord">
+        SELECT
+        works.id,
+        works.filing_code,
+        works.opt_type,
+        works.opt_opinion,
+        works.opt_date,
+        works.approve_status,
+        works.opt_by,
+        works.create_time,
+        works.update_user,
+        works.update_time,
+        works.STATUS,
+        works.is_deleted,
+        works.wbs_id,
+        works.filing_no,
+        works.node_id,
+        works.node_name,
+        works.opt_role,
+        works.opt_name,
+        works.remark,
+        works.create_dept,
+        works.create_user,
+        works.opt_title
+        FROM
+        (
+        SELECT
+        id,
+        filing_code,
+        opt_type,
+        opt_opinion,
+        opt_date,
+        approve_status,
+        opt_by,
+        create_time,
+        update_user,
+        update_time,
+        STATUS,
+        is_deleted,
+        wbs_id,
+        filing_no,
+        node_id,
+        node_name,
+        opt_role,
+        opt_name,
+        remark,
+        create_dept,
+        create_user,
+        opt_title
+        FROM
+        idevelop_approve_record
+        WHERE
+        is_deleted = 0
+        UNION ALL
+        SELECT
+        id,
+        NO AS filing_code,
+        ( CASE type WHEN 1 THEN '13' WHEN 2 THEN '14' WHEN 3 THEN '15' WHEN 4 THEN '16' WHEN 5 THEN '17' END ) AS opt_type,
+        content AS opt_opinion,
+        create_time AS opt_date,
+        3 AS approve_status,
+        create_user AS opt_by,
+        create_time AS create_time,
+        NULL AS update_user,
+        NULL AS update_time,
+        NULL AS STATUS,
+        is_deleted AS is_deleted,
+        NULL AS wbs_id,
+        NULL AS filing_no,
+        NULL AS node_id,
+        NULL AS node_name,
+        NULL AS opt_role,
+        NULL AS opt_name,
+        NULL AS remark,
+        NULL AS create_dept,
+        NULL AS create_user,
+        NULL AS opt_title
+        FROM
+        info_record
+        WHERE
+        is_deleted = 0
+        AND type IN ( 1, 2, 3, 4, 5 )
+        ) works
+        <where>
+            <if test="createUser != null and createUser != ''">
+                works.opt_by = #{createUser}
+            </if>
+        </where>
+        ORDER BY
+        works.create_time DESC
+        <if test="current !=null and size != null">
+            LIMIT #{current}, #{size}
+        </if>
+    </select>
+    <select id="selectWorkDoneMyCount" resultType="java.lang.Integer">
+        SELECT
+        count(*)
+        FROM
+        (
+        SELECT
+        id,
+        filing_code,
+        opt_type,
+        opt_opinion,
+        opt_date,
+        approve_status,
+        opt_by,
+        create_time,
+        update_user,
+        update_time,
+        STATUS,
+        is_deleted,
+        wbs_id,
+        filing_no,
+        node_id,
+        node_name,
+        opt_role,
+        opt_name,
+        remark,
+        create_dept,
+        create_user,
+        opt_title
+        FROM
+        idevelop_approve_record
+        WHERE
+        is_deleted = 0
+        UNION ALL
+        SELECT
+        id,
+        NO AS filing_code,
+        ( CASE type WHEN 1 THEN '13' WHEN 2 THEN '14' WHEN 3 THEN '15' WHEN 4 THEN '16' WHEN 5 THEN '17' END ) AS opt_type,
+        content AS opt_opinion,
+        create_time AS opt_date,
+        3 AS approve_status,
+        create_user AS opt_by,
+        create_time AS create_time,
+        NULL AS update_user,
+        NULL AS update_time,
+        NULL AS STATUS,
+        is_deleted AS is_deleted,
+        NULL AS wbs_id,
+        NULL AS filing_no,
+        NULL AS node_id,
+        NULL AS node_name,
+        NULL AS opt_role,
+        NULL AS opt_name,
+        NULL AS remark,
+        NULL AS create_dept,
+        NULL AS create_user,
+        NULL AS opt_title
+        FROM
+        info_record
+        WHERE
+        is_deleted = 0
+        AND type IN ( 1, 2, 3, 4, 5 )
+        ) works
+        <where>
+            <if test="createUser != null and createUser != ''">
+                works.opt_by = #{createUser}
+            </if>
+        </where>
+        ORDER BY
+        works.create_time DESC
+    </select>
+
+</mapper>

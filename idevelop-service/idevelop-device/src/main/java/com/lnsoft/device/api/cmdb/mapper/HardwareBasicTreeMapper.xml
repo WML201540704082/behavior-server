@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.cmdb.mapper.HardwareBasicTreeMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="hardwareBasicTreeResultMap" type="com.lnsoft.device.entity.HardwareBasicTree">
+        <id column="ci_id" property="ciId"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_dept" property="createDept"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="ci_name" property="ciName"/>
+        <result column="ci_label" property="ciLabel"/>
+        <result column="ci_icon" property="ciIcon"/>
+        <result column="ci_type_id" property="ciTypeId"/>
+        <result column="parent_ci_id" property="parentCiId"/>
+        <result column="parent_cmdb_id" property="parentCmdbId"/>
+        <!--<result column="ci_attr_global" property="ciAttrGlobal"/>-->
+        <result column="level" property="level"/>
+        <result column="is_menu" property="isMenu"/>
+        <result column="is_map" property="isMap"/>
+        <result column="is_update" property="isUpdate"/>
+        <result column="device_claccify" property="deviceClaccify"/>
+        <result column="device_type" property="deviceType"/>
+        <result column="sort" property="sort"/>
+        <result column="erp_code" property="erpCode"/>
+        <result column="i6000_code" property="i6000Code"/>
+    </resultMap>
+
+
+    <select id="selectHardwareBasicTreePage" resultMap="hardwareBasicTreeResultMap">
+        select * from idevelop_hardware_basic_tree where is_deleted = 0
+    </select>
+
+    <delete id="deleteByCiIds" parameterType="Long">
+        delete from idevelop_hardware_basic_tree  where ci_id in
+        <foreach item="id" collection="ciIds" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.warehouse.mapper.WarehouseMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="warehouseResultMap" type="com.lnsoft.device.api.warehouse.entity.Warehouse">
+        <id column="uuid" property="uuid"/>
+        <id column="warehouse_id" property="warehouseId"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_time" property="createTime"/>
+        <result column="status" property="status"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="warehouse_name" property="warehouseName"/>
+        <result column="owner_unit" property="ownerUnit"/>
+        <result column="warehouse_status" property="warehouseStatus"/>
+        <result column="charge_user" property="chargeUser"/>
+        <result column="phone_num" property="phoneNum"/>
+        <result column="owner_unit_id" property="ownerUnitId"/>
+        <result column="address" property="address"/>
+        <result column="remark" property="remark"/>
+        <result column="i6000_uuid" property="i6000Uuid"/>
+        <result column="i6000_name" property="i6000Name"/>
+    </resultMap>
+
+
+    <select id="selectWarehousePage" resultMap="warehouseResultMap">
+        select uuid,warehouse_id,warehouse_name,owner_unit,warehouse_status,charge_user,phone_num,address
+        from idevelop_warehouse where is_deleted = 0
+        <if test="warehouse.warehouseName != null and warehouse.warehouseName !=''">
+            and warehouse_name like concat('%',#{warehouse.warehouseName},'%')
+        </if>
+        <if test="warehouse.warehouseId!= null and warehouse.warehouseId !=''">
+            and warehouse_id = #{warehouse.warehouseId}
+        </if>
+        <if test="warehouse.ownerUnit!= null and warehouse.ownerUnit !=''">
+            and owner_unit = #{warehouse.owner_unit}
+        </if>
+    </select>
+    <select id="findByOwnerUnitId" resultType="com.lnsoft.device.api.warehouse.vo.WarehouseDictVO">
+        select warehouse_name,owner_unit,warehouse_id,owner_unit_id,uuid,address from idevelop_warehouse
+        <where>AND warehouse_status = 1 and is_deleted = 0
+            <if test="ownerUnitId != null and ownerUnitId != ''">
+                AND owner_unit_id = #{ownerUnitId}
+            </if>
+        </where>
+    </select>
+
+    <select id="deviceStatistics" resultMap="warehouseResultMap" parameterType="java.util.Map">
+        select uuid,warehouse_name,owner_unit,warehouse_id,owner_unit_id,dev_size,ware_size,out_size,last_update_time
+        from idevelop_warehouse
+        <where>is_deleted = 0
+            <if test="ownerUnitId!=null and ownerUnitId!=''">
+                and owner_unit_id = #{ownerUnitId}
+            </if>
+            <if test="ownerUnitName!=null and ownerUnitName!=''">
+                and warehouse_name = #{ownerUnitName}
+            </if>
+            <if test="warehouseName!=null and warehouseName!=''">
+                and warehouse_name = #{warehouseName}
+            </if>
+            <if test="warehouseId!=null and warehouseId!=''">
+                and warehouse_id = #{warehouseId}
+            </if>
+        </where>
+        order by dev_size desc limit 0,8
+    </select>
+    <select id="findByRegionCode" resultType="com.lnsoft.device.api.warehouse.vo.WarehouseVO">
+        select uuid,warehouse_id, charge_user,phone_num,i6000_name,
+               warehouse_name, warehouse_status, address, region_code,owner_unit_id,owner_unit
+        from idevelop_warehouse
+        where is_deleted = 0
+        <if test="regionCode!=null and regionCode!=''">
+            and region_code = #{regionCode}
+        </if>
+    </select>
+    <select id="findList" resultType="com.lnsoft.device.api.warehouse.vo.WarehouseVO">
+        SELECT iw.*,sum(idi.inventory_num) as devSize
+        FROM idevelop_warehouse iw
+        left join `idevelop_device_inventory` idi
+        on iw.uuid=idi.warehouse
+        where iw.is_deleted=0
+        <if test="ownerUnitId != null and ownerUnitId != ''">
+            AND owner_unit_id = #{ownerUnitId}
+        </if>
+        GROUP BY iw.uuid
+    </select>
+    <select id="findPage" resultType="com.lnsoft.device.api.warehouse.vo.WarehouseVO">
+        select *
+        from idevelop_warehouse
+        where is_deleted = 0
+        <if test="warehouse.ownerUnitId != null and warehouse.ownerUnitId != ''">
+            AND owner_unit_id = #{warehouse.ownerUnitId}
+        </if>
+        LIMIT #{startIndex},#{size}
+    </select>
+    <select id="findByRegionCodeAndName" resultType="com.lnsoft.device.api.warehouse.vo.WarehouseVO">
+        select uuid,warehouse_name,region_code,owner_unit_id,owner_unit
+        from idevelop_warehouse
+        where is_deleted = 0
+        <if test="regionCode!=null and regionCode!=''">
+            and region_code like concat(#{regionCode},'%')
+        </if>
+        <if test="name!=null and name!=''">
+            and warehouse_name = #{name}
+        </if>
+    </select>
+    <select id="getAll" resultType="com.lnsoft.device.api.warehouse.vo.WarehouseVO">
+        select iw.*,id.full_name from idevelop_warehouse iw left join idevelop_dept id on iw.owner_unit_id = id.id
+    </select>
+
+</mapper>

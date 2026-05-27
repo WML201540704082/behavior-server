@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.cmdb.mapper.IscDeptMapper">
+
+
+    <select id="selectIscDept">
+        SELECT isc.UNICODE as unicode,
+               isc.new_id,
+               isc.new_name,
+               stock.isc_user_id,
+               stock.isc_user_account,
+               stock.isc_user_name,
+               stock.isc_user_phone,
+               stock.isc_unit_id,
+               stock.isc_unit_name,
+               stock.isc_dept_id,
+               stock.isc_dept_name,
+               dept.erp_unit,
+               dept.erp_unit_code,
+               dept.region_code
+        FROM idevelop_dept dept
+                 left join idevelop_user_stock stock on dept.isc_dept_id = stock.isc_unit_id
+                 left join isc_dept isc on dept.id = isc.new_id
+        <where>
+            dept.type = 'CORP'
+            <if test="regionCode!= null and regionCode != ''">and region_code = #{regionCode} </if>
+        </where>
+
+    </select>
+
+
+    <select id="selectCientityId" resultType="java.lang.Long">
+        SELECT cientity_id AS cientityId
+        FROM idevelop_cientity_ls
+        <where>
+            <if test="isSuccess != null"> is_success = #{isSuccess} </if>
+        </where>
+        ORDER BY `id`
+        LIMIT #{pageNum}
+            , #{pageSize}
+    </select>
+
+    <update id="updateCientityId">
+        UPDATE idevelop_cientity_ls
+        SET is_success = #{isSuccess}
+        WHERE cientity_id = #{cientityId}
+    </update>
+
+    <select id="selectDeptIdByIscId" resultType="com.lnsoft.device.entity.StockDept">
+        SELECT id,full_name,isc_dept_id
+        FROM idevelop_dept
+        WHERE isc_dept_id in
+        <foreach item="item" collection="iscDeptList" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+</mapper>

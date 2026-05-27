@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.asset.mapper.ResourceCabinetsMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="resourceCabinetsResultMap" type="com.lnsoft.device.api.asset.entity.ResourceCabinets">
+        <id column="id" property="id"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_dept" property="createDept"/>
+        <result column="create_time" property="createTime"/>
+        <result column="status" property="status"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="cabinets_name" property="cabinetsName"/>
+        <result column="cabinets_id" property="cabinetsId"/>
+        <result column="global_name" property="globalName"/>
+        <result column="abbreviation" property="abbreviation"/>
+        <result column="belong_room" property="belongRoom"/>
+        <result column="cabinets_type" property="cabinetsType"/>
+        <result column="produce_factory" property="produceFactory"/>
+        <result column="use_date" property="useDate"/>
+        <result column="cabinets_width" property="cabinetsWidth"/>
+        <result column="cabinets_height" property="cabinetsHeight"/>
+        <result column="is_sort" property="isSort"/>
+        <result column="maintenance_unit" property="maintenanceUnit"/>
+        <result column="maintenance_unit_name" property="maintenanceUnitName"/>
+        <result column="capacity" property="capacity"/>
+        <result column="device_model" property="deviceModel"/>
+        <result column="cabinets_depth" property="cabinetsDepth"/>
+        <result column="return_date" property="returnDate"/>
+        <result column="maintenance_user" property="maintenanceUser"/>
+        <result column="room_id" property="roomId"/>
+        <result column="type" property="type"></result>
+    </resultMap>
+    <update id="updateBatch">
+        <foreach collection="list" item="item" separator=";">
+            update idevelop_resource_cabinets
+            set room_id = #{item.roomId}
+            where id = #{item.id}
+        </foreach>
+    </update>
+
+
+    <select id="selectResourceCabinetsPage" resultType="com.lnsoft.device.api.asset.entity.ResourceCabinetsLs">
+        select
+        *
+        from idevelop_resource_cabinets where is_deleted = 0
+        <if test="resourceCabinets.cabinetsName != null and resourceCabinets.cabinetsName != ''">
+            and cabinets_name like concat('%',#{resourceCabinets.cabinetsName},'%')
+        </if>
+        <if test="resourceCabinets.roomId != null and resourceCabinets.roomId != ''">
+            and room_id = #{resourceCabinets.roomId}
+        </if>
+        order by cabinets_name collate utf8mb4_general_ci
+    </select>
+    <select id="selectResourceCabinetsListByRoomId" resultMap="resourceCabinetsResultMap">
+        select * from idevelop_resource_cabinets where 1=1 and is_deleted = 0
+        <if test="roomIds != null and roomIds.size > 0">
+            and room_id in
+            <foreach collection="roomIds" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+    </select>
+    <select id="selectCabinetsIdById" resultType="java.lang.String">
+        select cabinets_id from idevelop_resource_cabinets where  is_deleted = 0 and id=#{id}
+    </select>
+    <select id="selectCabinetsList" resultType="com.lnsoft.device.api.asset.dto.ExportCabinets">
+        select cabinets_name,cabinets_id,global_name,abbreviation,belong_room,cabinets_type,
+        produce_factory,use_date,cabinets_width,cabinets_height,is_sort,maintenance_unit,capacity,
+        device_model,cabinets_depth,return_date,maintenance_user
+
+        from idevelop_resource_cabinets where is_deleted = 0
+        <if test="cabinetsName != null and cabinetsName != ''">
+            and cabinets_name like concat('%',#{cabinetsName},'%')
+        </if>
+        <if test="roomId != null and roomId != ''">
+            and room_id = #{roomId}
+        </if>
+    </select>
+    <select id="selectCabinetsById" resultType="com.lnsoft.device.api.asset.dto.ExportCabinets">
+       select cabinets_name,cabinets_id,global_name,abbreviation,belong_room,cabinets_type,
+        produce_factory,use_date,cabinets_width,cabinets_height,is_sort,maintenance_unit,capacity,
+        device_model,cabinets_depth,return_date,maintenance_user
+        from idevelop_resource_cabinets where is_deleted = 0 and id=#{id}
+    </select>
+    <select id="findByRoomId" resultType="com.lnsoft.device.api.asset.entity.ResourceCabinets">
+        select * from idevelop_resource_cabinets where is_deleted = 0
+        <if test="roomId != null and roomId != ''">
+            and room_id = #{roomId}
+        </if>
+        order by cabinets_name collate utf8mb4_general_ci
+    </select>
+    <select id="getAll" resultType="com.lnsoft.device.api.asset.vo.ResourceCabinetsVO">
+        select irc.*,id.full_name from idevelop_resource_cabinets irc left join idevelop_dept id on irc.maintenance_unit = id.id
+    </select>
+
+</mapper>

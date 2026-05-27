@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.stock.mapper.I6000ErpImportMasterMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="i6000ErpImportMasterResultMap" type="com.lnsoft.device.api.stock.entity.I6000ErpImportMaster">
+        <id column="id" property="id"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="status" property="status"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="import_uuid" property="importUuid"/>
+        <result column="import_name" property="importName"/>
+        <result column="import_number" property="importNumber"/>
+        <result column="import_status" property="importStatus"/>
+    </resultMap>
+
+    <resultMap id="i6000ErpImportMasterResultMap1" type="com.lnsoft.device.api.stock.vo.I6000ErpImportMasterVO">
+        <id column="id" property="id"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="status" property="status"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="import_uuid" property="importUuid"/>
+        <result column="import_name" property="importName"/>
+        <result column="import_number" property="importNumber"/>
+        <result column="import_status" property="importStatus"/>
+        <result column="item_count" property="itemCount"/>
+    </resultMap>
+
+
+    <select id="selectI6000ErpImportMasterPage" resultMap="i6000ErpImportMasterResultMap">
+        select *
+        from idevelop_i6000_erp_import_master
+        where is_deleted = 0
+    </select>
+
+
+    <select id="selectI6000ErpImportMasterPage1" resultMap="i6000ErpImportMasterResultMap1">
+        SELECT m.*,
+        (SELECT COUNT(1)
+        FROM idevelop_i6000_import_log i
+        WHERE i.`import_uuid` = m.`import_uuid`) AS item_count
+        FROM idevelop_i6000_erp_import_master m
+        <where>
+            m.is_deleted = 0
+            <if test="param2.createUser != null and param2.createUser != ''">
+                and m.create_user = #{param2.createUser}
+            </if>
+        </where>
+        ORDER BY
+        m.create_time DESC
+    </select>
+
+
+    <select id="selectI6000ErpImportMasterPageByUser" resultType="com.lnsoft.device.api.stock.vo.I6000ErpImportMasterVO">
+        SELECT import_name,
+        import_uuid,
+        import_status,
+        import_number,
+        create_user,
+        (SELECT COUNT(1)
+        FROM idevelop_i6000_import_log i
+        WHERE i.`import_uuid` = m.`import_uuid`) AS item_count
+        FROM idevelop_i6000_erp_import_master m
+        <where>
+            m.is_deleted = 0
+            and m.import_status = #{importStatus}
+            <if test="userId != null and userId != ''">
+                and m.create_user = #{userId}
+            </if>
+        </where>
+    </select>
+
+</mapper>

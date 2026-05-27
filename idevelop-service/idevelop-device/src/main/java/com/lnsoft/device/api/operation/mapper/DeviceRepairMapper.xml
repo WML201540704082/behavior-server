@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.operation.mapper.DeviceRepairMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="deviceRepairResultMap" type="com.lnsoft.device.entity.DeviceRepair">
+        <id column="id" property="id"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_dept" property="createDept"/>
+        <result column="create_time" property="createTime"/>
+        <result column="status" property="status"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="repair_code" property="repairCode"/>
+        <result column="repair_type" property="repairType"/>
+        <result column="use_user" property="useUser"/>
+        <result column="phone" property="phone"/>
+        <result column="apply_unit" property="applyUnit"/>
+        <result column="apply_dept" property="applyDept"/>
+        <result column="apply_user" property="applyUser"/>
+        <result column="ticket_status" property="ticketStatus"/>
+        <result column="repair_level" property="repairLevel"/>
+        <result column="receiver_time" property="receiverTime"/>
+        <result column="description" property="description"/>
+        <result column="annex" property="annex"/>
+        <result column="region_code" property="regionCode"/>
+        <result column="process_ins_id" property="processInsId"/>
+        <result column="process_status" property="processStatus"/>
+        <result column="remark" property="remark"/>
+    </resultMap>
+
+
+    <select id="selectDeviceRepairPage" resultMap="deviceRepairResultMap">
+        select * from idevelop_device_repair where is_deleted = 0
+    </select>
+    <select id="deskDeviceRepairList" resultType="com.lnsoft.device.vo.DeviceRepairVO">
+        select idr.id,
+        idr.filing_no,
+        idr.repair_type,
+        idr.repair_device_count,
+        idr.use_user,
+        idr.device_source,
+        idr.phone,
+        idr.apply_unit,
+        idr.apply_unit_name,
+        idr.apply_dept,
+        idr.apply_dept_name,
+        idr.apply_user,
+        idr.apply_user_name,
+        idr.ticket_status,
+        idr.repair_level,
+        idr.receiver_time,
+        idr.description,
+        idr.region_code,
+        idr.process_ins_id,
+        idr.process_status,
+        idr.create_user,
+        idr.create_dept,
+        idr.create_time,
+        idr.update_user,
+        idr.update_time,
+        iu.real_name
+        from idevelop_device_repair idr
+        left join idevelop_user iu on idr.apply_user = iu.id
+        <where>
+            idr.is_deleted = 0
+            AND idr.filing_no IN
+            <foreach collection="dto.filingNoList" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </where>
+        ORDER BY
+        idr.create_time DESC
+    </select>
+    <select id="findPage" resultType="com.lnsoft.device.entity.DeviceRepair">
+        select idr.*
+        from idevelop_device_repair idr left join idevelop_device_repair_list idrl on idr.id = idrl.repair_id
+        <where>
+            idr.is_deleted = 0
+            <if test="deviceRepair.deviceCode != null and deviceRepair.deviceCode != ''">
+                AND idrl.device_code LIKE CONCAT('%', #{deviceRepair.deviceCode}, '%')
+            </if>
+            <if test="deviceRepair.applyUnit != null and deviceRepair.applyUnit != ''">
+                AND idr.apply_unit = #{deviceRepair.applyUnit}
+            </if>
+            <if test="deviceRepair.applyDept != null and deviceRepair.applyDept != ''">
+                AND idr.apply_dept = #{deviceRepair.applyDept}
+            </if>
+            <if test="deviceRepair.repairType != null and deviceRepair.repairType != ''">
+                AND idr.repair_type = #{deviceRepair.repairType}
+            </if>
+            <if test="deviceRepair.repairLevel != null and deviceRepair.repairLevel != ''">
+                AND idr.repair_level = #{deviceRepair.repairLevel}
+            </if>
+            <if test="deviceRepair.applyUserName != null and deviceRepair.applyUserName != ''">
+                AND idr.apply_user_name = #{deviceRepair.applyUserName}
+            </if>
+            <if test="deviceRepair.processStatus != null and deviceRepair.processStatus != ''">
+                AND idr.process_status = #{deviceRepair.processStatus}
+            </if>
+            <if test="deviceRepair.regionCode != null and deviceRepair.regionCode != ''">
+                AND idr.region_code LIKE CONCAT(#{deviceRepair.regionCode}, '%')
+            </if>
+            <if test="deviceRepair.starTime != null and deviceRepair.starTime != '' and deviceRepair.endTime !=null and deviceRepair.endTime!=''">
+                AND idr.receiver_time &gt;= #{deviceRepair.starTime}
+                AND idr.receiver_time &lt;= #{deviceRepair.endTime}
+            </if>
+            GROUP BY idr.id ORDER BY idr.create_time DESC
+        </where>
+    </select>
+    <select id="getDeviceByRepairIdAndStatus"
+            resultType="com.lnsoft.device.entity.DeviceRepairList">
+
+    </select>
+
+</mapper>

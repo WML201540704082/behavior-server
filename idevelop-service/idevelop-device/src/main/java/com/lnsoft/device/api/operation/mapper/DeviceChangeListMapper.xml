@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.operation.mapper.DeviceChangeListMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="deviceChangeListResultMap" type="com.lnsoft.device.api.operation.entity.DeviceChangeList">
+        <id column="id" property="id"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_dept" property="createDept"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="change_id" property="changeId"/>
+        <result column="device_code" property="deviceCode"/>
+        <result column="asset_code_erp" property="assetCodeErp"/>
+        <result column="device_name" property="deviceName"/>
+        <result column="sn" property="sn"/>
+        <result column="receive_unit" property="receiveUnit"/>
+        <result column="receive_dept" property="receiveDept"/>
+        <result column="receiving_person" property="receivingPerson"/>
+        <result column="receiving_id_card" property="receivingIDCard"/>
+        <result column="receiving_tel" property="receivingTel"/>
+        <result column="receive_person_unified_acc" property="receivePersonUnifiedAcc"/>
+        <result column="user" property="user"/>
+        <result column="user_tel" property="userTel"/>
+        <result column="device_user_id_card" property="deviceUserIDCard"/>
+        <result column="installation_site" property="installationSite"/>
+        <result column="operation_unit" property="operationUnit"/>
+        <result column="operation_dept" property="operationDept"/>
+        <result column="operation_person" property="operationPerson"/>
+        <result column="operation_level" property="operationLevel"/>
+        <result column="operation_tel" property="operationTel"/>
+        <result column="network_access_method" property="networkAccessMethod"/>
+        <result column="device_status" property="deviceStatus"/>
+        <result column="brand" property="brand"/>
+        <result column="series" property="series"/>
+        <result column="device_model" property="deviceModel"/>
+        <result column="device_source" property="deviceSource"/>
+        <result column="mac" property="mac"/>
+        <result column="ip" property="ip"/>
+        <result column="belong_intnet" property="belongIntnet"/>
+
+        <result column="network_device_type" property="networkDeviceType"/>
+        <result column="manage_ip" property="manageIp"/>
+        <result column="manage_user" property="manageUser"/>
+        <result column="manage_password" property="managePassword"/>
+        <result column="switches_ip" property="switchesIp"/>
+        <result column="switches_password" property="switchesPassword"/>
+        <result column="snmp_version" property="snmpVersion"/>
+        <result column="snmp_read" property="snmpRead"/>
+        <result column="snmp_write" property="snmpWrite"/>
+        <result column="purpose" property="purpose"/>
+        <result column="vlan_number" property="vlanNumber"/>
+        <result column="allocation_password" property="allocationPassword"/>
+        <result column="ports_count" property="portsCount"/>
+
+
+
+
+
+
+
+
+
+    </resultMap>
+    <delete id="deleteByChangeId">
+        delete from idevelop_device_change_list where change_id = #{changeId}
+    </delete>
+
+
+    <select id="selectDeviceChangeListPage" resultMap="deviceChangeListResultMap">
+        select * from idevelop_device_change_list where is_deleted = 0
+    </select>
+
+    <select id="getByDeviceCode" resultType="com.lnsoft.device.api.operation.entity.DeviceChangeList">
+        SELECT *
+        FROM idevelop_device_change_list
+        WHERE device_code = #{deviceCode} and is_deleted = 0
+    </select>
+
+</mapper>

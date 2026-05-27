@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.oss.mapper.OssFileMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="ossFileResultMap" type="com.lnsoft.device.entity.OssFile">
+        <id column="id" property="id"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="status" property="status"/>
+        <result column="file_name" property="fileName"/>
+        <result column="export_json" property="exportJson"/>
+        <result column="export_time" property="exportTime"/>
+        <result column="link" property="link"/>
+        <result column="oss_name" property="ossName"/>
+        <result column="oss_type" property="ossType"/>
+        <result column="nums" property="nums"/>
+        <result column="remake" property="remake"/>
+        <result column="oss_info" property="ossInfo"/>
+    </resultMap>
+
+
+    <select id="selectOssFilePage" resultMap="ossFileResultMap">
+        select * from idevelop_oss_file where is_deleted = 0
+    </select>
+
+</mapper>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.operation.mapper.DeviceRepairListMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="deviceRepairListResultMap" type="com.lnsoft.device.entity.DeviceRepairList">
+        <id column="id" property="id"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_dept" property="createDept"/>
+        <result column="create_time" property="createTime"/>
+        <result column="status" property="status"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="repair_id" property="repairId"/>
+        <result column="device_code" property="deviceCode"/>
+        <result column="sn" property="sn"/>
+        <result column="use_user" property="useUser"/>
+        <result column="device_type" property="deviceType"/>
+        <result column="brand" property="brand"/>
+        <result column="series" property="series"/>
+        <result column="apply_user" property="applyUser"/>
+        <result column="device_model" property="deviceModel"/>
+        <result column="ip" property="ip"/>
+        <result column="mac" property="mac"/>
+        <result column="warehouseLocation" property="warehouseLocation"/>
+    </resultMap>
+
+
+    <select id="selectDeviceRepairListPage" resultMap="deviceRepairListResultMap">
+        select * from idevelop_device_repair_list where is_deleted = 0
+    </select>
+    <select id="getByDeviceCode" resultType="com.lnsoft.device.entity.DeviceRepairList">
+        SELECT *
+        FROM idevelop_device_repair_list
+        WHERE device_code = #{deviceCode} and is_deleted = 0
+    </select>
+
+</mapper>

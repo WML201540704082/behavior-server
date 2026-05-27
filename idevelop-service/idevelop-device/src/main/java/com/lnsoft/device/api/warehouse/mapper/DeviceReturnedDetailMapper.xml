@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.warehouse.mapper.DeviceReturnedDetailMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="deviceReturnedDetailResultMap" type="com.lnsoft.device.entity.DeviceReturnedDetail">
+        <id column="id" property="id"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_dept" property="createDept"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="returned_id" property="returnedId"/>
+        <result column="device_id" property="deviceId"/>
+        <result column="device_status" property="deviceStatus"/>
+        <result column="device_code" property="deviceCode"/>
+        <result column="device_name" property="deviceName"/>
+        <result column="asset_code_erp" property="assetCodeErp"/>
+        <result column="factory_serial" property="factorySerial"/>
+        <result column="warehouse_place" property="warehousePlace"/>
+        <result column="location" property="location"/>
+        <result column="device_photo" property="devicePhoto"/>
+        <result column="is_returned" property="isReturned"/>
+        <result column="device_category" property="deviceCategory"/>
+    </resultMap>
+
+
+    <select id="selectDeviceReturnedDetailPage" resultMap="deviceReturnedDetailResultMap">
+        select * from idevelop_device_returned_detail where is_deleted = 0
+    </select>
+
+</mapper>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.i6000.mapper.I6000ExternalAddMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="i6000ExternalAddResultMap" type="com.lnsoft.device.api.i6000.entity.I6000ExternalAdd">
+        <id column="id" property="id"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_dept" property="createDept"/>
+        <result column="create_time" property="createTime"/>
+        <result column="status" property="status"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="ext_code" property="extCode"/>
+        <result column="ext_id" property="extId"/>
+        <result column="ext_name" property="extName"/>
+        <result column="ext_pid" property="extPid"/>
+        <result column="ext_state" property="extState"/>
+        <result column="rn" property="rn"/>
+        <result column="match_model_id" property="matchModelId"/>
+        <result column="mfr_hs" property="mfrHs"/>
+    </resultMap>
+
+
+    <select id="selectI6000ExternalAddPage" resultMap="i6000ExternalAddResultMap">
+        select * from idevelop_i6000_external_add where is_deleted = 0
+    </select>
+
+</mapper>

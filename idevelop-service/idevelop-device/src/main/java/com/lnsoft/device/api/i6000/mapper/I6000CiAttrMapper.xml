@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.i6000.mapper.I6000CiAttrMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="i6000CiAttrResultMap" type="com.lnsoft.device.api.i6000.entity.I6000CiAttr">
+        <id column="id" property="id"/>
+        <result column="ci_code" property="ciCode"/>
+        <result column="attr_code" property="attrCode"/>
+        <result column="attr_name" property="attrName"/>
+        <result column="datatype_name" property="datatypeName"/>
+        <result column="attr_data_len" property="attrDataLen"/>
+        <result column="view_flag" property="viewFlag"/>
+        <result column="standard_flag" property="standardFlag"/>
+        <result column="otn_flag" property="otnFlag"/>
+        <result column="ori_type" property="oriType"/>
+        <result column="origin" property="origin"/>
+        <result column="collect_flag" property="collectFlag"/>
+        <result column="view_unit" property="viewUnit"/>
+        <result column="unit" property="unit"/>
+        <result column="readonly" property="readonly"/>
+        <result column="null_flag" property="nullFlag"/>
+        <result column="input_flag" property="inputFlag"/>
+        <result column="corp_code" property="corpCode"/>
+        <result column="asct_citype_id" property="asctCitypeId"/>
+        <result column="is_mapping" property="isMapping"/>
+    </resultMap>
+
+
+    <select id="selectI6000CiAttrPage" resultMap="i6000CiAttrResultMap">
+        select *
+        from idevelop_i6000_ci_attr
+        where is_deleted = 0
+        AND ci_code = #{param2.ciCode}
+        AND attr_code NOT LIKE '%_6'
+        AND ori_type in ('1', '2', '4')
+        <if test="param2.isMapping!=null">
+            AND is_mapping = #{param2.isMapping}
+        </if>
+        OR
+        (is_deleted = 0 AND ci_code = #{param2.ciCode}
+        and ori_type = '3'
+        AND asct_citype_id <![CDATA[<>]]> ''
+        AND asct_citype_id IS NOT NULL
+        <if test="param2.isMapping!=null">
+            AND is_mapping = #{param2.isMapping}
+        </if>)
+    </select>
+
+
+    <update id="updateByAttrCode" parameterType="String">
+        update idevelop_i6000_ci_attr
+        set is_mapping = 1
+        where attr_code = #{cmdbAttrCode} and ci_code = #{ciCode}
+    </update>
+
+
+    <select id="selectI6000AttrByCiTypeId" parameterType="String">
+        SELECT attr_code
+        FROM idevelop_i6000_ci_attr
+        WHERE is_deleted = 0 AND attr_code NOT LIKE '%_6' AND ci_code = #{ciCode}
+    </select>
+
+</mapper>
+
+
+

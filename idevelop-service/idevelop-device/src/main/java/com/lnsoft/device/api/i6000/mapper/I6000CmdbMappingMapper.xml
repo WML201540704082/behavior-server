@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.i6000.mapper.I6000CmdbMappingMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="I6000CmdbMappingResultMap" type="com.lnsoft.device.api.i6000.vo.I6000CmdbMappingVO">
+        <id column="id" property="id"/>
+        <result column="cmdb_ci_id" property="cmdbCiId"/>
+        <result column="cmdb_ci_name" property="cmdbCiName"/>
+        <result column="cmdb_attr_code" property="cmdbAttrCode"/>
+        <result column="cmdb_attr_label" property="cmdbAttrLabel"/>
+        <result column="cmdb_attr_type" property="cmdbAttrType"/>
+        <result column="i6000_ci_id" property="i6000CiId"/>
+        <result column="i6000_attr_code" property="i6000AttrCode"/>
+        <result column="i6000_datatype" property="i6000Datatype"/>
+        <result column="i6000_ori_type" property="i6000OriType"/>
+        <result column="i6000_origin" property="i6000Origin"/>
+        <result column="i6000_expan" property="i6000Expan"/>
+    </resultMap>
+
+
+    <select id="selectI6000CmdbMappingPage" resultMap="I6000CmdbMappingResultMap">
+        select *
+        from idevelop_cmdb_i6000_mapping
+        where is_deleted = 0
+    </select>
+
+
+    <select id="selectI6000CmdbMappingByCiIds" resultMap="I6000CmdbMappingResultMap">
+        select *
+        from idevelop_cmdb_i6000_mapping
+        WHERE
+        is_deleted = 0
+        and i6000_ci_id IN
+        <foreach collection="ciIds" item="id" index="index" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </select>
+    <select id="getList" resultType="com.lnsoft.device.api.i6000.vo.I6000CmdbMappingVO">
+
+        SELECT *,count(*) as count  FROM `idevelop_cmdb_i6000_mapping` GROUP BY cmdb_ci_id
+    </select>
+    <select id="getDeviceTypeId" resultType="java.lang.String">
+        SELECT device_type  FROM `idevelop_hardware_basic_tree` where ci_id = #{deviceType}
+    </select>
+    <select id="getMappingList" resultType="com.lnsoft.device.api.i6000.vo.I6000CmdbMappingVO">
+        SELECT * FROM `idevelop_cmdb_i6000_mapping` WHERE cmdb_ci_id = #{ciId}
+    </select>
+
+    <delete id="deleteLogic" parameterType="java.lang.String">
+        delete
+        from idevelop_cmdb_i6000_mapping
+        where id = #{id}
+    </delete>
+    <delete id="deleteAll">
+        delete from idevelop_cmdb_i6000_mapping where cmdb_ci_id = #{cmdbCiId}
+    </delete>
+
+</mapper>

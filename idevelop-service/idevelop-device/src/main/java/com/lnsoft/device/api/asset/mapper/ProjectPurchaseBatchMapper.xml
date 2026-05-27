@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.asset.mapper.ProjectPurchaseBatchMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="projectPurchaseBatchResultMap" type="com.lnsoft.device.api.asset.entity.ProjectPurchaseBatch">
+        <id column="id" property="id"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_dept" property="createDept"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="status" property="status"/>
+        <result column="wbs_id" property="wbsId"/>
+        <result column="wbs_code" property="wbsCode"/>
+        <result column="material_code" property="materialCode"/>
+        <result column="material_name" property="materialName"/>
+        <result column="purchase_batch" property="purchaseBatch"/>
+        <result column="purchase_batch_num" property="purchaseBatchNum"/>
+    </resultMap>
+
+
+    <select id="selectProjectPurchaseBatchPage" resultMap="projectPurchaseBatchResultMap">
+        select * from idevelop_project_purchase_batch where is_deleted = 0
+    </select>
+
+</mapper>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.asset.mapper.DeviceOperationAgeConfigMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="deviceOperationAgeConfigResultMap"
+               type="com.lnsoft.device.entity.DeviceOperationAgeConfig">
+        <id column="id" property="id"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_dept" property="createDept"/>
+        <result column="create_time" property="createTime"/>
+        <result column="status" property="status"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="device_category" property="deviceCategory"/>
+        <result column="device_type" property="deviceType"/>
+        <result column="device_type_name" property="deviceTypeName"/>
+        <result column="operation_age" property="operationAge"/>
+        <result column="region_code" property="regionCode"/>
+        <result column="dept_code" property="deptCode"/>
+        <result column="remark" property="remark"/>
+    </resultMap>
+
+
+    <select id="selectDeviceOperationAgeConfigPage" resultMap="deviceOperationAgeConfigResultMap">
+        select * from idevelop_device_operation_age_config where is_deleted = 0
+    </select>
+
+    <select id="getOneByDeviceType" resultType="java.lang.String">
+        SELECT
+	        operation_age
+        FROM
+        	`idevelop_device_operation_age_config`
+        WHERE
+        	is_deleted = 0
+        	AND operation_age IS NOT NULL
+        	AND device_type = #{deviceType}
+    </select>
+
+</mapper>

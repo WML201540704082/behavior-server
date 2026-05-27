@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.common.mapper.ImportResultMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="importResultResultMap" type="com.lnsoft.device.api.common.entity.ImportResult">
+        <id column="id" property="id"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="status" property="status"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="import_name" property="importName"/>
+        <result column="import_uuid" property="importUuid"/>
+        <result column="import_number" property="importNumber"/>
+        <result column="import_status" property="importStatus"/>
+        <result column="import_type" property="importType"/>
+    </resultMap>
+
+    <resultMap id="importResultResultMap1" type="com.lnsoft.device.api.common.vo.ImportResultVO">
+        <id column="id" property="id"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="status" property="status"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="import_name" property="importName"/>
+        <result column="import_uuid" property="importUuid"/>
+        <result column="import_number" property="importNumber"/>
+        <result column="import_status" property="importStatus"/>
+        <result column="import_type" property="importType"/>
+        <result column="item_count" property="itemCount"/>
+    </resultMap>
+
+
+    <select id="selectImportResultPage" resultMap="importResultResultMap">
+        select * from idevelop_import_result where is_deleted = 0
+    </select>
+
+    <select id="selectImportResultPage1" resultMap="importResultResultMap1">
+        SELECT m.*,
+        (SELECT COUNT(1)
+        FROM idevelop_import_log i
+        WHERE i.`import_uuid` = m.`import_uuid`) AS item_count
+        FROM idevelop_import_result m
+        <where>
+            m.is_deleted = 0
+            <if test="param2.createUser != null and param2.createUser != ''">
+                and m.create_user = #{param2.createUser}
+            </if>
+            <if test="param2.importType != null and param2.importType != ''">
+                and m.import_type = #{param2.importType}
+            </if>
+        </where>
+        ORDER BY
+        m.create_time DESC
+    </select>
+
+    <select id="selectImportResultPageByUser" resultType="com.lnsoft.device.api.common.vo.ImportResultVO">
+        SELECT import_name,
+        import_uuid,
+        import_status,
+        import_number,
+        create_user,
+        import_type,
+        (SELECT COUNT(1)
+        FROM idevelop_import_log i
+        WHERE i.`import_uuid` = m.`import_uuid`) AS item_count
+        FROM idevelop_import_result m
+        <where>
+            m.is_deleted = 0
+            and m.import_status = #{importStatus}
+            <if test="userId != null and userId != ''">
+                and m.create_user = #{userId}
+            </if>
+            <if test="importType != null and importType != ''">
+                and m.import_type = #{importType}
+            </if>
+        </where>
+    </select>
+
+</mapper>

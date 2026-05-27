@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.warehouse.mapper.CheckTaskDeviceMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="checkTaskDeviceResultMap" type="com.lnsoft.device.api.warehouse.entity.CheckTaskDevice">
+        <id column="id" property="id"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_dept" property="createDept"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="task_id" property="taskId"/>
+        <result column="device_id" property="deviceId"/>
+        <result column="cid" property="cid"/>
+        <result column="uuid" property="uuid"/>
+        <result column="device_code" property="deviceCode"/>
+        <result column="device_name" property="deviceName"/>
+        <result column="asset_code_erp" property="assetCodeErp"/>
+        <result column="account_code_erp" property="accountCodeErp"/>
+        <result column="factory_serial" property="factorySerial"/>
+        <result column="device_category" property="deviceCategory"/>
+        <result column="device_type" property="deviceType"/>
+        <result column="device_status" property="deviceStatus"/>
+        <result column="receive_dept" property="receiveDept"/>
+        <result column="receive_dept_code" property="receiveDeptCode"/>
+        <result column="receiving_person" property="receivingPerson"/>
+        <result column="receiving_tel" property="receivingTel"/>
+        <result column="user" property="user"/>
+        <result column="installation_site" property="installationSite"/>
+        <result column="ip" property="ip"/>
+        <result column="mac" property="mac"/>
+        <result column="check_status" property="checkStatus"/>
+        <result column="dispose_result" property="disposeResult"/>
+        <result column="dispose_status" property="disposeStatus"/>
+        <result column="is_itai_code" property="isITAICode"/>
+        <result column="cmdb_device" property="cmdbDevice"/>
+        <result column="sub_person" property="subPerson"/>
+        <result column="sub_tel" property="subTel"/>
+        <result column="sub_dept" property="subDept"/>
+        <result column="sub_time" property="subTime"/>
+        <result column="change_content" property="changeContent"/>
+        <result column="dis_person" property="disPerson"/>
+        <result column="dis_tel" property="disTel"/>
+        <result column="dis_dept" property="disDept"/>
+        <result column="dis_time" property="disTime"/>
+        <result column="dis_comment" property="disComment"/>
+        <result column="filing_no" property="filingNo"/>
+        <result column="filing_time" property="filingTime"/>
+        <result column="region_code" property="regionCode"/>
+    </resultMap>
+    <delete id="removeById">
+        delete from idevelop_check_task_device where is_deleted = 0 and task_id = #{taskId}
+    </delete>
+
+
+    <select id="selectCheckTaskDevicePage" resultMap="checkTaskDeviceResultMap">
+        select * from idevelop_check_task_device where is_deleted = 0
+    </select>
+    <select id="selectCheckNum" resultType="com.lnsoft.device.api.warehouse.vo.CheckDeviceNumVo">
+        select a.task_id, IFNULL(a.no_check_num, 0) no_check_num, IFNULL(b.is_check_num, 0) is_check_num, IFNULL(c.py, 0) py, IFNULL(cc.pys, 0) pys, IFNULL(d.pk, 0) pk, IFNULL(dd.pks, 0) pks
+        from (
+            select task_id, count(id) as no_check_num
+            from idevelop_check_task_device
+            where check_status = '1' and task_id in
+            <foreach collection="ids" open="(" close=")" separator="," item="id">
+                #{id}
+            </foreach>
+            group by task_id
+        ) a
+        left join (
+            select task_id, count(id) as is_check_num
+            from idevelop_check_task_device
+            where check_status = '0' and task_id in
+            <foreach collection="ids" open="(" close=")" separator="," item="id">
+                #{id}
+            </foreach>
+            group by task_id
+        ) b
+        on a.task_id = b.task_id
+        left join (
+            select task_id, count(id) as py
+            from idevelop_check_task_device
+            where check_status = '2' and task_id in
+            <foreach collection="ids" open="(" close=")" separator="," item="id">
+                #{id}
+            </foreach>
+            group by task_id
+        ) c
+        on a.task_id = c.task_id
+        left join (
+            select task_id, count(id) as pys
+            from idevelop_check_task_device
+            where check_status = '2' and dispose_result = '1' and task_id in
+            <foreach collection="ids" open="(" close=")" separator="," item="id">
+                #{id}
+            </foreach>
+            group by task_id
+        ) cc
+        on a.task_id = cc.task_id
+        left join (
+            select task_id, count(id) as pk
+            from idevelop_check_task_device
+            where check_status = '3' and task_id in
+            <foreach collection="ids" open="(" close=")" separator="," item="id">
+                #{id}
+            </foreach>
+            group by task_id
+        ) d
+        on a.task_id = d.task_id
+        left join (
+            select task_id, count(id) as pks
+            from idevelop_check_task_device
+            where check_status = '3' and dispose_status = '1' and task_id in
+            <foreach collection="ids" open="(" close=")" separator="," item="id">
+                #{id}
+            </foreach>
+            group by task_id
+        ) dd
+        on a.task_id = dd.task_id
+    </select>
+    <select id="checkTaskList" resultType="com.lnsoft.device.api.warehouse.entity.CheckTaskDevice">
+        select id, task_id, device_id, ci_id, uuid, device_code, device_name, asset_code_erp, account_code_erp, factory_serial, device_category, device_type, device_status, receive_dept, receive_dept_code,
+        receiving_person, receiving_tel, `user`, installation_site, ip, mac, check_status, dis_person, dis_time, dispose_result, dispose_status, is_itai_code, filing_no, filing_time, offline_start_time,
+        offline_end_time
+        from idevelop_check_task_device
+        <where>
+            is_deleted = 0
+            <if test="dto.taskId != null and dto.taskId != ''">
+                and task_id = #{dto.taskId}
+            </if>
+            <if test="dto.isOwner != null and dto.isOwner == 1">
+                and receive_person_unified_acc = #{dto.account}
+            </if>
+            <if test="dto.receiveDeptCode != null and dto.receiveDeptCode != ''">
+                and receive_dept_code = #{dto.receiveDeptCode}
+            </if>
+            <if test="dto.deviceType != null and dto.deviceType != ''">
+                and device_type = #{dto.deviceType}
+            </if>
+            <if test="dto.checkStatus != null and dto.checkStatus != ''">
+                and check_status = #{dto.checkStatus}
+            </if>
+            <if test="dto.isException != null and dto.isException == 0">
+                and change_content != '[]'
+            </if>
+            <if test="dto.deviceStatus != null and dto.deviceStatus != ''">
+                and device_status = #{dto.deviceStatus}
+            </if>
+            <if test="dto.disposeStatus != null and dto.disposeStatus != ''">
+                and dispose_status = #{dto.disposeStatus}
+            </if>
+            <if test="dto.ip != null and dto.ip != ''">
+                and ip like concat('%', #{dto.ip}, '%')
+            </if>
+            <if test="dto.mac != null and dto.mac != ''">
+                and mac like concat('%', #{dto.mac}, '%')
+            </if>
+            <if test="dto.deviceName != null and dto.deviceName != ''">
+                and device_name like concat('%', #{dto.deviceName}, '%')
+            </if>
+            <if test="dto.isItaiCode != null and dto.isItaiCode != ''">
+                and is_itai_code = #{dto.isItaiCode}
+            </if>
+            <if test="dto.subPerson != null and dto.subPerson != ''">
+                and sub_person like concat('%', #{dto.subPerson}, '%')
+            </if>
+            <if test="dto.subTel != null and dto.subTel != ''">
+                and sub_tel like concat('%', #{dto.subTel}, '%')
+            </if>
+            <if test="dto.lastDevice != null and dto.lastDevice.size != 0">
+                and check_status in
+                <foreach collection="dto.lastDevice" item="status" open="(" separator="," close=")">
+                    #{status}
+                </foreach>
+                or dispose_result in
+                <foreach collection="dto.lastDevice" item="status" open="(" separator="," close=")">
+                    #{status}
+                </foreach>
+            </if>
+        </where>
+        order by update_time DESC
+    </select>
+    <select id="selectCheckNumNo" resultType="java.lang.Long">
+        select  count(id) as no_check_num
+        from idevelop_check_task_device
+        where check_status = '1' and task_id = #{id}
+        and is_deleted = 0
+    </select>
+    <select id="selectCheckNumIs" resultType="java.lang.Long">
+        select  count(id) as is_check_num
+        from idevelop_check_task_device
+        where check_status = '0' and task_id = #{id}
+        and is_deleted = 0
+    </select>
+    <select id="selectCheckNumPys" resultType="java.lang.Long">
+        select  count(id) as pys
+        from idevelop_check_task_device
+        where check_status = '2' and dispose_result = '1' and task_id = #{id}
+        and is_deleted = 0
+    </select>
+    <select id="selectCheckNumPy" resultType="java.lang.Long">
+         select count(id) as py
+        from idevelop_check_task_device
+        where check_status = '2' and task_id = #{id}
+        and is_deleted = 0
+    </select>
+    <select id="selectCheckNumPk" resultType="java.lang.Long">
+        select count(id) as pk
+        from idevelop_check_task_device
+        where check_status = '3' and task_id = #{id}
+        and is_deleted = 0
+    </select>
+    <select id="selectCheckNumPks" resultType="java.lang.Long">
+        select  count(id) as pks
+        from idevelop_check_task_device
+        where check_status = '3' and dispose_status = '1' and task_id = #{id}
+        and is_deleted = 0
+    </select>
+    <select id="selectChecklstw" resultType="java.lang.Long">
+        select count(id) from idevelop_check_task_device
+        where  dispose_result = '5' and task_id = #{id}
+        and is_deleted = 0
+    </select>
+    <select id="selectCheckReturned" resultType="java.lang.Long">
+        select count(id) from idevelop_check_task_device
+        where  dispose_result = '3' and task_id = #{id}
+        and is_deleted = 0
+    </select>
+    <select id="dept" resultType="com.lnsoft.device.api.warehouse.entity.CheckStatistic">
+        select receive_unit as dept,count(*) as num
+        from idevelop_check_task_device
+        where (check_status = '2' or check_status = '3')
+        group by receive_unit
+    </select>
+
+</mapper>

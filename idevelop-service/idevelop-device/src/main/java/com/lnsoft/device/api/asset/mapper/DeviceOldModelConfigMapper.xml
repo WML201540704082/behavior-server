@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.asset.mapper.DeviceOldModelConfigMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="deviceOldModelConfigResultMap" type="com.lnsoft.device.api.asset.entity.DeviceOldModelConfig">
+        <id column="id" property="id"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_dept" property="createDept"/>
+        <result column="create_time" property="createTime"/>
+        <result column="status" property="status"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="config_type" property="configType"/>
+        <result column="config_item" property="configItem"/>
+        <result column="value" property="value"/>
+        <result column="device_category" property="deviceCategory"/>
+        <result column="device_type" property="deviceType"/>
+        <result column="device_category_name" property="deviceCategoryName"/>
+        <result column="decice_type_name" property="deciceTypeName"/>
+        <result column="remark" property="remark"/>
+    </resultMap>
+
+
+    <select id="selectDeviceOldModelConfigPage" resultMap="deviceOldModelConfigResultMap">
+        select * from idevelop_device_old_model_config where is_deleted = 0
+    </select>
+    <select id="getValue" resultType="com.lnsoft.device.api.asset.vo.DeviceOldModelConfigVO">
+        select * from idevelop_device_old_model_config where is_deleted = 0
+        and config_item = #{configItem}
+    </select>
+    <select id="getValueOfType" resultType="com.lnsoft.device.api.asset.vo.DeviceOldModelConfigVO">
+        select * from idevelop_device_old_model_config where is_deleted = 0
+        and config_item = #{configItem} and device_type = #{deviceTypeCode}
+    </select>
+
+</mapper>

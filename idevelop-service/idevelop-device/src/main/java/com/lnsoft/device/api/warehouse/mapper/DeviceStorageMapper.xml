@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.warehouse.mapper.DeviceStorageMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="deviceStorageResultMap" type="com.lnsoft.device.api.warehouse.entity.DeviceStorage">
+        <id column="id" property="id"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="status" property="status"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_dept" property="createDept"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="serial_number" property="serialNumber"/>
+        <result column="device_source" property="deviceSource"/>
+        <result column="wbs_project" property="wbsProject"/>
+        <result column="wbs_element" property="wbsElement"/>
+        <result column="device_category" property="deviceCategory"/>
+        <result column="device_type" property="deviceType"/>
+        <result column="warehouse" property="warehouse"/>
+        <result column="device_num" property="deviceNum"/>
+        <result column="oprt_dept" property="oprtDept"/>
+        <result column="receiver" property="receiver"/>
+        <result column="storage_time" property="storageTime"/>
+        <result column="use_keep_person" property="useKeepPerson"/>
+        <result column="voltage_level" property="voltageLevel"/>
+        <result column="procure_date" property="procureDate"/>
+        <result column="owner_unit" property="ownerUnit"/>
+        <result column="owner_unit_name" property="ownerUnitName"/>
+        <result column="property_dept" property="propertyDept"/>
+        <result column="property_dept_name" property="propertyDeptName"/>
+        <result column="is_to_i6000" property="isToI6000"/>
+        <result column="is_to_erp" property="isToErp"/>
+        <result column="is_usable" property="isUsable"/>
+        <result column="is_temp" property="isTemp"/>
+        <result column="remark" property="remark"/>
+        <result column="status_i6000" property="statusI6000"/>
+        <result column="region_code" property="regionCode"/>
+        <result column="dept_code" property="deptCode"/>
+        <result column="dept_name" property="deptName"/>
+        <result column="operation_unit" property="operationUnit"/>
+        <result column="operation_unit_code" property="operationUnitCode"/>
+    </resultMap>
+
+    <update id="updateByMap">
+        <foreach collection="backMap" item="value" index="key" separator=";">
+            UPDATE idevelop_device_storage_list
+            SET ci_entity_id = #{value},
+            is_to_cmdb = 1
+            WHERE
+            uuid = #{key}
+            AND is_deleted = 0
+        </foreach>
+    </update>
+
+
+    <select id="selectDeviceStoragePage" resultMap="deviceStorageResultMap">
+        select * from idevelop_device_storage where is_deleted = 0
+    </select>
+
+    <select id="selectByExportIds" parameterType="list"
+            resultType="com.lnsoft.device.api.warehouse.vo.DeviceStorageExportVO">
+        SELECT
+        t_storage.*,
+        t_storage_list.*,
+        t_wh.warehouse_name
+        FROM
+        idevelop_device_storage t_storage
+        LEFT JOIN idevelop_device_storage_list t_storage_list ON t_storage.id = t_storage_list.storage_id AND
+        t_storage_list.is_deleted = 0
+        left join idevelop_warehouse t_wh on t_storage.warehouse = t_wh.uuid and t_wh.is_deleted = 0
+        WHERE
+        t_storage.is_deleted = 0
+        AND t_storage.id IN
+        (
+        <foreach collection="list" item="id" index="index" separator=",">
+            #{id}
+        </foreach>
+        )
+        ORDER BY t_storage.create_time DESC
+    </select>
+
+    <select id="selectByExportParam" parameterType="com.lnsoft.device.api.warehouse.dto.DeviceStorageExportSO"
+            resultType="com.lnsoft.device.api.warehouse.vo.DeviceStorageExportVO">
+        SELECT
+        t_storage.*,
+        t_storage_list.*,
+        t_wh.warehouse_name
+        FROM
+        idevelop_device_storage t_storage
+        LEFT JOIN idevelop_device_storage_list t_storage_list ON t_storage.id = t_storage_list.storage_id AND
+        t_storage_list.is_deleted = 0
+        left join idevelop_warehouse t_wh on t_storage.warehouse = t_wh.uuid and t_wh.is_deleted = 0
+        WHERE
+        t_storage.is_deleted = 0
+        AND t_storage.region_code = #{regionCode}
+        <if test="serialNumber != null  and serialNumber != ''">and t_storage.serial_number = #{serialNumber}</if>
+        <if test="storageDate != null  and storageDate != ''">and DATE_FORMAT(t_storage.storage_time,'%Y-%m-%d') =
+            #{storageDate}
+        </if>
+        <if test="status != null  and status != ''">and t_storage.`status` = #{status}</if>
+        <if test="wbsProject != null  and wbsProject != ''">and t_storage.wbs_project = #{wbsProject}</if>
+        <if test="ownerUnit != null  and ownerUnit != ''">and t_storage.owner_unit = #{ownerUnit}</if>
+        <if test="wbsElement != null  and wbsElement != ''">and t_storage.wbs_element = #{wbsElement}</if>
+        <if test="receiver != null  and receiver != ''">and t_storage.receiver = #{receiver}</if>
+        <if test="warehouse != null  and warehouse != ''">and t_storage.warehouse = #{warehouse}</if>
+        <if test="isToI6000 != null  and isToI6000 != ''">and t_storage.is_to_i6000 = #{isToI6000}</if>
+        ORDER BY t_storage.create_time DESC
+    </select>
+
+    <select id="findById" resultType="com.lnsoft.device.api.warehouse.dto.DeviceStorageSaveCmdbDTO">
+        SELECT
+        	t_storage.region_code AS area,
+        	t_storage.dept_code AS dept,
+        	t_storage.wbs_project AS wbsElementName,
+        	t_storage.receiver AS entryWarehousePerson,
+        	DATE_FORMAT( t_storage.storage_time, '%Y-%m-%d' ) AS inWarehouseDate,
+        	t_storage.owner_unit AS ownerUnitCode,
+        	t_storage.property_dept AS propertyDeptCode,
+        	t_storage_list.erp_asset_code AS assetCodeErp,
+        	t_storage_list.erp_account_code AS deviceCodeErp,
+        	t_storage_list.remark AS remark,
+        	t_storage.*,
+        	t_storage_list.*,
+        	wh.uuid AS inWarehouseCode,
+        	wh.warehouse_name AS inWarehouse,
+        	wh.address AS warehouseLocation,
+        	dr.device_add_type AS deviceAddType,
+        	dr.device_change_type AS soType,
+        	dr.use_keep_dept AS useKeepDept,
+        	dr.use_keep_dept_name AS useKeepDeptName,
+        	dr.entity_keep_dept AS realManageDept,
+        	dr.entity_keep_dept_name AS entityManagementDeptName,
+        	dr.fun_location AS funLocation,
+        	dr.fun_location_code AS funLocationCode,
+        	dr.factory_area AS factoryArea,
+        	dr.factory_area_code AS factoryAreaCode,
+        	dr.maintenance_factory AS maintenanceFactory,
+        	dr.maintenance_factory_code AS maintenanceFactoryCode,
+        	dr.maintenance_country AS maintenanceCountry,
+        	dr.line_station AS lineStation,
+        	dr.line_station AS lineStationSign,
+        	dr.unit AS measureUnit
+        FROM
+        	idevelop_device_storage_list t_storage_list
+        	LEFT JOIN idevelop_device_storage t_storage ON t_storage.id = t_storage_list.storage_id AND t_storage.is_deleted = 0
+        	LEFT JOIN idevelop_warehouse wh ON t_storage.warehouse = wh.uuid AND wh.is_deleted = 0
+        	LEFT JOIN idevelop_device_record_list drl ON drl.erp_asset_code = t_storage_list.erp_asset_code AND drl.is_deleted = 0
+        	LEFT JOIN idevelop_device_record dr ON dr.id = drl.record_id AND dr.is_deleted = 0
+        WHERE
+        	 t_storage_list.is_deleted = 0
+        	AND t_storage.id = #{id}
+    </select>
+
+    <select id="findById2Erp" resultType="com.lnsoft.device.api.warehouse.dto.DeviceStorageSyncErpDTO">
+        SELECT
+        	dr.manufacturer AS maker,
+        	dr.oprt_date AS oprtDate,
+        	dr.unit AS unit,
+        	dr.nameplate_no AS nameplateNo
+        FROM
+        	idevelop_device_record_list drl
+        	LEFT JOIN idevelop_device_record dr ON dr.id = drl.record_id
+        WHERE
+        	drl.is_deleted = 0
+        	AND dr.is_deleted = 0
+        	AND drl.device_uuid = #{uuid}
+    </select>
+    <select id="customSelectPage" resultType="com.lnsoft.device.api.warehouse.entity.DeviceStorage">
+        SELECT
+            a.*,
+            b.device_code
+        FROM
+            idevelop_device_storage a
+        LEFT JOIN idevelop_device_storage_list b ON a.id = b.storage_id AND b.is_deleted = 0
+        WHERE a.is_deleted = 0
+            <if test="so.deviceCode != null and so.deviceCode != ''">
+                AND b.device_code LIKE CONCAT('%', #{so.deviceCode}, '%')
+            </if>
+            <if test="so.ownerUnitCode != null and so.ownerUnitCode != ''">
+                AND a.owner_unit = #{so.ownerUnitCode}
+            </if>
+            <if test="so.deptCode != null and so.deptCode != ''">
+                AND a.dept_code = #{so.deptCode}
+            </if>
+            <if test="so.deviceSourceCode != null and so.deviceSourceCode != ''">
+                AND a.device_source = #{so.deviceSourceCode}
+            </if>
+            <if test="so.deviceCategory != null and so.deviceCategory != ''">
+                AND a.device_category = #{so.deviceCategory}
+            </if>
+            <if test="so.deviceType != null and so.deviceType != ''">
+                AND a.device_type = #{so.deviceType}
+            </if>
+            <if test="so.warehouse != null and so.warehouse != ''">
+                AND a.warehouse = #{so.warehouse}
+            </if>
+            <if test="so.wbsProject != null and so.wbsProject != ''">
+                AND a.wbs_project = #{so.wbsProject}
+            </if>
+            <if test="so.regionCode != null and so.regionCode != ''">
+                AND a.region_code LIKE CONCAT(#{so.regionCode}, '%')
+            </if>
+            <if test="so.startDate != null and so.startDate != '' and so.endDate !=null and so.endDate!=''">
+                AND a.storage_time BETWEEN #{so.startDate} AND #{so.endDate}
+            </if>
+            GROUP BY a.id
+            ORDER BY a.create_time DESC
+    </select>
+
+</mapper>

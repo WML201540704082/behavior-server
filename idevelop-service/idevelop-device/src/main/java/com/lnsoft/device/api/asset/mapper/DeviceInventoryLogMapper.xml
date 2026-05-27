@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.asset.mapper.DeviceInventoryLogMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="deviceInventoryLogResultMap" type="com.lnsoft.device.api.asset.entity.DeviceInventoryLog">
+        <id column="id" property="id"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_dept" property="createDept"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="status" property="status"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="crop_id" property="cropId"/>
+        <result column="device_category" property="deviceCategory"/>
+        <result column="device_category_name" property="deviceCategoryName"/>
+        <result column="device_type" property="deviceType"/>
+        <result column="device_type_name" property="deviceTypeName"/>
+        <result column="warehouse" property="warehouse"/>
+        <result column="warehouse_name" property="warehouseName"/>
+        <result column="inventory_num" property="inventoryNum"/>
+        <result column="inventory_type" property="inventoryType"/>
+        <result column="inventory_man" property="inventoryMan"/>
+    </resultMap>
+
+
+    <select id="selectDeviceInventoryLogPage" resultMap="deviceInventoryLogResultMap">
+        select * from idevelop_device_inventory_log where is_deleted = 0
+    </select>
+
+</mapper>

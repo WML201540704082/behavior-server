@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.warehouse.mapper.DeviceRecordMapper">
+    <select id="selectDeviceRecord" resultType="com.lnsoft.device.api.warehouse.entity.DeviceRecord">
+        select * from idevelop_device_record
+        <where>
+            <if test="ids!=null and ids.size()>0">
+                id in
+                <foreach collection="ids" item="id" open="(" separator="," close=")">
+                    #{id}
+                </foreach>
+            </if>
+        </where>
+    </select>
+    <select id="deskDeviceRecodeList" resultType="com.lnsoft.device.api.warehouse.vo.DeviceRecordVO">
+        SELECT
+        iar.id,
+        iar.filing_no,
+        iar.`status`,
+        iar.device_category,
+        iar.device_type,
+        iar.device_num,
+        iar.owner_unit,
+        iar.property_dept,
+        iar.submit_time,
+        iar.process_ins_id,
+        iar.process_status,
+        iar.property_dept,
+        iar.property_dept_name,
+        iar.owner_unit,
+        iar.owner_unit_name,
+        iar.use_keep_dept,
+        iar.use_keep_dept_name,
+        iar.entity_keep_dept,
+        iar.entity_keep_dept,
+        iar.receiver,
+        iar.receiver_name,
+        iar.receiver_time
+        FROM
+        `idevelop_device_record` iar
+        <where>
+            iar.is_deleted = 0
+            AND iar.filing_no IN
+            <foreach collection="deviceRecordDTO.filingNoList" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </where>
+        ORDER BY
+        iar.submit_time DESC
+    </select>
+
+</mapper>

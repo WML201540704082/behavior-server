@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.asset.mapper.ResourceRoomMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="resourceRoomResultMap" type="com.lnsoft.device.api.asset.entity.ResourceRoom">
+        <id column="uuid" property="uuid"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_dept" property="createDept"/>
+        <result column="create_time" property="createTime"/>
+        <result column="status" property="status"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="room_name" property="roomName"/>
+        <result column="room_id" property="roomId"/>
+        <result column="global_name" property="globalName"/>
+        <result column="abbreviation" property="abbreviation"/>
+        <result column="room_location" property="roomLocation"/>
+        <result column="maintenance_unit" property="maintenanceUnit"/>
+        <result column="maintenance_unit_name" property="maintenanceUnitName"/>
+        <result column="room_area" property="roomArea"/>
+        <result column="room_height" property="roomHeight"/>
+        <result column="room_width" property="roomWidth"/>
+        <result column="room_type" property="roomType"/>
+        <result column="is_monitor" property="isMonitor"/>
+        <result column="room_bearing" property="roomBearing"/>
+        <result column="room_depth" property="roomDepth"/>
+        <result column="heating_method" property="heatingMethod"/>
+        <result column="air_method" property="airMethod"/>
+        <result column="routing_method" property="routingMethod"/>
+        <result column="maintenance_user" property="maintenanceUser"/>
+        <result column="duty_phone" property="dutyPhone"/>
+        <result column="region_code" property="regionCode"></result>
+        <result column="region_name" property="regionName"></result>
+        <result column="type" property="type"></result>
+        <result column="area_parent_id" property="areaParentId"></result>
+        <result column="i6000_uuid" property="i6000Uuid"/>
+        <result column="i6000_name" property="i6000Name"/>
+    </resultMap>
+
+
+    <select id="selectResourceRoomPage" resultMap="resourceRoomResultMap">
+        select
+        *
+        from idevelop_resource_room where is_deleted = 0
+        <if test="resourceRoom.roomName!=null and resourceRoom.roomName!= ''">
+            and room_name like concat('%',#{resourceRoom.roomName},'%')
+        </if>
+        <if test="resourceRoom.regionCode != null and resourceRoom.regionCode != ''">
+            and region_code like concat(#{resourceRoom.regionCode},'%')
+        </if>
+        <if test="resourceRoom.maintenanceUnit != null and resourceRoom.maintenanceUnit != ''">
+            and maintenance_unit = #{resourceRoom.maintenanceUnit}
+        </if>
+        <if test="resourceRoom.roomFunction != null">
+            and room_function = #{resourceRoom.roomFunction}
+        </if>
+        <if test="resourceRoom.roomLocation != null and resourceRoom.roomLocation !=''">
+            and room_location = #{resourceRoom.roomLocation}
+        </if>
+        <if test="resourceRoom.roomType != null and resourceRoom.roomType !=''">
+            and room_type = #{resourceRoom.roomType}
+        </if>
+        order by room_type asc,create_time desc
+    </select>
+    <select id="selectRoomIdById" resultType="java.lang.String">
+        select room_id from idevelop_resource_room where is_deleted = 0 and uuid = #{uuid}
+    </select>
+    <select id="selectRoomById" resultType="com.lnsoft.device.api.asset.dto.ExportRoom">
+        select room_name,global_name,room_id,maintenance_unit_name,room_type,room_location,i6000_name
+        from idevelop_resource_room where is_deleted = 0 and uuid =#{id}
+    </select>
+    <select id="selectRoomList" resultType="com.lnsoft.device.api.asset.dto.ExportRoom">
+        select room_name,global_name,room_id,maintenance_unit_name,room_type,room_location,i6000_name
+        from idevelop_resource_room where is_deleted = 0
+        <if test="roomName != null and roomName != ''">
+            and room_name like concat('%',#{roomName},'%')
+        </if>
+        <if test="regionCode != null and regionCode != ''">
+            and region_code = #{regionCode}
+        </if>
+        <if test="maintenanceUnit != null and maintenanceUnit != ''">
+            and maintenance_unit = #{maintenanceUnit}
+        </if>
+    </select>
+    <select id="selectRoomByAreaId" resultMap="resourceRoomResultMap">
+        select uuid,room_name,global_name,room_id,maintenance_unit_name,room_type,room_location
+        from idevelop_resource_room
+        where is_deleted = 0
+        <if test="resourceRoom.areaParentId != null and resourceRoom.areaParentId != ''">
+        and area_parent_id = #{resourceRoom.areaParentId}
+        </if>
+    </select>
+    <select id="findByAreaId" resultType="com.lnsoft.device.api.asset.entity.ResourceRoom">
+        select * from idevelop_resource_room where is_deleted = 0
+        <if test="regionCode != null and regionCode != ''">
+            and region_code = #{regionCode}
+        </if>
+    </select>
+    <select id="findByDeptId" resultType="com.lnsoft.device.api.asset.entity.ResourceRoom">
+        select * from idevelop_resource_room where is_deleted = 0
+        <if test="maintenanceUnit != null and maintenanceUnit != ''">
+            and maintenance_unit = #{maintenanceUnit}
+        </if>
+        <if test="regionCode != null and regionCode != ''">
+            and region_code like concat(#{regionCode},'%')
+        </if>
+        order by room_type asc,create_time desc
+    </select>
+    <select id="getAll" resultType="com.lnsoft.device.api.asset.vo.ResourceRoomVO">
+        select irr.*,id.full_name
+        from idevelop_resource_room irr left join idevelop_dept id on irr.maintenance_unit = id.id
+    </select>
+
+</mapper>

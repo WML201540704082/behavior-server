@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.cmdb.mapper.CmdbCiAttrMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="cmdbCiAttrResultMap" type="com.lnsoft.cmdb.entity.CmdbCiAttr">
+        <id column="attr_ci_id" property="attrCiId"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_dept" property="createDept"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="status" property="status"/>
+        <result column="attr_id" property="attrId"/>
+        <result column="ci_id" property="ciId"/>
+        <result column="attr_name" property="attrName"/>
+        <result column="attr_label" property="attrLabel"/>
+        <result column="attr_type" property="attrType"/>
+        <result column="attr_type_text" property="attrTypeText"/>
+        <result column="attr_config" property="attrConfig"/>
+        <result column="attr_text" property="attrText"/>
+    </resultMap>
+
+
+    <select id="selectCmdbCiAttrPage" resultMap="cmdbCiAttrResultMap">
+        select * from idevelop_cmdb_ci_attr where is_deleted = 0
+    </select>
+
+
+    <delete id="deleteCiAttrByAttrCi" parameterType="String">
+        delete from idevelop_cmdb_ci_attr where attr_ci_id like concat(#{attrCi},'%')
+    </delete>
+
+</mapper>

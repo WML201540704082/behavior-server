@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.asset.mapper.ProjectManagerMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="projectManagerResultMap" type="com.lnsoft.device.api.asset.vo.ProjectManagerVO">
+        <id column="wbs_code" property="wbsCode"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_dept" property="createDept"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="status" property="status"/>
+        <result column="wbs_name" property="wbsName"/>
+        <result column="project_type_code" property="projectTypeCode"/>
+        <result column="project_type" property="projectType"/>
+        <result column="project_define_code" property="projectDefineCode"/>
+        <result column="project_define" property="projectDefine"/>
+        <result column="project_unit_code" property="projectUnitCode"/>
+        <result column="project_unit_name" property="projectUnitName"/>
+        <result column="loevm" property="loevm"/>
+        <result column="project_create_time" property="projectCreateTime"/>
+    </resultMap>
+
+
+    <select id="selectProjectManagerPage" resultType="com.lnsoft.device.api.asset.vo.ProjectManagerVO">
+        select
+        ipm.project_type_code,
+        ipm.project_type,
+        ipm.project_define,
+        ipm.project_define_code,
+        ipm.wbs_code,
+        ipm.wbs_name,
+        ipm.project_unit_code,
+        ipm.project_unit_name,
+        ipm.loevm,
+        ipm.project_create_time,
+        (select count(*) from idevelop_project_manager_detail ipmd where ipmd.is_deleted = 0 and ipmd.wbs_code = ipm.wbs_code and ipmd.wbs_name = ipm.wbs_name) as erpTotal,
+        id.region_code
+        FROM
+        idevelop_project_manager ipm
+        left join (SELECT region_code,erp_unit_code,type from idevelop_dept WHERE type = 'CORP' and is_deleted = 0 GROUP BY erp_unit_code) id
+        on ipm.project_unit_code = id.erp_unit_code
+        where ipm.is_deleted = 0 and ipm.loevm = 'Y'
+        <if test="param2.wbsCode!=null and param2.wbsCode!=''">
+            and ipm.wbs_code like concat('%', #{param2.wbsCode},'%')
+        </if>
+        <if test="param2.projectDefineCode!=null and param2.projectDefineCode!=''">
+            and ipm.project_define_code like concat('%', #{param2.projectDefineCode},'%')
+        </if>
+        <if test="param2.projectDefine!=null and param2.projectDefine!=''">
+            and ipm.project_define like concat('%', #{param2.projectDefine},'%')
+        </if>
+        <if test="param2.wbsName!=null and param2.wbsName!=''">
+            and ipm.wbs_name like concat('%', #{param2.wbsName},'%')
+        </if>
+        <if test="param2.regionCode!=null and param2.regionCode!=''">
+            and id.region_code like concat(#{param2.regionCode},'%')
+        </if>
+        <if test="param2.ids!=null">
+            and ipm.id IN
+            <foreach collection="param2.ids" item="item" open="(" close=")" separator=",">
+                #{item}
+            </foreach>
+        </if>
+        <if test="param2.startTime!=null and param2.startTime!=''">
+            and ipm.project_create_time >= #{param2.startTime}
+        </if>
+          <if test="param2.endTime!=null and param2.endTime!=''">
+            and ipm.project_create_time &lt;= #{param2.endTime}
+        </if>
+
+    </select>
+
+
+    <select id="getErpList" parameterType="com.lnsoft.device.api.asset.entity.ProjectManagerErp"
+            resultType="com.lnsoft.device.api.asset.vo.ProjectManagerErpVO">
+
+        select
+        erp.*
+        from (
+        select
+        idrl.id as id,
+        idrl.erp_asset_code as erpAssetCode,
+        idrl.erp_account_code as erpAccountCode,
+        idrl.erp_asset_status as erpAssetStatus,
+        idrl.erp_status as erpStatus,
+        idrl.i6000_status as i6000Status,
+        idrl.device_code as deviceCode,
+        idrl.device_name as deviceName,
+        idrl.device_type as deviceType
+        from idevelop_device_record_list idrl
+        where is_deleted = 0 and idrl.erp_asset_code is not null
+        <if test="wbsProject!=null and wbsProject!=''">
+            and idrl.wbs_project = #{wbsProject}
+        </if>
+        <if test="wbsElement!=null and wbsElement!=''">
+            and idrl.wbs_element = #{wbsElement}
+        </if>
+        <if test="erpAssetCode!=null and erpAssetCode!=''">
+            and idrl.erp_asset_code like concat('%', #{erpAssetCode},'%')
+        </if>
+        <if test="erpAssetStatus!=null and erpAssetStatus!=''">
+            and idrl.erp_asset_status = #{erpAssetStatus}
+        </if>
+        <if test="erpStatus!=null and erpStatus!=''">
+            and idrl.erp_status = #{erpStatus}
+        </if>
+        <if test="i6000Status!=null and i6000Status!=''">
+            and idrl.i6000_status = #{i6000Status}
+        </if>
+        <if test="deviceCode!=null and deviceCode!=''">
+            and idrl.device_code like concat('%', #{deviceCode},'%')
+        </if>
+        UNION ALL
+        select
+        idtd.id as id,
+        idtd.erp_asset_code as erpAssetCode,
+        idtd.erp_account_code as erpAccountCode,
+        idtd.erp_asset_status as erpAssetStatus,
+        idtd.erp_status as erpStatus,
+        idtd.i6000_status as i6000Status,
+        idtd.device_code as deviceCode,
+        idtd.device_name as deviceName,
+        idtd.device_type as deviceType
+        from idevelop_device_transfer_detail idtd
+        where is_deleted = 0 and idtd.erp_asset_code is not null
+        <if test="wbsProject!=null and wbsProject!=''">
+            and idtd.wbs_project = #{wbsProject}
+        </if>
+        <if test="wbsElement!=null and wbsElement!=''">
+            and idtd.wbs_element = #{wbsElement}
+        </if>
+        <if test="erpAssetCode!=null and erpAssetCode!=''">
+            and idtd.erp_asset_code concat('%', #{erpAssetCode},'%')
+        </if>
+        <if test="erpAssetStatus!=null and erpAssetStatus!=''">
+            and idtd.erp_asset_status = #{erpAssetStatus}
+        </if>
+        <if test="erpStatus!=null and erpStatus!=''">
+            and idtd.erp_status = #{erpStatus}
+        </if>
+        <if test="i6000Status!=null and i6000Status!=''">
+            and idtd.i6000_status = #{i6000Status}
+        </if>
+        <if test="deviceCode!=null and deviceCode!=''">
+            and idtd.device_code like concat('%', #{deviceCode},'%')
+        </if>
+        ) erp
+        LIMIT #{current}, #{size}
+    </select>
+
+    <select id="getErpListCount" parameterType="com.lnsoft.device.api.asset.entity.ProjectManagerErp"
+            resultType="Long">
+
+        select
+        count(*)
+        from (
+        select
+        idrl.id as id,
+        idrl.erp_asset_code as erpAssetCode,
+        idrl.erp_account_code as erpAccountCode,
+        idrl.erp_asset_status as erpAssetStatus,
+        idrl.erp_status as erpStatus,
+        idrl.i6000_status as i6000Status,
+        idrl.device_code as deviceCode,
+        idrl.device_name as deviceName,
+        idrl.device_type as deviceType
+        from idevelop_device_record_list idrl
+        where is_deleted = 0 and idrl.erp_asset_code is not null
+        <if test="wbsProject!=null and wbsProject!=''">
+            and idrl.wbs_project = #{wbsProject}
+        </if>
+        <if test="wbsElement!=null and wbsElement!=''">
+            and idrl.wbs_element = #{wbsElement}
+        </if>
+        <if test="erpAssetCode!=null and erpAssetCode!=''">
+            and idrl.erp_asset_code like concat('%', #{erpAssetCode},'%')
+        </if>
+        <if test="erpAssetStatus!=null and erpAssetStatus!=''">
+            and idrl.erp_asset_status = #{erpAssetStatus}
+        </if>
+        <if test="erpStatus!=null and erpStatus!=''">
+            and idrl.erp_status = #{erpStatus}
+        </if>
+        <if test="i6000Status!=null and i6000Status!=''">
+            and idrl.i6000_status = #{i6000Status}
+        </if>
+        <if test="deviceCode!=null and deviceCode!=''">
+            and idrl.device_code like concat('%', #{deviceCode},'%')
+        </if>
+        UNION ALL
+        select
+        idtd.id as id,
+        idtd.erp_asset_code as erpAssetCode,
+        idtd.erp_account_code as erpAccountCode,
+        idtd.erp_asset_status as erpAssetStatus,
+        idtd.erp_status as erpStatus,
+        idtd.i6000_status as i6000Status,
+        idtd.device_code as deviceCode,
+        idtd.device_name as deviceName,
+        idtd.device_type as deviceType
+        from idevelop_device_transfer_detail idtd
+        where is_deleted = 0 and idtd.erp_asset_code is not null
+        <if test="wbsProject!=null and wbsProject!=''">
+            and idtd.wbs_project = #{wbsProject}
+        </if>
+        <if test="wbsElement!=null and wbsElement!=''">
+            and idtd.wbs_element = #{wbsElement}
+        </if>
+        <if test="erpAssetCode!=null and erpAssetCode!=''">
+            and idtd.erp_asset_code concat('%', #{erpAssetCode},'%')
+        </if>
+        <if test="erpAssetStatus!=null and erpAssetStatus!=''">
+            and idtd.erp_asset_status = #{erpAssetStatus}
+        </if>
+        <if test="erpStatus!=null and erpStatus!=''">
+            and idtd.erp_status = #{erpStatus}
+        </if>
+        <if test="i6000Status!=null and i6000Status!=''">
+            and idtd.i6000_status = #{i6000Status}
+        </if>
+        <if test="deviceCode!=null and deviceCode!=''">
+            and idtd.device_code like concat('%', #{deviceCode},'%')
+        </if>
+        ) erp
+    </select>
+
+
+</mapper>

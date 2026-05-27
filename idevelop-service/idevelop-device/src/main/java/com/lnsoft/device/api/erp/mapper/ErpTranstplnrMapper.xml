@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.erp.mapper.ErpTranstplnrMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="erpTranstplnrResultMap" type="com.lnsoft.device.api.erp.entity.ErpTranstplnr">
+        <id column="trlnr" property="trlnr"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_dept" property="createDept"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="status" property="status"/>
+        <result column="trlnr" property="trlnr"/>
+        <result column="pltxt" property="pltxt"/>
+        <result column="zsbdydj" property="zsbdydj"/>
+        <result column="beber" property="beber"/>
+        <result column="swerk" property="swerk"/>
+        <result column="tplma" property="tplma"/>
+        <result column="operation" property="operation"/>
+        <result column="erp_status" property="erpStatus"/>
+        <result column="i6000_status" property="i6000Status"/>
+        <result column="i6000_code" property="i6000Code"/>
+        <result column="i6000_message" property="i6000Message"/>
+    </resultMap>
+
+
+    <delete id="remove">
+        delete from idevelop_erp_transtplnr where is_deleted = 0
+        <if test="trlnr!= null and trlnr !=''">
+            and trlnr = #{trlnr}
+        </if>
+    </delete>
+
+
+    <select id="selectErpTranstplnrPage" resultMap="erpTranstplnrResultMap">
+        select *
+        from idevelop_erp_transtplnr
+        where
+        is_deleted = 0
+        and (operation = 'C' or operation = 'M')
+        <if test="param2.swerk!=null and param2.swerk!=''">
+            and swerk = #{param2.swerk}
+        </if>
+    </select>
+    <select id="getDetail" resultType="com.lnsoft.device.api.erp.entity.ErpTranstplnr">
+        select * from idevelop_erp_transtplnr
+        where is_deleted = 0
+        <if test="trlnr != null and trlnr!= ''">
+            and trlnr = #{trlnr}
+        </if>
+    </select>
+
+</mapper>

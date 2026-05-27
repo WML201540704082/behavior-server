@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.erp.mapper.ErpMaintainMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="erpMaintainResultMap" type="com.lnsoft.device.api.erp.entity.ErpMaintain">
+        <id column="code" property="code"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="status" property="status"/>
+        <result column="name" property="name"/>
+        <result column="full_name" property="fullName"/>
+    </resultMap>
+
+
+    <select id="selectErpMaintainPage" resultMap="erpMaintainResultMap">
+        select *
+        from idevelop_erp_maintain
+        where is_deleted = 0
+    </select>
+
+    <select id="selectErpListBySwerk" resultType="java.lang.String">
+        select dept.erp_unit_code
+        from idevelop_dept dept
+        where
+        dept.type = 'CORP'
+        and dept.region_code like CONCAT ('%',(select left(dept1.region_code, 4) as area
+        from idevelop_dept dept1
+        <where>
+            dept1.type = 'CORP'
+            and dept1.is_deleted = 0
+            <if test="swerk != null and swerk!= ''">
+                and dept1.erp_unit_code = #{swerk}
+            </if>
+        </where>
+        limit 1)
+        , '%')
+    </select>
+    <select id="getSwerk" resultType="com.lnsoft.device.api.erp.entity.ErpMaintain">
+        select dept.erp_unit_code as code, dept.erp_unit as name
+        from idevelop_dept dept
+        where
+        dept.type = 'CORP'
+        and dept.region_code like CONCAT ('%',(select left(dept1.region_code, 4) as area
+        from idevelop_dept dept1
+        <where>
+            dept1.type = 'CORP'
+            and dept1.is_deleted = 0
+            <if test="code != null and code!= ''">
+                and dept1.erp_unit_code = #{code}
+            </if>
+        </where>
+        limit 1)
+        , '%')
+    </select>
+
+
+</mapper>

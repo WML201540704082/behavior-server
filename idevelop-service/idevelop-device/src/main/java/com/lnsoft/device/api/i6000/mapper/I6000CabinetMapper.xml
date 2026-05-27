@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.i6000.mapper.I6000CabinetMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="i6000CabinetResultMap" type="com.lnsoft.device.api.i6000.entity.I6000Cabinet">
+        <id column="i6000_cabinet_id" property="i6000CabinetId"/>
+        <id column="i6000_unit_id" property="i6000UnitId"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="status" property="status"/>
+        <result column="i6000_cabinet_name" property="i6000CabinetName"/>
+        <result column="i6000_unit_name" property="i6000UnitName"/>
+    </resultMap>
+
+
+    <select id="selectI6000CabinetPage" resultMap="i6000CabinetResultMap">
+        select * from idevelop_i6000_cabinet where is_deleted = 0
+    </select>
+
+</mapper>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.warehouse.mapper.DeviceRecordListMapper">
+
+    <update id="updateBatchDeviceId">
+        update idevelop_device_record_list
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="erp_asset_code = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.erpAssetCode != null and item.erpAssetCode != ''">
+                        when device_uuid = #{item.id}
+                        then #{item.erpAssetCode}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="erp_account_code = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.erpAccountCode != null and item.erpAccountCode != ''">
+                        when device_uuid = #{item.id}
+                        then #{item.erpAccountCode}
+                    </if>
+                </foreach>
+            </trim>
+        </trim>
+        , erp_status = '2', erp_asset_status = '0', update_time = now()
+        where is_deleted = 0 AND device_uuid in
+        <foreach collection="list" item="item" index="index" separator="," open="(" close=")">
+            #{item.id}
+        </foreach>
+    </update>
+</mapper>

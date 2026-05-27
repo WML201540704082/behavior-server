@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.asset.mapper.DeviceOldListMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="deviceOldListResultMap" type="com.lnsoft.device.api.asset.entity.DeviceOldList">
+        <id column="id" property="id"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_dept" property="createDept"/>
+        <result column="create_time" property="createTime"/>
+        <result column="status" property="status"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="device_code" property="deviceCode"/>
+        <result column="room_function" property="roomFunction"/>
+        <result column="device_status" property="deviceStatus"/>
+        <result column="device_category" property="deviceCategory"/>
+        <result column="device_type" property="deviceType"/>
+        <result column="device_category_name" property="deviceCategoryName"/>
+        <result column="decice_type_name" property="deciceTypeName"/>
+        <result column="owner_unit" property="ownerUnit"/>
+        <result column="owner_unit_code" property="ownerUnitCode"/>
+        <result column="property_dept" property="propertyDept"/>
+        <result column="property_dept_code" property="propertyDeptCode"/>
+        <result column="operation_unit" property="operationUnit"/>
+        <result column="operation_unit_code" property="operationUnitCode"/>
+        <result column="operation_dept" property="operationDept"/>
+        <result column="operation_dept_code" property="operationDeptCode"/>
+        <result column="operation_condition" property="operationCondition"/>
+        <result column="oprt_date_first" property="oprtDateFirst"/>
+        <result column="fault_count" property="faultCount"/>
+        <result column="fault_detail" property="faultDetail"/>
+        <result column="hidden_count" property="hiddenCount"/>
+        <result column="is_change" property="isChange"/>
+        <result column="change_reason" property="changeReason"/>
+        <result column="is_project" property="isProject"/>
+        <result column="project_time" property="projectTime"/>
+        <result column="room_code" property="roomCode"/>
+        <result column="room_type" property="roomType"/>
+        <result column="region_code" property="regionCode"/>
+    </resultMap>
+
+
+    <select id="selectDeviceOldListPage" resultMap="deviceOldListResultMap">
+
+    </select>
+    <select id="getDetail" resultType="com.lnsoft.device.api.asset.vo.DeviceOldListVO">
+        select * from idevelop_device_old_list
+        where is_deleted = 0 and id = #{id}
+    </select>
+
+</mapper>

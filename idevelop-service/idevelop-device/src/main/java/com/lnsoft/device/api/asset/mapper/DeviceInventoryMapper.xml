@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.asset.mapper.DeviceInventoryMapper">
+
+    <insert id="saveOrUpdateDatabase">
+        INSERT INTO `idevelop_device_inventory` (
+        `id`,
+        `region_code`,
+        `crop_id`,
+        `device_category`,
+        `device_category_name`,
+        `device_type`,
+        `device_type_name`,
+        `warehouse`,
+        `warehouse_name`,
+        `inventory_num`,
+        `version`,
+        `create_user`,
+        `create_time`,
+        `is_deleted`)
+        VALUES(
+        #{id},
+        #{regionCode},
+        #{cropId},
+        #{deviceCategory},
+        #{deviceCategoryName},
+        #{deviceType},
+        #{deviceTypeName},
+        #{warehouse},
+        #{warehouseName},
+        #{inventoryNum},
+        0,
+        #{createUser},
+        #{createTime},
+        #{isDeleted})
+        ON DUPLICATE KEY UPDATE inventory_num = inventory_num + #{inventoryNum},version = version + 1
+    </insert>
+    <update id="batchUpdateInventory">
+        UPDATE idevelop_device_inventory
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="inventory_num = case" suffix="end,">
+                <foreach collection="deviceInventory" item="item" index="index">
+                    <if test="item.inventoryNum != null and item.inventoryNum != ''">
+                        when id = #{item.id}
+                        then #{item.inventoryNum}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="version = case" suffix="end,">
+                <foreach collection="deviceInventory" item="item" index="index">
+                    <if test="item.version != null and item.version != ''">
+                        when id = #{item.id}
+                        then #{item.version} + 1
+                    </if>
+                </foreach>
+            </trim>
+        </trim>
+        , update_time = now()
+        where is_deleted = 0 AND id in
+        <foreach collection="deviceInventory" item="item" index="index" separator="," open="(" close=")">
+            #{item.id}
+        </foreach>
+        and version in
+        <foreach collection="deviceInventory" item="item" index="index" separator="," open="(" close=")">
+            #{item.version}
+        </foreach>
+    </update>
+    <select id="findListPage" resultType="com.lnsoft.device.api.asset.dto.DeviceInventoryDTO">
+        SELECT idi.*,id.full_name
+        FROM `idevelop_device_inventory` idi
+        LEFT JOIN idevelop_dept id on idi.crop_id = id.id
+        where idi.is_deleted = 0
+        <if test="inventory.regionCode != null and inventory.regionCode != ''">
+            and idi.region_code like concat(#{inventory.regionCode},'%')
+        </if>
+        <if test="inventory.cropId != null and inventory.cropId != ''">
+            and idi.crop_id = #{inventory.cropId}
+        </if>
+        <if test="inventory.warehouseName != null and inventory.warehouseName != ''">
+            and idi.warehouse_name like concat('%',#{inventory.warehouseName},'%')
+        </if>
+        <if test="inventory.deviceCategory != null and inventory.deviceCategory != ''">
+            and idi.device_category = #{inventory.deviceCategory}
+        </if>
+        <if test="inventory.deviceType != null and inventory.deviceType != ''">
+            and idi.device_type = #{inventory.deviceType}
+        </if>
+        limit #{sizeIndex},#{size}
+    </select>
+    <select id="selectDeviceCount" resultType="com.lnsoft.device.api.asset.entity.DeviceInventory">
+        select sum(inventory_num) as inventory_num
+        FROM idevelop_device_inventory where warehouse = #{warehouse} and device_category = #{deviceCategory}
+    </select>
+    <select id="getTotal" resultType="java.lang.String">
+        SELECT count(*)
+        FROM `idevelop_device_inventory` idi
+        LEFT JOIN idevelop_dept id on idi.crop_id = id.id
+        where idi.is_deleted = 0
+        <if test="inventory.regionCode != null and inventory.regionCode != ''">
+            and idi.region_code like concat(#{inventory.regionCode},'%')
+        </if>
+        <if test="inventory.cropId != null and inventory.cropId != ''">
+            and idi.crop_id = #{inventory.cropId}
+        </if>
+        <if test="inventory.warehouseName != null and inventory.warehouseName != ''">
+            and idi.warehouse_name like concat('%',#{inventory.warehouseName},'%')
+        </if>
+        <if test="inventory.deviceCategory != null and inventory.deviceCategory != ''">
+            and idi.device_category = #{inventory.deviceCategory}
+        </if>
+        <if test="inventory.deviceType != null and inventory.deviceType != ''">
+            and idi.device_type = #{inventory.deviceType}
+        </if>
+    </select>
+
+</mapper>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.cmdb.mapper.CmdbCiAttrGradeMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="cmdbCiAttrGradeResultMap" type="com.lnsoft.device.api.cmdb.vo.CmdbCiAttrGradeVO">
+        <id column="attr_ci_id" property="attrCiId"/>
+        <result column="ci_id" property="ciId"/>
+        <result column="id" property="id"/>
+        <result column="ci_name" property="ciName"/>
+        <result column="ci_label" property="ciLabel"/>
+        <result column="label" property="label"/>
+        <result column="name" property="name"/>
+        <result column="type" property="type"/>
+        <result column="type_text" property="typeText"/>
+        <result column="cmdb_config" property="cmdbConfig"/>
+        <result column="allow_edit" property="allowEdit"/>
+        <result column="attr_grade" property="attrGrade"/>
+        <result column="can_import" property="canImport"/>
+        <result column="can_input" property="canInput"/>
+        <result column="can_search" property="canSearch"/>
+        <result column="need_config" property="needConfig"/>
+        <result column="need_target_ci" property="needTargetCi"/>
+        <result column="need_whole_row" property="needWholeRow"/>
+        <result column="description" property="description"/>
+        <result column="expression_list" property="expressionList"/>
+        <result column="group_name" property="groupName"/>
+        <result column="input_type" property="inputType"/>
+        <result column="input_type_text" property="inputTypeText"/>
+        <result column="is_ci_unique" property="isCiUnique"/>
+        <result column="is_required" property="isRequired"/>
+        <result column="is_extended" property="isExtended"/>
+        <result column="is_private" property="isPrivate"/>
+        <result column="is_search_able" property="isSearchAble"/>
+        <result column="is_unique" property="isUnique"/>
+        <result column="sort" property="sort"/>
+        <result column="start_page" property="startPage"/>
+        <result column="is_xtyth_required" property="isXtythRequired"/>
+    </resultMap>
+
+
+    <select id="selectCmdbCiAttrGradePage" resultMap="cmdbCiAttrGradeResultMap">
+        select *
+        from idevelop_cmdb_ci_attr_grade
+        where is_deleted = 0
+          and attr_ci_id like concat(#{param2.attrCiId}, '%')
+        order by sort
+    </select>
+
+    <select id="selectCmdbAttrCiIdList" parameterType="java.lang.Long" resultType="java.lang.String">
+        select attr_ci_id
+        from idevelop_cmdb_ci_attr_grade
+        where is_deleted = 0
+          and attr_ci_id like concat(#{param2.attrCiId}, '%')
+    </select>
+
+    <delete id="delectCmdbCiAttrGradeList" parameterType="java.lang.String">
+        delete
+        from idevelop_cmdb_ci_attr_grade
+        where attr_ci_id in
+        <foreach item="item" collection="ciIds" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+</mapper>

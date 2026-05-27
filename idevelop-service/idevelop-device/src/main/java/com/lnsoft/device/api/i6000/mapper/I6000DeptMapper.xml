@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.i6000.mapper.I6000DeptMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="i6000DeptResultMap" type="com.lnsoft.device.api.i6000.entity.I6000Dept">
+        <id column="i6000_dept_id" property="i6000DeptId"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="status" property="status"/>
+        <result column="i6000_dept_name" property="i6000DeptName"/>
+        <result column="i6000_unit_id" property="i6000UnitId"/>
+        <result column="i6000_unit_name" property="i6000UnitName"/>
+    </resultMap>
+
+
+    <select id="selectI6000DeptPage" resultMap="i6000DeptResultMap">
+        select * from idevelop_i6000_dept where is_deleted = 0
+    </select>
+    <select id="selectUnitId" resultType="java.lang.String">
+        SELECT i6000_unit_id FROM `idevelop_i6000_dept` GROUP BY i6000_unit_id
+    </select>
+
+</mapper>

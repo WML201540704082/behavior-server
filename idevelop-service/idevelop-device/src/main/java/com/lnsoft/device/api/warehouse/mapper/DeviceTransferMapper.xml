@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.warehouse.mapper.DeviceTransferMapper">
+
+    <select id="deviceTransferList" resultType="com.lnsoft.device.api.warehouse.vo.DeviceTransferVO">
+        SELECT
+        idt.id,
+        idt.filing_no,
+        idt.`STATUS`,
+        idt.erp_status,
+        idt.wbs_project,
+        idt.wbs_element,
+        idt.use_keep_dept,
+        idt.entity_keep_dept,
+        idt.create_time,
+        idt.process_status,
+        idt.owner_unit,
+        idt.owner_unit_name,
+        idt.property_dept,
+        idt.property_dept_name
+        FROM
+        idevelop_device_transfer idt
+        LEFT JOIN idevelop_device_transfer_detail idtd ON idt.id = idtd.transfer_id
+        <where>
+            idt.is_deleted = 0
+            <if test="deviceTransferDTO.deviceCode != null and deviceTransferDTO.deviceCode != ''">
+                AND idtd.device_code LIKE CONCAT('%', #{deviceTransferDTO.deviceCode}, '%')
+            </if>
+            <if test="deviceTransferDTO.deviceCategory != null and deviceTransferDTO.deviceCategory != ''">
+                AND idtd.device_category = #{deviceTransferDTO.deviceCategory}
+            </if>
+            <if test="deviceTransferDTO.deviceType != null and deviceTransferDTO.deviceType != ''">
+                AND idtd.device_type = #{deviceTransferDTO.deviceType}
+            </if>
+            <if test="deviceTransferDTO.regionCode != null and deviceTransferDTO.regionCode != ''">
+                AND idt.region_code LIKE CONCAT(#{deviceTransferDTO.regionCode}, '%')
+            </if>
+            <if test="deviceTransferDTO.ownerUnit !=null and deviceTransferDTO.ownerUnit != ''">
+                AND idt.owner_unit = #{deviceTransferDTO.ownerUnit}
+            </if>
+            <if test="deviceTransferDTO.propertyDept !=null and deviceTransferDTO.propertyDept != ''">
+                AND idt.property_dept = #{deviceTransferDTO.propertyDept}
+            </if>
+            <if test="deviceTransferDTO.wbsProject !=null and deviceTransferDTO.wbsProject != ''">
+                AND idt.wbs_project = #{deviceTransferDTO.wbsProject}
+            </if>
+            <if test="deviceTransferDTO.minDate != null and deviceTransferDTO.minDate != '' and deviceTransferDTO.maxDate !=null and deviceTransferDTO.maxDate!=''">
+                AND idt.create_time &gt;= #{deviceTransferDTO.minDate}
+                AND idt.create_time &lt;= #{deviceTransferDTO.maxDate}
+            </if>
+            GROUP BY idt.id ORDER BY idt.create_time DESC
+        </where>
+    </select>
+    <select id="deskDeviceTransferList" resultType="com.lnsoft.device.api.warehouse.vo.DeviceTransferVO">
+        SELECT
+        idt.id,
+        idt.device_type,
+        idt.device_category,
+        idt.receiver_time,
+        idt.receiver,
+        idt.filing_no,
+        idt.`STATUS`,
+        idt.erp_status,
+        idt.wbs_project,
+        idt.wbs_element,
+        iu.real_name,
+        idt.use_keep_dept,
+        idt.entity_keep_dept,
+        idt.create_time,
+        idt.process_status,
+        idt.owner_unit,
+        idt.property_dept,
+        idt.owner_unit_name,
+        idt.property_dept_name
+        FROM idevelop_device_transfer idt
+        LEFT JOIN idevelop_user iu ON idt.receiver = iu.id
+        <where>
+            idt.is_deleted = 0
+            <if test="dto.regionCode != null and dto.regionCode != ''">
+                and region_code = #{dto.regionCode}
+            </if>
+            <if test="dto.filingNoList != null and dto.filingNoList.size() != 0">
+                AND filing_no IN
+                <foreach collection="dto.filingNoList" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+        ORDER BY
+        idt.create_time DESC
+    </select>
+
+</mapper>

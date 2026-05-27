@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.cmdb.mapper.CmdbDictCiMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="cmdbDictCiResultMap" type="com.lnsoft.device.entity.CmdbDictCi">
+        <id column="ci_id" property="ciId"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_dept" property="createDept"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="status" property="status"/>
+        <result column="ci_name" property="ciName"/>
+        <result column="ci_label" property="ciLabel"/>
+        <result column="ci_icon" property="ciIcon"/>
+        <result column="ci_type_id" property="ciTypeId"/>
+        <result column="cascade_ci_info" property="cascadeCiInfo"/>
+        <result column="is_exist_cascade" property="isExistCascade"/>
+        <result column="select_ci_id" property="selectCiId"/>
+        <result column="select_ci_name" property="selectCiName"/>
+    </resultMap>
+
+
+    <select id="selectCmdbDictCiPage" resultMap="cmdbDictCiResultMap">
+        select * from idevelop_cmdb_dict_ci where is_deleted = 0
+    </select>
+
+</mapper>

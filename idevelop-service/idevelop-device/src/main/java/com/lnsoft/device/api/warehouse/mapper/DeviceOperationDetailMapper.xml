@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.warehouse.mapper.DeviceOperationDetailMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="deviceOperationDetailResultMap" type="com.lnsoft.device.api.warehouse.entity.DeviceOperationDetail">
+        <id column="id" property="id"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="operation_id" property="operationId"/>
+        <result column="user_name" property="userName"/>
+        <result column="user_phone" property="userPhone"/>
+        <result column="user_card" property="userCard"/>
+        <result column="device_code" property="deviceCode"/>
+        <result column="device_name" property="deviceName"/>
+        <result column="device_status" property="deviceStatus"/>
+        <result column="erp_asset_code" property="erpAssetCode"/>
+        <result column="factory_number" property="factoryNumber"/>
+        <result column="device_subnet" property="deviceSubnet"/>
+        <result column="device_ip" property="deviceIp"/>
+        <result column="device_old_mac" property="deviceOldMac"/>
+        <result column="device_mac" property="deviceMac"/>
+        <result column="device_network_type" property="deviceNetworkType"/>
+        <result column="auth_account" property="authAccount"/>
+        <result column="auth_password" property="authPassword"/>
+        <result column="operation_unit" property="operationUnit"/>
+        <result column="operation_dept" property="operationDept"/>
+        <result column="operation_use" property="operationUse"/>
+        <result column="operation_grade" property="operationGrade"/>
+        <result column="operation_phone" property="operationPhone"/>
+        <result column="change_person" property="changePerson"/>
+        <result column="remark" property="remark"/>
+    </resultMap>
+
+
+    <select id="selectDeviceOperationDetailPage" resultMap="deviceOperationDetailResultMap">
+        select * from idevelop_device_operation_detail where is_deleted = 0
+    </select>
+
+</mapper>

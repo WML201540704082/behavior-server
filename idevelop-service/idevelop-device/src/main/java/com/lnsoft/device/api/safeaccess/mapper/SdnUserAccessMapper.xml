@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.safeaccess.mapper.SdnUserAccessMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="accessResultMap" type="com.lnsoft.device.api.safeaccess.entity.SdnUserAccess">
+        <id column="ID" property="id"/>
+        <result column="COMPANY" property="company"/>
+        <result column="DEPARTMENT" property="department"/>
+        <result column="ADDRESS" property="address"/>
+        <result column="PHONE" property="phone"/>
+        <result column="DEVICE_ID" property="deviceId"/>
+        <result column="SUBNET_ID" property="subnetId"/>
+        <result column="AUTH_USER" property="authUser"/>
+        <result column="AUTH_PASSWORD" property="authPassword"/>
+        <result column="MAC_ADDRESS" property="macAddress"/>
+        <result column="IP_ADDRESS" property="ipAddress"/>
+        <result column="SBBM" property="sbbm"/>
+        <result column="START_TIME" property="startTime"/>
+        <result column="ALLOW_DAYS" property="allowDays"/>
+        <result column="IS802" property="is802"/>
+        <result column="FULL_USERNAME" property="fullUsername"/>
+        <result column="IS_ACCESS" property="isAccess"/>
+        <result column="SYNC_TIME" property="syncTime"/>
+        <result column="SYNC_SIGN" property="syncSign"/>
+        <result column="READ_STATE" property="readState"/>
+        <result column="DATA_FROM" property="dataFrom"/>
+        <result column="VLAN_ID" property="vlanId"/>
+    </resultMap>
+
+
+    <select id="selectAccessPage" resultMap="accessResultMap">
+        select * from user_access where is_deleted = 0
+    </select>
+    <select id="getUrl" resultType="java.lang.String">
+        select url from `idevelop_city_code` where `self_code` = #{regionCode}
+    </select>
+
+</mapper>

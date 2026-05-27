@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.asset.mapper.HardwareBasicMapper">
+
+
+    <select id="warehouse" resultType="com.lnsoft.device.api.asset.dto.WarehouseDetailDTO">
+        SELECT idt.serial_number as ticketCode,
+        '入库工单' as type,
+        idt.owner_unit as unit,
+        idt.warehouse as warehouse,
+        idt.device_num as number,
+        idt.create_time as tim,
+        idt.`status` as `status`,
+        idt.receiver as user
+        FROM `idevelop_device_storage`  idt left join idevelop_device_storage_list idtl on  idt.id = idtl.storage_id  where idtl.device_code = #{deviceCode}
+    </select>
+    <select id="apply" resultType="java.lang.Object">
+        SELECT *
+        FROM `idevelop_device_apply` ida left join idevelop_device_apply_detail idad on  ida.id = idad.apply_id  where idad.old_device_code = #{deviceCode}
+    </select>
+    <select id="operation" resultType="java.lang.Object">
+        SELECT *
+        FROM `idevelop_device_operation`  ido left join idevelop_device_operation_detail idod on  ido.id = idod.operation_id  where idod.device_code = #{deviceCode}
+    </select>
+    <select id="change" resultType="java.lang.Object">
+        SELECT *
+        FROM `idevelop_device_change`  idc left join idevelop_device_change_list idcl on  idc.id = idcl.change_id  where idcl.device_code = #{deviceCode}
+    </select>
+    <select id="repair" resultType="java.lang.Object">
+        SELECT *
+        FROM `idevelop_device_repair`  idr left join idevelop_device_repair_list idrl on  idr.id = idrl.repair_id  where idrl.device_code = #{deviceCode}
+    </select>
+</mapper>

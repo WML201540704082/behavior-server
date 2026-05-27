@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.warehouse.mapper.SyncSdnMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="syncSdnResultMap" type="com.lnsoft.device.api.warehouse.entity.SyncSdn">
+        <id column="id" property="id"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_dept" property="createDept"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="status" property="status"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="region_code" property="regionCode"/>
+        <result column="switcher_type" property="switcherType"/>
+        <result column="request_type" property="requestType"/>
+        <result column="request" property="request"/>
+    </resultMap>
+
+
+    <select id="selectSyncSdnPage" resultMap="syncSdnResultMap">
+        select * from idevelop_sync_sdn where is_deleted = 0
+    </select>
+
+    <update id="updateSyncSdnById">
+        update idevelop_sync_sdn
+        set is_deleted = 1
+        where id = #{id}
+    </update>
+
+</mapper>

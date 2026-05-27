@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.operation.mapper.DeviceChangeMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="deviceChangeResultMap" type="com.lnsoft.device.api.operation.entity.DeviceChange">
+        <id column="id" property="id"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_dept" property="createDept"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="filing_no" property="filingNo"/>
+        <result column="change_type" property="changeType"/>
+        <result column="apply_unit" property="applyUnit"/>
+        <result column="apply_unit_name" property="applyUnitName"/>
+        <result column="apply_dept" property="applyDept"/>
+        <result column="apply_dept_name" property="applyDeptName"/>
+        <result column="apply_user" property="applyUser"/>
+        <result column="apply_user_name" property="applyUserName"/>
+        <result column="ticket_status" property="ticketStatus"/>
+        <result column="ticket_creat_type" property="ticketCreatType"/>
+        <result column="receiver_time" property="receiverTime"/>
+        <result column="process_ins_id" property="processInsId"/>
+        <result column="process_status" property="processStatus"/>
+        <result column="remark" property="remark"/>
+    </resultMap>
+
+
+    <select id="selectDeviceChangePage" resultMap="deviceChangeResultMap">
+        select id,filing_no,change_type,apply_unit,apply_dept,apply_user,ticket_status,ticket_creat_type,receiver_time
+        from idevelop_device_change where is_deleted = 0
+        <if test="deviceChange.filingNo!=null and deviceChange.filingNo !=''">
+            and filing_no = #{deviceChange.filingNo}
+        </if>
+        <if test="deviceChange.changeType!=null and deviceChange.changeType !=''">
+            and change_type = #{deviceChange.changeType}
+        </if>
+        <if test="deviceChange.ticketStatus!=null and deviceChange.ticketStatus !=''">
+            and ticket_status = #{deviceChange.ticketStatus}
+        </if>
+        <if test="deviceChange.applyDept!=null and deviceChange.applyDept !=''">
+            and apply_dept = #{deviceChange.applyDept}
+        </if>
+        <if test="deviceChange.startDate!=null and deviceChange.startDate !='' and">
+            and receiver_time &gt;= #{deviceChange.startDate} and receiver_time &lt;= #{deviceChange.startDate}
+        </if>
+        <if test="deviceChange.changeCode!=null and deviceChange.changeCode !=''">
+            and change_code = #{deviceChange.changeCode}
+        </if>
+    </select>
+    <select id="deskDeviceChangeList" resultType="com.lnsoft.device.api.operation.vo.DeviceChangeVO">
+        select
+        idc.id,
+        idc.filing_no,
+        idc.change_type,
+        idc.apply_unit,
+        idc.apply_unit_name,
+        idc.apply_dept,
+        idc.apply_dept_name,
+        idc.apply_user,
+        idc.apply_user_name,
+        idc.ticket_status,
+        idc.device_count,
+        idc.ticket_creat_type,
+        idc.receiver_time,
+        idc.process_ins_id,
+        idc.process_status,
+        idc.region_code,
+        idc.remark,
+        idc.create_user,
+        idc.create_dept,
+        idc.create_time,
+        idc.update_user,
+        idc.update_time,
+        iu.real_name
+        from idevelop_device_change idc
+        left join idevelop_user iu on idc.apply_user = iu.id
+        <where>
+            idc.is_deleted = 0
+            AND idc.filing_no IN
+            <foreach collection="deviceChange.filingNoList" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </where>
+        ORDER BY
+        idc.create_time DESC
+    </select>
+    <select id="findPage" resultType="com.lnsoft.device.api.operation.entity.DeviceChange">
+        select idc.*
+        from idevelop_device_change idc left join idevelop_device_change_list idcl on idc.id = idcl.change_id
+        <where>
+            idc.is_deleted = 0
+            <if test="deviceChange.deviceCode != null and deviceChange.deviceCode != ''">
+                AND idcl.device_code LIKE CONCAT('%', #{deviceChange.deviceCode}, '%')
+            </if>
+            <if test="deviceChange.applyUnit != null and deviceChange.applyUnit != ''">
+                AND idc.apply_unit = #{deviceChange.applyUnit}
+            </if>
+            <if test="deviceChange.applyDept != null and deviceChange.applyDept != ''">
+                AND idc.apply_dept = #{deviceChange.applyDept}
+            </if>
+            <if test="deviceChange.changeType != null and deviceChange.changeType != ''">
+                AND idc.change_type = #{deviceChange.changeType}
+            </if>
+            <if test="deviceChange.ticketCreatType != null and deviceChange.ticketCreatType != ''">
+                AND idc.ticket_creat_type = #{deviceChange.ticketCreatType}
+            </if>
+            <if test="deviceChange.applyUserName != null and deviceChange.applyUserName != ''">
+                AND idc.apply_user_name = #{deviceChange.applyUserName}
+            </if>
+            <if test="deviceChange.regionCode != null and deviceChange.regionCode != ''">
+                AND idc.region_code LIKE CONCAT(#{deviceChange.regionCode}, '%')
+            </if>
+            <if test="deviceChange.startDate != null and deviceChange.startDate != '' and deviceChange.endDate !=null and deviceChange.endDate!=''">
+                AND idc.receiver_time &gt;= #{deviceChange.startDate}
+                AND idc.receiver_time &lt;= #{deviceChange.endDate}
+            </if>
+            GROUP BY idc.id ORDER BY idc.create_time DESC
+        </where>
+    </select>
+
+</mapper>

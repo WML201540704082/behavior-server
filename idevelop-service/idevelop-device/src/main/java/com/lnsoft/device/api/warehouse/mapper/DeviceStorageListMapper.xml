@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.warehouse.mapper.DeviceStorageListMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="deviceStorageListResultMap" type="com.lnsoft.device.api.warehouse.entity.DeviceStorageList">
+        <id column="id" property="id"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_dept" property="createDept"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="status" property="status"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="storage_id" property="storageId"/>
+        <result column="device_code" property="deviceCode"/>
+        <result column="erp_asset_code" property="erpAssetCode"/>
+        <result column="erp_account_code" property="erpAccountCode"/>
+        <result column="device_name" property="deviceName"/>
+        <result column="full_name" property="fullName"/>
+        <result column="device_status" property="deviceStatus"/>
+        <result column="device_hardware_info" property="deviceHardwareInfo"/>
+        <result column="remark" property="remark"/>
+        <result column="ci_entity_id" property="ciEntityId"/>
+        <result column="uuid" property="uuid"/>
+        <result column="is_to_cmdb" property="isToCmdb"/>
+        <result column="sync_erp_status" property="syncErpStatus"/>
+        <result column="sync_i6000_status" property="syncI6000Status"/>
+    </resultMap>
+
+
+    <select id="selectDeviceStorageListPage" resultMap="deviceStorageListResultMap">
+        select * from idevelop_device_storage_list where is_deleted = 0
+    </select>
+
+    <select id="selectErpAssetCode" resultType="com.lnsoft.device.entity.DeviceRecordList">
+        SELECT
+            a.device_uuid,
+            a.erp_asset_code,
+            a.erp_account_code
+        FROM
+            idevelop_device_record_list a
+            LEFT JOIN idevelop_device_record b ON b.id = a.record_id
+            AND b.is_deleted = 0
+        WHERE
+            a.is_deleted = 0
+            AND a.erp_asset_status = 0
+            AND a.erp_asset_code IS NOT NULL
+            AND a.device_uuid IS NOT NULL
+            AND a.device_category = #{deviceCategory}
+            AND a.device_type = #{deviceType}
+            AND a.wbs_element = #{wbsElement}
+            AND a.erp_status = #{erpStatus}
+            AND b.`status` = 3
+            LIMIT #{size}
+    </select>
+
+</mapper>

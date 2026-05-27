@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.safeaccess.mapper.SafeaccessIppoolMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="safeaccessIppoolResultMap" type="com.lnsoft.device.api.safeaccess.entity.SafeaccessIppool">
+        <id column="ip_id" property="ipId"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_dept" property="createDept"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="status" property="status"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="org_no" property="orgNo"/>
+        <result column="subnet" property="subnet"/>
+        <result column="ip" property="ip"/>
+        <result column="ip_level" property="ipLevel"/>
+        <result column="is_used" property="isUsed"/>
+        <result column="order_no" property="orderNo"/>
+        <result column="bak_col1" property="bakCol1"/>
+        <result column="bak_col2" property="bakCol2"/>
+        <result column="bak_col3" property="bakCol3"/>
+        <result column="remark" property="remark"/>
+        <result column="region_code" property="regionCode"/>
+        <result column="dept_code" property="deptCode"/>
+    </resultMap>
+
+    <insert id="insertIpPool">
+        insert into ${tableName}
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            ip_id,
+            org_no,
+            subnet,
+            ip,
+            ip_level,
+            is_used,
+            order_no,
+            bak_col1,
+            bak_col2,
+            bak_col3,
+        </trim>
+        values
+        <foreach collection="list" item="item" index="index" open="" close="" separator=",">
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                #{item.id,jdbcType=VARCHAR},
+                #{item.orgNo,jdbcType=VARCHAR},
+                #{item.subnetId,jdbcType=VARCHAR},
+                #{item.ip,jdbcType=VARCHAR},
+                '1',
+                '0',
+                #{item.orderNo,jdbcType=VARCHAR},
+                #{item.bskCol1,jdbcType=VARCHAR},
+                #{item.bskCol2,jdbcType=VARCHAR},
+                #{item.bskCol3,jdbcType=VARCHAR},
+            </trim>
+        </foreach>
+    </insert>
+    <update id="updateIpLevel" parameterType="com.lnsoft.device.api.safeaccess.dto.SafeaccessIppoolDTO">
+        update ${ipPoolName} set IP_LEVEL = #{ipLevel} where IP_ID in
+        <foreach collection="ids" item="ids" index="index" open="(" separator="," close=")">
+            #{ids}
+        </foreach>
+    </update>
+    <update id="updateBatchIpPool">
+        UPDATE ${updateSurface} SET is_used = #{ipUse},
+        <if test="userId != null">
+            update_user = #{userId},
+        </if>
+        update_time = now()
+        WHERE subnet = #{deviceSubnet}
+        AND ip IN
+        <foreach collection="deviceIpList" item="item" index="index" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </update>
+    <update id="updateIpPool">
+        update ${ipPoolName} t
+        set t.is_used = '1'
+        where t.is_used &lt;&gt; '2'
+          and t.subnet = #{subnet}
+          and t.ip = #{ip}
+    </update>
+
+
+    <select id="selectSafeaccessIppoolPage" resultMap="safeaccessIppoolResultMap">
+        select *
+        from idevelop_safeaccess_ippool
+        where is_deleted = 0
+    </select>
+
+    <select id="searchByPage" resultType="com.lnsoft.device.api.safeaccess.dto.SafeaccessIppoolDTO">
+        SELECT
+        ip.*,
+        sb.subnet_name AS subnetName,
+        dept.dept_name AS orgName
+        FROM
+        ${param.ipPoolName} ip
+        LEFT JOIN idevelop_safeaccess_subnet sb ON ip.subnet = sb.id and sb.is_deleted = 0
+        LEFT JOIN idevelop_dept dept ON ip.org_no = dept.id and dept.is_deleted = 0
+        WHERE
+        1=1
+        <if test="param.ip!=null and param.ip!=''">and ip.ip =#{param.ip}</if>
+        <if test="param.level!=null and param.level!=''">and ip.ip_level =#{param.level}</if>
+        <if test="param.isUsed!=null and param.isUsed!=''">and ip.is_used =#{param.isUsed}</if>
+        <if test="param.subnet!=null and param.subnet!=''">and ip.subnet =#{param.subnet}</if>
+        <if test="param.orgNo!=null and param.orgNo!=''">and ip.org_no=#{param.orgNo}</if>
+        order by ip.order_no*1 asc
+    </select>
+
+    <select id="search" resultType="com.lnsoft.device.api.safeaccess.dto.SafeaccessIppoolDTO">
+        SELECT
+        ip.ip_id AS ipId,
+        ip.subnet AS subnet,
+        ip.ip AS ip
+        <!--
+        ip.ip_level AS ipLevel,
+        ip.is_used AS isUsed,
+        ip.bak_col1 AS bakCol1,
+        ip.bak_col2 AS bakCol2,
+        ip.bak_col3 AS bakCol3,
+        sb.subnet_name AS subnetName,
+        dept.dept_name AS orgName
+        -->
+        FROM
+        ${ipPoolName} ip
+        <!--
+        LEFT JOIN idevelop_safeaccess_subnet sb ON ip.subnet = sb.id
+        LEFT JOIN idevelop_dept dept ON ip.org_no = dept.id
+        -->
+        WHERE
+        ip.is_deleted = 0
+        <if test="ip!=null and ip!=''">and ip.ip like CONCAT('%',#{ip},'%')</if>
+        <if test="ipLevel!=null and ipLevel!=''">and ip.ip_level =#{ipLevel}</if>
+        <if test="isUsed!=null and isUsed!=''">and ip.is_used =#{isUsed}</if>
+        <if test="subnet!=null and subnet!=''">and ip.subnet =#{subnet}</if>
+        <if test="orgNo!=null and orgNo!=''">and ip.org_no=#{orgNo}</if>
+        <if test="ippoolSegment!=null and ippoolSegment!=''">and ip.ip like CONCAT('%',#{ippoolSegment},'%')</if>
+        order by ip.order_no*1 asc
+    </select>
+    <select id="getQueryList" resultType="com.lnsoft.device.api.safeaccess.dto.SafeaccessIppoolDTO">
+        SELECT
+        t.ip_id,
+        t.org_no,
+        t.subnet,
+        t.ip,
+        t.ip_level,
+        t.is_used,
+        t.BAK_COL1 bakCol1,
+        t.BAK_COL2 bakCol2,
+        t.BAK_COL3 bakCol3,
+        a.dept_name AS orgName,
+        c.subnet_name AS subnetName,
+        ctua.is802,
+        ctua.mac_address as mac,
+        ctua.device_type_name as deviceType,
+        (case when sh3cou.framed_ip_str is null then '离线' else '在线' end) as online
+        FROM
+        ${ipPoolName} t
+        left join idevelop_safeaccess_subnet c on t.subnet = c.id and c.is_deleted = 0
+        left join idevelop_dept a on t.org_no = a.id and a.is_deleted = 0
+        left join sdn_h3c_online_user sh3cou on sh3cou.framed_ip_str = t.ip
+        left join idevelop_safeaccess_user_access ctua on ctua.ip_address = t.ip and ctua.is_deleted = 0 and t.subnet =
+        ctua.subnet_id
+        <where>
+            t.is_deleted = 0
+            <if test="ip!=null and ip!=''">
+                and t.ip like CONCAT('%',#{ip},'%')
+            </if>
+            <if test="ippoolSegment!=null and ippoolSegment!=''">
+                and t.ip like CONCAT('%',#{ippoolSegment},'%')
+            </if>
+            <if test="ipLevel!=null and ipLevel!=''">
+                and t.ip_level =#{ipLevel}
+            </if>
+            <if test="isUsed!=null and isUsed!=''">
+                and t.is_used =#{isUsed}
+            </if>
+            <if test="subnet!=null and subnet!=''">
+                and t.subnet =#{subnet}
+            </if>
+            <if test="orgNo!=null and orgNo!=''">and t.org_no=#{orgNo}</if>
+        </where>
+        order by t.order_no*1 asc
+    </select>
+
+    <select id="getDetails" resultType="java.util.Map">
+        SELECT
+        stip.ip as ip,
+        stip.ip_level as ipLevel,
+        stip.is_used as isUsed,
+        cts.vlan_id as vlanId,
+        cts.subnet_name as subnetName,
+        ssp.nas_ip as nasip,
+        ctua.mac_address AS appMac,
+        ctua.device_code AS deviceCode,
+        ctua.device_type_name AS basicDeviceType,
+        ctua.mi_user AS miUser,
+        ctua.is802 as is802
+        <!--
+        (case when sh3cou.framed_ip_str is null then '离线' else '在线' end) as online,
+        dthb.BASIC_DEVICE_NAME as basicDeviceName,
+        dtht.TYPE_NAME as basicDeviceType,
+        dthb.BASIC_MAKER as basicMaker,
+        dthb.APP_MAC as appMac,
+        dthb.last_auth_time as lastAuthTime,
+        dthb.basic_state as basicState,
+        dthu.MI_USER as miUser,
+        -->
+        FROM
+        ${ipPoolName} stip
+        LEFT JOIN idevelop_safeaccess_subnet cts ON stip.subnet = cts.id and cts.is_deleted = 0
+        LEFT JOIN idevelop_safeaccess_user_access ctua on stip.ip = ctua.ip_address and ctua.is_deleted = 0 AND cts.id =
+        ctua.subnet_id
+        left join sdn_switch_port ssp on ssp.user_name = ctua.approveu_user
+        <!--
+        left join sdn_h3c_online_user sh3cou on sh3cou.framed_ip_str = stip.ip
+        LEFT JOIN dev_t_hardware_basic dthb ON dthb.APP_IP = stip.IP
+        LEFT JOIN dev_t_hardware_use dthu on dthu.BASIC_DEVICE_CODE = dthb.BASIC_DEVICE_CODE
+        LEFT JOIN dev_t_hardware_type dtht on dtht.TYPE_CODE = dthb.BASIC_DEVICE_TYPE
+
+        -->
+        WHERE stip.ip_id =#{ippoolId}
+        group by ip
+    </select>
+
+    <select id="selectSwitches" resultType="java.util.Map">
+        select sw_firm     as swFirm,
+               sw_model    as swModel,
+               sw_ip       as swIp,
+               ports_count as porstCount
+        from idevelop_safeaccess_subnet cts
+                 LEFT JOIN idevelop_safeaccess_switche ctsw ON ctsw.id = cts.switchboard and ctsw.is_deleted = 0
+        where cts.id = #{subnetId}
+          and cts.is_deleted = 0
+    </select>
+
+    <select id="selectSdnSwitchPort" resultType="java.util.Map">
+        select a.nas_port
+        from sdn_switch_port a
+        where a.framed_ip_address = #{ipAddress}
+        ORDER BY a.access_start_time desc limit 1
+    </select>
+
+    <select id="selectInterface" resultType="java.util.Map">
+        select count(sh3cdi.device_id) as num
+        from sdn_h3c_device_interface sh3cdi
+                 left join sdn_h3c_rs_device sh3crd on sh3crd.id = sh3cdi.device_id
+        where sh3crd.ip_address = #{authIp}
+    </select>
+
+    <select id="searchNoPage" resultType="com.lnsoft.device.api.safeaccess.dto.SafeaccessIppoolDTO">
+        SELECT
+        ip.*,
+        sb.subnet_name AS subnetName,
+        dept.dept_name AS orgName
+        FROM
+        ${ipPoolName} ip
+        LEFT JOIN idevelop_safeaccess_subnet sb ON ip.subnet = sb.id and sb.is_deleted = 0
+        LEFT JOIN idevelop_dept dept ON ip.org_no = dept.id and dept.is_deleted = 0
+        WHERE
+        1=1
+        <if test="ip!=null and ip!=''">and ip.ip like CONCAT('%',#{ip},'%')</if>
+        <if test="level!=null and level!=''">and ip.ip_level =#{level}</if>
+        <if test="isUsed!=null and isUsed!=''">and ip.is_used =#{isUsed}</if>
+        <if test="subnet!=null and subnet!=''">and ip.subnet =#{subnet}</if>
+        <if test="orgNo!=null and orgNo!=''">and ip.org_no=#{orgNo}</if>
+        <if test="excludeIps != null and excludeIps.size >0 ">
+            AND ip.ip NOT IN
+            <foreach item="excludeIp" collection="excludeIps" open="(" separator="," close=")">
+                #{excludeIp}
+            </foreach>
+        </if>
+        order by ip.order_no*1 asc
+    </select>
+    <select id="selectBatchIpCount" resultType="java.lang.Integer">
+        SELECT count(1) FROM ${updateSurface}
+        WHERE is_used = 1 AND ip IN
+        <foreach collection="deviceIpList" item="item" index="index" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="selectBySubnetIdAndIp" resultType="com.lnsoft.device.api.safeaccess.entity.SafeaccessIppool">
+        SELECT *
+        FROM ${ipPoolName}
+        WHERE is_deleted = 0
+          AND subnet = #{subnet}
+          AND ip = #{ip}
+    </select>
+
+    <select id="getIpAllNumber" resultType="java.lang.Integer">
+        SELECT count(*)
+        FROM ${ipPoolDB} isi
+        LEFT JOIN idevelop_safeaccess_subnet iss ON iss.id = isi.subnet
+        <where>
+            iss.network_type IN ('1107943262322689', '1107943379763201', '1145574650085377')
+            AND isi.is_used in (0, 1)
+            <if test="regionCode!=null and regionCode!=''">AND iss.region_code = #{regionCode}</if>
+        </where>
+    </select>
+
+    <select id="getIpAssignNumber" resultType="com.lnsoft.device.api.asset.vo.WorkBenchIpAssignNumberVO">
+        SELECT
+        iss.network_type AS networkType,
+        isi.is_used AS isUsed,
+        count(*) AS number
+        FROM ${ipPoolDB} isi
+        LEFT JOIN idevelop_safeaccess_subnet iss ON iss.id = isi.subnet
+        <where>
+            isi.is_used IN (0, 1)
+            <if test="networkTypeList != null and networkTypeList != '' ">
+                AND iss.network_type IN
+                <foreach collection="networkTypeList" item="item" index="index" separator="," open="(" close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="regionCode != null and regionCode != '' ">
+                AND iss.region_code = #{regionCode}
+            </if>
+        </where>
+        GROUP BY iss.network_type,isi.is_used
+    </select>
+    <select id="selectIpPoolOne" resultType="com.lnsoft.device.api.safeaccess.entity.SafeaccessIppool">
+        SELECT * FROM ${updateSurface} WHERE ip = #{deviceIp}
+    </select>
+
+</mapper>

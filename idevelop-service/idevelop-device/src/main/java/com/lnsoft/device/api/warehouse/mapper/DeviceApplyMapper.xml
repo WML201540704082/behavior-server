@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.warehouse.mapper.DeviceApplyMapper">
+
+    <select id="selectDeviceApplyList" resultType="com.lnsoft.device.api.warehouse.vo.DeviceApplyVO">
+        SELECT
+        ida.id,
+        ida.apply_no,
+        ida.outbound_no,
+        ida.operation_no,
+        ida.receive_unit,
+        ida.receive_unit_name,
+        ida.receive_duty_dept,
+        ida.receive_duty_dept_name,
+        ida.receive_duty_group,
+        ida.receive_duty_group_name,
+        ida.receive_duty_person,
+        ida.device_category,
+        ida.device_type,
+        ida.receive_duty_person,
+        ida.receive_duty_person_name,
+        ida.`status`,
+        ida.apply_num,
+        ida.old_to_new,
+        ida.operation,
+        ida.apply_date,
+        ida.process_status,
+        ida.device_category_name,
+        ida.device_type_name
+        FROM
+        idevelop_device_apply ida
+        <where>
+            ida.is_deleted = 0
+            <if test="deviceApplyDTO.applyNo != null and deviceApplyDTO.applyNo != ''">
+                AND ida.apply_no LIKE CONCAT('%', #{deviceApplyDTO.applyNo}, '%')
+            </if>
+            <if test="deviceApplyDTO.outboundNo != null and deviceApplyDTO.outboundNo != ''">
+                AND ida.outbound_no LIKE CONCAT('%', #{deviceApplyDTO.outboundNo}, '%')
+            </if>
+            <if test="deviceApplyDTO.operationNo != null and deviceApplyDTO.operationNo != ''">
+                AND ida.operation_no LIKE CONCAT('%', #{deviceApplyDTO.operationNo}, '%')
+            </if>
+            <if test="deviceApplyDTO.applyUser != null and deviceApplyDTO.applyUser != ''">
+                AND ida.apply_user_name LIKE CONCAT('%', #{deviceApplyDTO.applyUser}, '%')
+            </if>
+            <if test="deviceApplyDTO.deviceCategory != null and deviceApplyDTO.deviceCategory != ''">
+                AND ida.device_category = #{deviceApplyDTO.deviceCategory}
+            </if>
+            <if test="deviceApplyDTO.deviceType != null and deviceApplyDTO.deviceType != ''">
+                AND ida.device_type = #{deviceApplyDTO.deviceType}
+            </if>
+            <if test="deviceApplyDTO.oldToNew != null and deviceApplyDTO.oldToNew != ''">
+                AND ida.old_to_new = #{deviceApplyDTO.oldToNew}
+            </if>
+            <if test="deviceApplyDTO.receiveUnitName != null and deviceApplyDTO.receiveUnitName != ''">
+                AND ida.receive_unit_name = #{deviceApplyDTO.receiveUnitName}
+            </if>
+            <if test="deviceApplyDTO.receiveDutyDept != null and deviceApplyDTO.receiveDutyDept != ''">
+                AND ida.receive_duty_dept = #{deviceApplyDTO.receiveDutyDept}
+            </if>
+            <if test="deviceApplyDTO.status != null">
+                AND ida.status = #{deviceApplyDTO.status}
+            </if>
+            <if test="deviceApplyDTO.regionCode != null and deviceApplyDTO.regionCode != ''">
+                AND ida.region_code LIKE CONCAT ( #{deviceApplyDTO.regionCode}, '%')
+            </if>
+        </where>
+        ORDER BY
+        ida.create_time DESC
+    </select>
+    <select id="getApply" resultType="com.lnsoft.device.api.warehouse.entity.DeviceApply">
+        select ida.*
+        from idevelop_device_apply ida left join idevelop_device_apply_detail idad on
+        ida.id = idad.apply_id
+        where ida.is_deleted = 0 and  idad.old_device_code  = #{deviceCode}
+        GROUP BY ida.id ORDER BY ida.create_time DESC
+    </select>
+</mapper>

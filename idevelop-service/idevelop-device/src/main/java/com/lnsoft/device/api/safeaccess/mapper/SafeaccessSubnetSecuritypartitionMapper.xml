@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.safeaccess.mapper.SafeaccessSubnetSecuritypartitionMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="safeaccessSubnetSecuritypartitionResultMap" type="com.lnsoft.device.api.safeaccess.entity.SafeaccessSubnetSecuritypartition">
+        <id column="sp_id" property="spId"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_dept" property="createDept"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="status" property="status"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="sp_name" property="spName"/>
+        <result column="sp_desc" property="spDesc"/>
+        <result column="sp_strategy" property="spStrategy"/>
+        <result column="mpls_vpn_id" property="mplsVpnId"/>
+        <result column="mpls_vpn_name" property="mplsVpnName"/>
+        <result column="mpls_vpn_configinfo" property="mplsVpnConfiginfo"/>
+        <result column="sp_routingprotocol" property="spRoutingprotocol"/>
+        <result column="sp_encl" property="spEncl"/>
+        <result column="bak_col1" property="bakCol1"/>
+        <result column="bak_col2" property="bakCol2"/>
+        <result column="bak_col3" property="bakCol3"/>
+        <result column="org_code4" property="orgCode4"/>
+        <result column="org_code6" property="orgCode6"/>
+        <result column="dept_id" property="deptId"/>
+        <result column="remark" property="remark"/>
+        <result column="region_code" property="regionCode"/>
+        <result column="dept_code" property="deptCode"/>
+    </resultMap>
+
+
+    <select id="selectSafeaccessSubnetSecuritypartitionPage" resultMap="safeaccessSubnetSecuritypartitionResultMap">
+        select * from idevelop_safeaccess_subnet_securitypartition where is_deleted = 0
+    </select>
+
+</mapper>

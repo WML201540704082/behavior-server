@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.res.mapper.HussarBpmMapper">
+
+    <select id="selectUserList" resultType="com.lnsoft.device.api.res.vo.HussarBpmUserVO">
+        SELECT
+        id AS user_id,
+        real_name,
+        phone,
+        region_code
+        FROM idevelop_user WHERE id IN
+        <foreach collection="assigneeList" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+</mapper>

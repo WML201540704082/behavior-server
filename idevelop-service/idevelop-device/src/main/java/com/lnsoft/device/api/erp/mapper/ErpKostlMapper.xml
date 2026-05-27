@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.erp.mapper.ErpKostlMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="erpKostlResultMap" type="com.lnsoft.device.api.erp.entity.ErpKostl">
+        <id column="kostl" property="kostl"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_time" property="createTime"/>
+        <result column="status" property="status"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="kostl_t" property="kostlT"/>
+        <result column="kostl_lt" property="kostlLt"/>
+        <result column="kosl_status" property="koslStatus"/>
+        <result column="swerk" property="swerk"/>
+    </resultMap>
+
+
+    <select id="selectErpKostlPage" resultMap="erpKostlResultMap">
+        select * from idevelop_erp_kostl where is_deleted = 0
+    </select>
+
+
+    <delete id="delectErpKostlList" parameterType="java.lang.String">
+        delete
+        from idevelop_erp_kostl
+        where swerk in
+        <foreach item="item" collection="swerks" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+</mapper>

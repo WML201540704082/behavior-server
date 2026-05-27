@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.i6000.mapper.I6000EnumMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="i6000EnumResultMap" type="com.lnsoft.device.api.i6000.entity.I6000Enum">
+        <id column="id" property="id"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_time" property="createTime"/>
+        <result column="status" property="status"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="enum_name" property="enumName"/>
+        <result column="enum_id" property="enumId"/>
+        <result column="enumval_code" property="enumvalCode"/>
+        <result column="enumval_name" property="enumvalName"/>
+    </resultMap>
+    <update id="updateByEnumvalCode">
+        update idevelop_i6000_enum set
+        create_user = #{createUser},
+        create_time = #{createTime},
+        status = #{status},
+        update_user = #{updateUser},
+        update_time = #{updateTime},
+        is_deleted = #{isDeleted},
+        enum_name = #{enumName},
+        enum_id = #{enumId},
+        enumval_code = #{enumvalCode},
+        enumval_name = #{enumvalName}
+        where enumvalCode = #{enumvalCode}
+    </update>
+
+
+    <select id="selectI6000EnumPage" resultMap="i6000EnumResultMap">
+        select * from idevelop_i6000_enum where is_deleted = 0
+    </select>
+
+</mapper>

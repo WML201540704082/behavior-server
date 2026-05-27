@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.endpoint.mapper.EndpointApplyMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="endpointApplyResultMap" type="com.lnsoft.device.api.endpoint.entity.EndpointApply">
+        <id column="id" property="id"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="status" property="status"/>
+        <result column="apply_team_name" property="applyTeamName"/>
+        <result column="apply_phone" property="applyPhone"/>
+        <result column="apply_cause" property="applyCause"/>
+        <result column="apply_number" property="applyNumber"/>
+        <result column="apply_ip" property="applyIp"/>
+        <result column="process_ins_id" property="processInsId"/>
+        <result column="process_status" property="processStatus"/>
+    </resultMap>
+    <insert id="insertPort">
+        insert into idevelop_endpoint_apply_port (filing_no,port_id,apply_id)
+        value (#{filingNo},#{portId},#{id})
+    </insert>
+    <insert id="insertPortUser">
+        insert into idevelop_endpoint_port_user (user_id,port_id,port_address,vaild_time,is_deleted)
+        value (#{userId},#{portId},#{portAddress},#{vaildTime},0)
+    </insert>
+    <delete id="deletePort">
+        delete from idevelop_endpoint_apply_port where apply_id = #{applyId}
+    </delete>
+
+
+    <select id="selectEndpointApplyPage" resultMap="endpointApplyResultMap">
+        select * from idevelop_endpoint_apply where is_deleted = 0
+    </select>
+    <select id="getUserList" resultType="com.lnsoft.system.user.entity.User">
+        select * from idevelop_user
+        <where>
+            <if test="real_name != null and real_name != ''">
+                real_name like concat('%',#{name},'%')
+            </if>
+        </where>
+    </select>
+    <select id="getPortById" resultType="com.lnsoft.device.api.endpoint.entity.EndpointPortVO">
+        select iep.* from idevelop_endpoint_apply_port ieap left join idevelop_endpoint_port iep on ieap.port_id = iep.id where ieap.apply_id = #{id}
+    </select>
+    <select id="getAddress" resultType="java.lang.String">
+        select port_address from idevelop_endpoint_port where id = #{portById}
+    </select>
+
+</mapper>

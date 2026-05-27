@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.warehouse.mapper.CheckTaskMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="checkTaskResultMap" type="com.lnsoft.device.api.warehouse.entity.CheckTask">
+        <id column="id" property="id"/>
+        <result column="status" property="status"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_dept" property="createDept"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="filing_no" property="filingNo"/>
+        <result column="task_name" property="taskName"/>
+        <result column="is_expire" property="isExpire"/>
+        <result column="check_num" property="checkNum"/>
+        <result column="task_start_time" property="taskStartTime"/>
+        <result column="task_end_time" property="taskEndTime"/>
+        <result column="launch_unit" property="launchUnit"/>
+        <result column="launch_unit_name" property="launchUnitName"/>
+        <result column="check_dept" property="checkDept"/>
+        <result column="device_category" property="deviceCategory"/>
+        <result column="device_type" property="deviceType"/>
+        <result column="receiver" property="receiver"/>
+        <result column="receiver_time" property="receiverTime"/>
+        <result column="remark" property="remark"/>
+        <result column="region_code" property="regionCode"/>
+        <result column="process_ins_id" property="processInsId"/>
+        <result column="process_status" property="processStatus"/>
+    </resultMap>
+
+
+    <select id="selectCheckTaskPage" resultMap="checkTaskResultMap">
+        select * from idevelop_check_task where is_deleted = 0
+    </select>
+    <select id="checkTaskList" resultType="com.lnsoft.device.api.warehouse.entity.CheckTask">
+        select distinct t.id, t.filing_no, t.task_name, t.is_expire, t.check_num, t.task_start_time, t.task_end_time, t.status, t.process_status, t.process_ins_id
+        from idevelop_check_task t
+        left join idevelop_check_task_device d
+        on t.id = d.task_id and d.is_deleted = 0
+        <where>
+            t.is_deleted = 0
+            <if test="dto.filingNo != null and dto.filingNo != ''">
+                and t.filing_no like concat('%', #{dto.filingNo}, '%')
+            </if>
+            <if test="dto.taskName != null and dto.taskName != ''">
+                and t.task_name like concat('%', #{dto.taskName}, '%')
+            </if>
+            <if test="dto.taskStartTimeS != null and dto.taskStartTimeE != null">
+                and (t.task_start_time between #{dto.taskStartTimeS} and #{dto.taskStartTimeE})
+            </if>
+            <if test="dto.taskEndTimeS != null and dto.taskEndTimeE != null">
+                and (t.task_end_time between #{dto.taskEndTimeS} and #{dto.taskEndTimeE})
+            </if>
+            <if test="dto.status != null and dto.status != ''">
+                and t.status = #{dto.status}
+            </if>
+            <if test="dto.regionCode != null and dto.regionCode != ''">
+                and t.region_code like concat(#{dto.regionCode}, '%')
+            </if>
+            <if test="dto.pyStatus != null and dto.pyStatus != ''">
+                and d.check_status = '2'
+                <if test="dto.pyStatus != '2'">
+                    and dispose_result = #{dto.pyStatus}
+                </if>
+            </if>
+            <if test="dto.pkStatus != null and dto.pkStatus != ''">
+                and d.check_status = '3'
+                <if test="dto.pyStatus != '2'">
+                    and dispose_status = #{dto.pkStatus}
+                </if>
+            </if>
+        </where>
+    </select>
+    <select id="deskCheckTaskList" resultType="com.lnsoft.device.api.warehouse.vo.CheckTaskVO">
+        select id, filing_no, task_name, task_start_time, task_end_time, check_dept, check_depts, device_type, device_types, history_task, history_check_type, history_check_types
+        from idevelop_check_task
+        <where>
+            is_deleted = 0
+            <if test="dto.regionCode != null and dto.regionCode != ''">
+                and region_code = #{dto.regionCode}
+            </if>
+            <if test="dto.filingNoList != null and dto.filingNoList.size() != 0">
+                AND filing_no IN
+                <foreach collection="dto.filingNoList" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+        ORDER BY create_time DESC
+    </select>
+    <select id="getCheckListByUser" resultType="com.lnsoft.device.api.warehouse.entity.CheckTask">
+        select *
+        from idevelop_check_task
+        <where>
+            is_deleted = 0 and status = 2
+            <if test="unitId != null and unitId != ''">
+                and launch_unit = #{unitId}
+            </if>
+            <if test="deptId != null and deptId != ''">
+                and (check_dept like concat('%', #{deptId}, '%')
+                <if test="userId != null and userId != ''">
+                    and receiver like concat('%', #{userId}, '%')
+                </if>
+                )
+            </if>
+        </where>
+    </select>
+    <select id="getCheck" resultType="com.lnsoft.device.api.warehouse.entity.CheckTask">
+        select ict.*
+        from idevelop_check_task ict left join idevelop_check_task_device ictd on ict.id = ictd.task_id
+        where ict.is_deleted = 0 and ictd.device_code = #{deviceCode}
+        GROUP BY ict.id ORDER BY ict.create_time DESC
+    </select>
+
+
+</mapper>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.cmdb.mapper.HandlerDeviceMapper">
+
+    <select id="selectSortCodeByTypeCode" resultType="java.lang.Integer">
+        select count(ci_id) from idevelop_hardware_basic_tree
+        <where>
+            <if test="claccify != null and claccify != ''">
+                and device_claccify = #{claccify}
+            </if>
+            <if test="type != null and type != ''">
+                and `type` = #{type}
+            </if>
+        </where>
+    </select>
+
+    <select id="getInfoByIP" resultType="com.lnsoft.device.api.stock.dto.SimpleSafeAccessSwitchesDTO">
+        SELECT
+            tel_user,
+            tel_pass,
+            sw_pass,
+            snmp_read_str,
+            snmp_write_str,
+            snmp_version,
+            vlans,
+            config_pass
+        FROM
+            `cs_t_switches`
+        WHERE
+            sw_ip = #{ip}
+    </select>
+
+</mapper>

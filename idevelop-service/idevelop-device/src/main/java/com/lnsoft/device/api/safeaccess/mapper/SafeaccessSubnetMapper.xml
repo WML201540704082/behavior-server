@@ -1,0 +1,566 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.safeaccess.mapper.SafeaccessSubnetMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="safeaccessSubnetResultMap" type="com.lnsoft.device.entity.SafeaccessSubnet">
+        <id column="id" property="id"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_dept" property="createDept"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="status" property="status"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="subnet_name" property="subnetName"/>
+        <result column="broadcast_address" property="broadcastAddress"/>
+        <result column="subnet_address" property="subnetAddress"/>
+        <result column="subnet_gateway" property="subnetGateway"/>
+        <result column="subnet_mask" property="subnetMask"/>
+        <result column="address_resolution_ip" property="addressResolutionIp"/>
+        <result column="dnsip" property="dnsip"/>
+        <result column="dnsip2" property="dnsip2"/>
+        <result column="code" property="code"/>
+        <result column="switchboard" property="switchboard"/>
+        <result column="user_group" property="userGroup"/>
+        <result column="vlan_id" property="vlanId"/>
+        <result column="vlan_name" property="vlanName"/>
+        <result column="institution_code" property="institutionCode"/>
+        <result column="fill_date" property="fillDate"/>
+        <result column="fill_man" property="fillMan"/>
+        <result column="segment" property="segment"/>
+        <result column="ip1" property="ip1"/>
+        <result column="location1" property="location1"/>
+        <result column="ip2" property="ip2"/>
+        <result column="location2" property="location2"/>
+        <result column="default_time" property="defaultTime"/>
+        <result column="default_lease_time" property="defaultLeaseTime"/>
+        <result column="sp_id" property="spId"/>
+        <result column="sp_name" property="spName"/>
+        <result column="is_public" property="isPublic"/>
+        <result column="bak_col2" property="bakCol2"/>
+        <result column="bak_col3" property="bakCol3"/>
+        <result column="rds_state" property="rdsState"/>
+        <result column="remark" property="remark"/>
+        <result column="region_code" property="regionCode"/>
+        <result column="dept_code" property="deptCode"/>
+        <result column="network_type" property="networkType"/>
+        <result column="network_type_name" property="networkTypeName"/>
+        <result column="institution_name" property="institutionName"/>
+    </resultMap>
+
+    <insert id="saveEditNet" parameterType="com.lnsoft.device.api.safeaccess.entity.SafeaccessEditSubnet">
+        INSERT INTO idevelop_safeaccess_editnet
+		(
+		ID,
+		SUBNET_OLD,
+		SUBNET_NEW,
+		IP_USED_COUNT,
+		IP_AVAILABLE_COUNT
+		)
+		VALUES
+		(#{id},
+		#{subnetOld},
+		#{subnetNew},
+		#{ipUsedCount},
+		#{ipAvailableCount});
+    </insert>
+
+    <insert id="insertSubnetIppool">
+        insert into idevelop_safeaccess_subnet_ippool
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="subnetId != null">subnet_id,</if>
+            <if test="ippoolId != null">ippool_id,</if>
+            <if test="ippoolSegment != null">ippool_segment,</if>
+            <if test="code != null">code,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="subnetId != null">#{subnetId},</if>
+            <if test="ippoolId != null">#{ippoolId},</if>
+            <if test="ippoolSegment != null">#{ippoolSegment},</if>
+            <if test="code != null">#{code},</if>
+        </trim>
+    </insert>
+
+    <insert id="initUserAccess">
+        INSERT INTO idevelop_safeaccess_user_access (
+        `company`,
+        `department`,
+        `address`,
+        `phone`,
+        `device_type_name`,
+        `device_code`,
+        `subnet_id`,
+        `approveu_user`,
+        `approveu_password`,
+        `mac_address`,
+        `ip_address`,
+        `code`,
+        `accept_man`,
+        `accept_date`,
+        `fill_man`,
+        `fill_time`,
+        `dept_code`,
+        `mi_user`,
+        `start_time`,
+        `allow_days`,
+        `full_username`,
+        `is802`,
+        `is_access`,
+        `fingerprint`,
+        `apply_type`,
+        `disable_status`,
+        `create_time`
+        ) SELECT
+        `COMPANY`,
+        `DEPARTMENT`,
+        `ADDRESS`,
+        `PHONE`,
+        b.type_name,
+        `SBBM`,
+        `SUBNET_ID`,
+        `APPROVEU_USER`,
+        `APPROVEU_PASSWORD`,
+        `MAC_ADDRESS`,
+        `IP_ADDRESS`,
+        `CODE`,
+        `ACCEPT_MAN`,
+        `ACCEPT_DATE`,
+        `FILL_MAN`,
+        `FILL_TIME`,
+        `BMBM`,
+        `ZRR`,
+        `START_TIME`,
+        `ALLOW_DAYS`,
+        `FULL_USERNAME`,
+        `IS802`,
+        `IS_ACCESS`,
+        `FINGERPRINT`,
+        `apply_type`,
+        `disable_status`,
+        NOW( )
+        FROM
+            cs_t_user_access a
+            LEFT JOIN dev_t_hardware_type b ON a.DEVICE_ID = b.type_code
+    </insert>
+    <insert id="initSubnet">
+        INSERT INTO idevelop_safeaccess_subnet (
+        `id`,
+        `subnet_name`,
+        `broadcast_address`,
+        `subnet_address`,
+        `subnet_gateway`,
+        `subnet_mask`,
+        `address_resolution_ip`,
+        `dnsip`,
+        `dnsip2`,
+        `code`,
+        `switchboard`,
+        `user_group`,
+        `vlan_id`,
+        `vlan_name`,
+        `institution_code`,
+        `fill_date`,
+        `fill_man`,
+        `segment`,
+        `ip1`,
+        `location1`,
+        `ip2`,
+        `location2`,
+        `default_time`,
+        `default_lease_time`,
+        `sp_id`,
+        `sp_name`,
+        `is_public`,
+        `bak_col2`,
+        `bak_col3`,
+        `rds_state`,
+        `create_time`
+        ) SELECT
+        `id`,
+        `SUBNET_NAME`,
+        `BROADCAST_ADDRESS`,
+        `SUBNET_ADDRESS`,
+        `SUBNET_GATEWAY`,
+        `SUBNET_MASK`,
+        `ADDRESS_RESOLUTION_IP`,
+        `DNSIP`,
+        `DNSIP2`,
+        `CODE`,
+        `SWITCHBOARD`,
+        `USER_GROUP`,
+        `VLAN_ID`,
+        `VLAN_NAME`,
+        `INSTITUTION_CODE`,
+        `FILL_DATE`,
+        `FILL_MAN`,
+        `SEGMENT`,
+        `IP1`,
+        `LOCATION1`,
+        `IP2`,
+        `LOCATION2`,
+        `DEFAULT_TIME`,
+        `DEFAULT_LEASE_TIME`,
+        `SP_ID`,
+        `SP_NAME`,
+        `BAK_COL1`,
+        `BAK_COL2`,
+        `BAK_COL3`,
+        `bak_col7`,
+        NOW( )
+        FROM
+            cs_t_subnet
+    </insert>
+    <insert id="initSwitches">
+        INSERT INTO idevelop_safeaccess_switche (
+        `id`,
+        `sw_name`,
+        `sw_firm`,
+        `sw_model`,
+        `sw_where`,
+        `sw_purpose`,
+        `company`,
+        `sw_ip`,
+        `sw_pass`,
+        `config_bak`,
+        `is_admin`,
+        `is3`,
+        `sw_state`,
+        `ports_count`,
+        `auth_config`,
+        `old_shortname`,
+        `vlans`,
+        `tel_ip`,
+        `tel_user`,
+        `tel_pass`,
+        `config_pass`,
+        `snmp_query_pass`,
+        `snmp_manage_pass`,
+        `snmp_version`,
+        `device_code`,
+        `snmp_read_str`,
+        `snmp_write_str`,
+        `fill_man`,
+        `fill_date`,
+        `is_access_switch`,
+        `remark`,
+        `create_time`,
+        `subnet_id`
+        ) SELECT
+        `SW_ID`,
+        `SW_NAME`,
+        `SW_FIRM`,
+        `SW_MODEL`,
+        `SW_WHERE`,
+        `SW_PURPOSE`,
+        `ORG_CODE`,
+        `SW_IP`,
+        `SW_PASS`,
+        `CONFIG_BAK`,
+        `IS_ADMIN`,
+        `IS3`,
+        `SW_STATE`,
+        `PORTS_COUNT`,
+        `IS802`,
+        `OLD_SHORTNAME`,
+        `VLANS`,
+        `TEL_IP`,
+        `TEL_USER`,
+        `TEL_PASS`,
+        `CONFIG_PASS`,
+        `SNMP_QUERY_PASS`,
+        `SNMP_MANAGE_PASS`,
+        `SNMP_VERSION`,
+        `SBBM`,
+        `SNMP_READ_STR`,
+        `SNMP_WRITE_STR`,
+        `FILL_MAN`,
+        `FILL_DATE`,
+        `IS_ACCESS_SWITCH`,
+        `remark`,
+        NOW( ),
+        `BAK_COL2`
+        FROM
+            cs_t_switches
+    </insert>
+
+    <update id="deviceChangeUpdate">
+        update idevelop_safeaccess_user_access
+        set subnet_id = #{subnetId},
+        ip_address = #{IP},
+        is802 = #{networkAccessMethod},
+        device_id = #{deviceId},
+        device_uuid = #{uuid},
+        device_ci_id = #{ciId},
+        device_type = #{deviceTypeCode},
+        device_type_name = #{deviceType},
+        device_code = #{deviceCode}
+        where id = #{userAccessId} and is_deleted = 0
+    </update>
+
+    <update id="deviceChangeUpdateOnline">
+        update idevelop_safeaccess_user_access
+        set mi_charge_user = #{user},
+            mi_user = #{receivingPerson},
+            address = #{installationSite},
+            phone = #{userTel},
+            dept_code = #{receiveDeptCode}
+        where device_code = #{deviceCode} and is_deleted = 0
+    </update>
+
+    <!-- 更新用户入网表 区域编码   -->
+    <update id="updateUserAccessRegionCode">
+        UPDATE idevelop_safeaccess_user_access a
+        SET a.region_code = ( SELECT b.region_code FROM idevelop_dept_xtyth b WHERE a.department = b.xtyth_code LIMIT 1 )
+    </update>
+
+    <!-- 更新子网管理表 区域编码   -->
+    <update id="updateSubnetRegionCode">
+        UPDATE idevelop_safeaccess_subnet a
+        SET a.region_code = ( SELECT b.region_code FROM idevelop_dept_xtyth b WHERE a.INSTITUTION_CODE = b.xtyth_code LIMIT 1 );
+    </update>
+
+    <!-- 更新子网管理表 所属单位   -->
+    <update id="updateSubnetInstitutionCode">
+        UPDATE idevelop_safeaccess_subnet a
+        SET a.INSTITUTION_CODE = ( SELECT b.id FROM idevelop_dept_xtyth b WHERE a.INSTITUTION_CODE = b.xtyth_code LIMIT 1 );
+    </update>
+
+    <!-- 更新子网管理表 所属单位名称   -->
+    <update id="updateSubnetInstitutionName">
+        UPDATE idevelop_safeaccess_subnet a
+        SET a.institution_name = ( SELECT b.dept_name FROM idevelop_dept b WHERE a.INSTITUTION_CODE = b.id LIMIT 1 );
+    </update>
+
+    <update id="updateUserAccessCompany">
+        UPDATE idevelop_safeaccess_user_access a
+        SET a.company = ( SELECT b.id FROM idevelop_dept_xtyth b WHERE a.company = b.xtyth_code LIMIT 1 );
+    </update>
+    <update id="updateUserAccessDepartment">
+        UPDATE idevelop_safeaccess_user_access a
+        SET a.department = ( SELECT b.id FROM idevelop_dept_xtyth b WHERE a.department = b.xtyth_code LIMIT 1 );
+    </update>
+    <update id="updateRegionCode">
+        UPDATE idevelop_safeaccess_switche a
+        SET a.region_code = ( SELECT b.region_code FROM idevelop_dept_xtyth b WHERE a.company = b.xtyth_code LIMIT 1 );
+    </update>
+    <update id="updateDeptCode">
+        UPDATE idevelop_safeaccess_switche a
+        SET a.dept_code = ( SELECT b.id FROM idevelop_dept_xtyth b WHERE a.company = b.xtyth_code LIMIT 1 );
+    </update>
+    <update id="deviceChangeDelete">
+        update idevelop_safeaccess_user_access
+        set is_deleted = 1
+        where id = #{userAccessId}
+    </update>
+
+    <select id="selectSafeaccessSubnetPage" resultMap="safeaccessSubnetResultMap">
+        select * from idevelop_safeaccess_subnet where is_deleted = 0
+    </select>
+
+    <select id="findByCondition" parameterType="java.util.Map" resultType="java.util.Map">
+        select *from (SELECT
+        t.id id,
+        t.subnet_name subnetName,
+        t.broadcast_address broadcastAddress,
+        t.subnet_address subnetAddress,
+        t.subnet_gateway subnetGateway,
+        t.subnet_mask subnetMask,
+        t.address_resolution_ip addressResolutionIp,
+        t.dnsip dnsip,
+        t.dnsip2 dnsip2,
+        t.code code,
+        w.sw_ip switchboardip,
+        w.sw_name switchName,
+        t.switchboard switchboard,
+        t.user_group userGroup,
+        t.vlan_id vlanId,
+        t.vlan_name vlanName,
+        i.name institutionName,
+        t.institution_code institutionCode,
+        t.fill_date fillDate,
+        t.fill_man fillMan,
+        t.segment segment,
+        t.ip1 ip1,
+        t.location1 location1,
+        t.ip2 ip2,
+        t.location2 location2,
+        t.default_time defaultTime,
+        t.default_lease_time defaultLeaseTime,
+        t.sp_id spId,
+        t.sp_name spName,
+        t.create_time crateDate,
+        t.update_time updateDate,
+        t.is_public isPublic,
+        t.bak_col2 bak2,
+        t.bak_col3 bak3
+        FROM
+        idevelop_safeaccess_subnet t
+        left join idevelop_safeaccess_switche w on t.switchboard=w.id and w.is_deleted = 0
+        left join idevelop_region i on i.code=t.institution_code
+        <where>
+            t.is_deleted = 0
+            <if test="subnetName!=null and subnetName!=''">
+                and t.subnet_name like
+                CONCAT('%',#{subnetName,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="code!=null and code!=''">
+                and t.code like CONCAT('%',#{code,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="vlanId!=null and vlanId!=''">
+                and t.vlan_id like
+                CONCAT('%',#{vlanId,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="subnetAddress!=null and subnetAddress!=''">
+                and t.subnet_address like
+                CONCAT('%',#{subnetAddress},'%')
+            </if>
+            <if test="spName!=null and spName!=''">
+                and t.sp_name like
+                CONCAT('%',#{spName,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="institutionCode!=null and institutionCode!=''">
+                and t.institution_code like
+                CONCAT('%',#{institutionCode,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="id!=null and id!=''">
+                and t.id=#{id,jdbcType=VARCHAR}
+            </if>
+            <if test="subnetMask!=null and subnetMask!=''">
+                and t.subnet_mask=#{subnetMask,jdbcType=VARCHAR}
+            </if>
+
+            <if test="deptCode!=null and deptCode!=''">
+                and t.institution_code=#{deptCode,jdbcType=VARCHAR}
+            </if>
+            <if test="isPublic!=null and isPublic!=''">
+                and t.is_public=#{isPublic,jdbcType=VARCHAR}
+            </if>
+            <if test="regionCode!=null and regionCode!=''">
+                and t.region_code like
+                CONCAT(#{regionCode,jdbcType=VARCHAR},'%')
+            </if>
+        </where>
+        <if test="isPublic!=null and isPublic!=''">
+            union
+            SELECT
+            t.id id,
+            t.subnet_name subnetName,
+            t.broadcast_address broadcastAddress,
+            t.subnet_address subnetAddress,
+            t.subnet_gateway subnetGateway,
+            t.subnet_mask subnetMask,
+            t.address_resolution_ip addressResolutionIp,
+            t.dnsip dnsip,
+            t.dnsip2 dnsip2,
+            t.code code,
+            w.sw_ip switchboardip,
+            w.sw_name switchName,
+            t.switchboard switchboard,
+            t.user_group userGroup,
+            t.vlan_id vlanId,
+            t.vlan_name vlanName,
+            i.name institutionName,
+            t.institution_code institutionCode,
+            t.fill_date fillDate,
+            t.fill_man fillMan,
+            t.segment segment,
+            t.ip1 ip1,
+            t.location1 location1,
+            t.ip2 ip2,
+            t.location2 location2,
+            t.default_time defaultTime,
+            t.default_lease_time defaultLeaseTime,
+            t.sp_id spId,
+            t.sp_name spName,
+            t.create_time crateDate,
+            t.update_time updateDate,
+            t.is_public isPublic,
+            t.bak_col2 bak2,
+            t.bak_col3 bak3
+            FROM
+            idevelop_safeaccess_subnet t
+            left join idevelop_safeaccess_switche w on t.switchboard = w.id and w.is_deleted = 0
+            left join idevelop_region i on i.code=t.institution_code
+            where
+            t.is_deleted = 0
+            <if test="subnetName!=null and subnetName!=''">
+                and t.subnet_name like
+                CONCAT('%',#{subnetName,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="code!=null and code!=''">
+                and t.code like CONCAT('%',#{code,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="vlanId!=null and vlanId!=''">
+                and t.vlan_id like
+                CONCAT('%',#{vlanId,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="subnetAddress!=null and subnetAddress!=''">
+                and t.subnet_address like
+                CONCAT('%',#{subnetAddress},'%')
+            </if>
+            <if test="spName!=null and spName!=''">
+                and t.sp_name like
+                CONCAT('%',#{spName,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="reinstitutionCode!=null and reinstitutionCode!=''">
+                and t.institution_code like
+                CONCAT('%',#{reinstitutionCode,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="id!=null and id!=''">
+                and t.id=#{id,jdbcType=VARCHAR}
+            </if>
+            <if test="subnetMask!=null and subnetMask!=''">
+                and t.subnet_mask=#{subnetMask,jdbcType=VARCHAR}
+            </if>
+
+            <if test="deptCode!=null and deptCode!=''">
+                and t.institution_code=#{deptCode,jdbcType=VARCHAR}
+            </if>
+            <if test="regionCode!=null and regionCode!=''">
+                and t.region_code like
+                CONCAT(#{regionCode,jdbcType=VARCHAR},'%')
+            </if>
+            and t.is_public = '1'
+        </if>
+        )temp
+        order by temp.fillDate desc,
+        convert(substring_index(temp.subnetAddress,'.',1),signed ),
+        convert(substring_index(substring_index(temp.subnetAddress,'.',2),'.',-1),signed ),
+        convert(substring_index(substring_index(temp.subnetAddress,'.',3),'.',-1),signed ),
+        convert(substring_index(temp.subnetAddress,'.',-1),signed ) desc
+    </select>
+
+    <select id="queryNewIpBySubnet" resultType="java.lang.Integer">
+        select count(1) from ${tableName} where ip in
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="selectSubnetIppoolList" resultType="java.lang.String">
+        select ippool_segment from idevelop_safeaccess_subnet_ippool
+        <where>
+            <if test="subnetId != null  and subnetId != ''">and subnet_id = #{subnetId}</if>
+            <if test="ippoolId != null  and ippoolId != ''">and ippool_id = #{ippoolId}</if>
+            <if test="ippoolSegment != null  and ippoolSegment != ''">and ippool_segment = #{ippoolSegment}</if>
+        </where>
+        order by convert(substring_index(ippool_segment,'.',1),signed ),
+        convert(substring_index(substring_index(ippool_segment,'.',2),'.',-1),signed ),
+        convert(substring_index(substring_index(ippool_segment,'.',3),'.',-1),signed ),
+        convert(substring_index(ippool_segment,'.',-1),signed ) desc
+    </select>
+    <select id="hasTerminal" resultType="java.lang.Integer">
+        SELECT
+	        count( 1 )
+        FROM
+	        idevelop_safeaccess_user_access a
+	    LEFT JOIN idevelop_safeaccess_subnet b ON b.id = a.subnet_id
+        WHERE
+	        a.is_deleted = 0
+	    AND a.subnet_id = #{subnetId}
+    </select>
+
+</mapper>

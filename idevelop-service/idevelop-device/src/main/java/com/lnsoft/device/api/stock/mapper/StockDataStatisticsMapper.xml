@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.stock.mapper.StockDataStatisticsMapper">
+
+
+    <select id="getDeviceType" resultType="java.lang.Integer">
+       SELECT count(*)
+       FROM idevelop_zfit_xt_cwzt izxc
+       LEFT join idevelop_dept id on izxc.swerk = id.erp_unit_code
+       LEFT join idevelop_hardware_basic_tree ihbt on izxc.sbfl = ihbt.erp_code
+       where id.is_deleted = 0 and id.type = 'CORP'
+       and id.region_code like CONCAT(#{region}, '%')
+       and ihbt.device_claccify = #{category}
+    </select>
+    <select id="getRegion" resultType="java.util.Map">
+       SELECT * FROM `idevelop_dept` where type = 'CORP' and is_deleted = 0 and region_code like concat(#{region},'%') ORDER BY region_code
+    </select>
+    <select id="getRegionCity" resultType="java.util.Map">
+        SELECT * FROM `idevelop_dept` where type = 'CORP' and is_deleted = 0 and region_code like concat('37','%') and length(region_code)=4 and region_code &lt;&gt; '3718' ORDER BY region_code
+    </select>
+    <select id="getRegionList" resultType="com.lnsoft.system.entity.Region">
+        SELECT * FROM `idevelop_region` WHERE parent_code = '37'
+    </select>
+</mapper>

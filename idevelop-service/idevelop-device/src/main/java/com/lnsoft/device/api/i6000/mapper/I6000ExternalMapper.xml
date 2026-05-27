@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.i6000.mapper.I6000ExternalMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="i6000UnitResultMap" type="com.lnsoft.device.api.i6000.entity.I6000External">
+        <id column="id" property="id"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_dept" property="createDept"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="status" property="status"/>
+        <result column="ext_code" property="extCode"/>
+        <result column="ext_id" property="extId"/>
+        <result column="ext_name" property="extName"/>
+        <result column="ext_pid" property="extPid"/>
+        <result column="ext_state" property="extState"/>
+        <result column="rn" property="rn"/>
+        <result column="match_model_id" property="matchModelId"/>
+        <result column="mfr_hs" property="mfrHs"/>
+    </resultMap>
+    <delete id="deleteExternal">
+        delete from idevelop_i6000_external
+        where id in
+        <foreach collection="idList" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <select id="selectExternalPage" resultType="com.lnsoft.device.api.i6000.entity.I6000External">
+        select id,ext_code,ext_id,ext_name,ext_pid,ext_state,rn,match_model_id,mfr_hs
+        from idevelop_i6000_external
+        where is_deleted = 0
+        <if test="i6000External.extName!=null and i6000External.extName !=''">
+            and ext_name like concat('%',#{i6000External.extName},'%')
+        </if>
+        <if test="i6000External.extId !=null and i6000External.extId !=''">
+            and ext_id = #{i6000External.extId}
+        </if>
+        <if test="i6000External.extPid !=null and i6000External.extPid !=''">
+            and ext_pid = #{i6000External.extPid}
+        </if>
+        <if test="i6000External.extCode!=null and i6000External.extCode !=''">
+            and ext_code = #{i6000External.extCode}
+        </if>
+    </select>
+
+
+</mapper>

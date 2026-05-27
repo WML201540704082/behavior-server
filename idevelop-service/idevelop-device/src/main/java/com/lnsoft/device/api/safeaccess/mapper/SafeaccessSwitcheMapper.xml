@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.safeaccess.mapper.SafeaccessSwitcheMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="safeaccessSwitcheResultMap" type="com.lnsoft.device.entity.SafeaccessSwitche">
+        <id column="id" property="id"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_dept" property="createDept"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="status" property="status"/>
+        <result column="sw_name" property="swName"/>
+        <result column="sw_maker" property="swMaker"/>
+        <result column="sw_series" property="swSeries"/>
+        <result column="sw_firm" property="swFirm"/>
+        <result column="sw_model" property="swModel"/>
+        <result column="sw_where" property="swWhere"/>
+        <result column="sw_purpose" property="swPurpose"/>
+        <result column="company" property="company"/>
+        <result column="sw_ip" property="swIp"/>
+        <result column="sw_pass" property="swPass"/>
+        <result column="config_bak" property="configBak"/>
+        <result column="is_admin" property="isAdmin"/>
+        <result column="is3" property="is3"/>
+        <result column="sw_state" property="swState"/>
+        <result column="ports_count" property="portsCount"/>
+        <result column="auth_config" property="authConfig"/>
+        <result column="auth_state" property="authState"/>
+        <result column="old_shortname" property="oldShortname"/>
+        <result column="vlans" property="vlans"/>
+        <result column="tel_ip" property="telIp"/>
+        <result column="tel_user" property="telUser"/>
+        <result column="tel_pass" property="telPass"/>
+        <result column="config_pass" property="configPass"/>
+        <result column="snmp_query_pass" property="snmpQueryPass"/>
+        <result column="snmp_manage_pass" property="snmpManagePass"/>
+        <result column="snmp_version" property="snmpVersion"/>
+        <result column="device_code" property="deviceCode"/>
+        <result column="snmp_read_str" property="snmpReadStr"/>
+        <result column="snmp_write_str" property="snmpWriteStr"/>
+        <result column="fill_man" property="fillMan"/>
+        <result column="fill_date" property="fillDate"/>
+        <result column="is_access_switch" property="isAccessSwitch"/>
+        <result column="remark" property="remark"/>
+        <result column="subnet_id" property="subnetId"/>
+        <result column="region_code" property="regionCode"/>
+        <result column="dept_code" property="deptCode"/>
+    </resultMap>
+
+
+    <update id="updateBatchSafeAccessSwitches">
+        update idevelop_safeaccess_switche
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="sw_state = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.swState != null and item.swState != ''">
+                        when device_id = #{item.deviceId}
+                        then #{item.swState}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="auth_config = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.authConfig != null and item.authConfig != ''">
+                        when device_id = #{item.deviceId}
+                        then #{item.authConfig}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="auth_state = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.authState != null and item.authState != ''">
+                        when device_id = #{item.deviceId}
+                        then #{item.authState}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="vlans = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.vlans != null and item.vlans != ''">
+                        when device_id = #{item.deviceId}
+                        then #{item.vlans}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="tel_ip = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.telIp != null and item.telIp != ''">
+                        when device_id = #{item.deviceId}
+                        then #{item.telIp}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="tel_user = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.telUser != null and item.telUser != ''">
+                        when device_id = #{item.deviceId}
+                        then #{item.telUser}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="tel_pass = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.telPass != null and item.telPass != ''">
+                        when device_id = #{item.deviceId}
+                        then #{item.telPass}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="snmp_version = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.snmpVersion != null and item.snmpVersion != ''">
+                        when device_id = #{item.deviceId}
+                        then #{item.snmpVersion}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="config_pass = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.configPass != null and item.configPass != ''">
+                        when device_id = #{item.deviceId}
+                        then #{item.configPass}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="snmp_read_str = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.snmpReadStr != null and item.snmpReadStr != ''">
+                        when device_id = #{item.deviceId}
+                        then #{item.snmpReadStr}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="snmp_write_str = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.snmpWriteStr != null and item.snmpWriteStr != ''">
+                        when device_id = #{item.deviceId}
+                        then #{item.snmpWriteStr}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="operation_id = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.operationId != null and item.operationId != ''">
+                        when device_id = #{item.deviceId}
+                        then #{item.operationId}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="operation_flag = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.operationFlag != null">
+                        when device_id = #{item.deviceId}
+                        then #{item.operationFlag}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="subnet_id = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.subnetId != null and item.subnetId != ''">
+                        when device_id = #{item.deviceId}
+                        then #{item.subnetId}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="update_user = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.updateUser != null and item.updateUser != ''">
+                        when device_id = #{item.deviceId}
+                        then #{item.updateUser}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="sw_ip = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.swIp != null and item.swIp != ''">
+                        when device_id = #{item.deviceId}
+                        then #{item.swIp}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="sw_pass = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.swPass != null and item.swPass != ''">
+                        when device_id = #{item.deviceId}
+                        then #{item.swPass}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="sw_where = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.swWhere != null and item.swWhere != ''">
+                        when device_id = #{item.deviceId}
+                        then #{item.swWhere}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="is3 = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.is3 != null and item.is3 != ''">
+                        when device_id = #{item.deviceId}
+                        then #{item.is3}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="sw_purpose = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.swPurpose != null and item.swPurpose != ''">
+                        when device_id = #{item.deviceId}
+                        then #{item.swPurpose}
+                    </if>
+                </foreach>
+            </trim>
+        </trim>
+        , update_time = now()
+        where is_deleted = 0 AND device_id in
+        <foreach collection="list" item="item" index="index" separator="," open="(" close=")">
+            #{item.deviceId}
+        </foreach>
+    </update>
+</mapper>

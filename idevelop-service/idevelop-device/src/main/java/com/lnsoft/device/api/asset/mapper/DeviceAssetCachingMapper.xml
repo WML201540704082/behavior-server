@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.asset.mapper.DeviceAssetCachingMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="deviceAssetCachingResultMap" type="com.lnsoft.device.api.asset.entity.DeviceAssetCaching">
+        <id column="id" property="id"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_dept" property="createDept"/>
+        <result column="create_time" property="createTime"/>
+        <result column="status" property="status"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="device_category" property="deviceCategory"/>
+        <result column="device_category_code" property="deviceCategoryCode"/>
+        <result column="asset_sum_a" property="assetSumA"/>
+        <result column="asset_sum" property="assetSum"/>
+        <result column="device_type" property="deviceType"/>
+        <result column="device_type_code" property="deviceTypeCode"/>
+        <result column="dept" property="dept"/>
+        <result column="region_code" property="regionCode"/>
+    </resultMap>
+    <select id="selectDeviceAssetCachingPage" resultMap="deviceAssetCachingResultMap">
+        select * from idevelop_device_asset_caching where is_deleted = 0
+    </select>
+    <select id="getOneData" resultType="com.lnsoft.device.api.asset.entity.DeviceAssetCaching">
+        select * from idevelop_device_asset_caching where is_deleted = 0
+        <if test="deviceCategoryCode!=null and deviceCategoryCode!=''">
+            and device_category_code = #{deviceCategoryCode}
+        </if>
+        <if test="deviceTypeCode!=null and deviceTypeCode!=''">
+            and device_type_code = #{deviceTypeCode}
+        </if>
+        <if test="dept!=null and dept!=''">
+            and dept = #{dept}
+        </if>
+    </select>
+
+</mapper>

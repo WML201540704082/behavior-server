@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.warehouse.mapper.DeviceOperationMapper">
+
+    <select id="getPage" resultType="com.lnsoft.device.api.warehouse.vo.DeviceOperationVO">
+        select ido.*
+        from idevelop_device_operation ido left join idevelop_device_operation_detail idod on ido.id = idod.operation_id
+        <where>
+            ido.is_deleted = 0
+            <if test="deviceOperationDTO.deviceCode != null and deviceOperationDTO.deviceCode != ''">
+                AND idod.device_code LIKE CONCAT('%', #{deviceOperationDTO.deviceCode}, '%')
+            </if>
+            <if test="deviceOperationDTO.outboundNo != null and deviceOperationDTO.outboundNo != ''">
+                AND ido.outbound_no LIKE CONCAT('%', #{deviceOperationDTO.outboundNo}, '%')
+            </if>
+            <if test="deviceOperationDTO.operationNo != null and deviceOperationDTO.operationNo != ''">
+                AND ido.operation_no LIKE CONCAT('%', #{deviceOperationDTO.operationNo}, '%')
+            </if>
+            <if test="deviceOperationDTO.applyNo != null and deviceOperationDTO.applyNo != ''">
+                AND ido.apply_no LIKE CONCAT('%', #{deviceOperationDTO.applyNo}, '%')
+            </if>
+            <if test="deviceOperationDTO.deviceCategory != null and deviceOperationDTO.deviceCategory != ''">
+                AND ido.device_category = #{deviceOperationDTO.deviceCategory}
+            </if>
+            <if test="deviceOperationDTO.deviceType != null and deviceOperationDTO.deviceType != ''">
+                AND ido.device_type = #{deviceOperationDTO.deviceType}
+            </if>
+            <if test="deviceOperationDTO.oldToNew != null and deviceOperationDTO.oldToNew != ''">
+                AND ido.old_to_new = #{deviceOperationDTO.oldToNew}
+            </if>
+            <if test="deviceOperationDTO.regionCode != null and deviceOperationDTO.regionCode != ''">
+                AND ido.region_code LIKE CONCAT(#{deviceOperationDTO.regionCode}, '%')
+            </if>
+            <if test="deviceOperationDTO.receiveUnit !=null and deviceOperationDTO.receiveUnit != ''">
+                AND ido.receive_unit = #{deviceOperationDTO.receiveUnit}
+            </if>
+            <if test="deviceOperationDTO.operationType !=null and deviceOperationDTO.operationType != ''">
+                AND ido.operation_type = #{deviceOperationDTO.operationType}
+            </if>
+            <if test="deviceOperationDTO.receiveDutyDept !=null and deviceOperationDTO.receiveDutyDept != ''">
+                AND ido.receive_duty_dept = #{deviceOperationDTO.receiveDutyDept}
+            </if>
+            GROUP BY ido.id ORDER BY ido.create_time DESC
+        </where>
+    </select>
+</mapper>

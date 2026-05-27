@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.warehouse.mapper.DeviceReturnedMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="deviceReturnedResultMap" type="com.lnsoft.device.entity.DeviceReturned">
+        <id column="id" property="id"/>
+        <result column="status" property="status"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="filing_no" property="filingNo"/>
+        <result column="apply_unit" property="applyUnit"/>
+        <result column="accept_user" property="acceptUser"/>
+        <result column="accept_user_name" property="acceptUserName"/>
+        <result column="apply_dept" property="applyDept"/>
+        <result column="accept_phone" property="acceptPhone"/>
+        <result column="accept_time" property="acceptTime"/>
+        <result column="return_reason" property="returnReason"/>
+        <result column="device_return_num" property="deviceReturnNum"/>
+        <result column="is_all_returned" property="isAllReturned"/>
+        <result column="process_ins_id" property="processInsId"/>
+        <result column="process_status" property="processStatus"/>
+        <result column="region_code" property="regionCode"/>
+    </resultMap>
+
+
+    <select id="selectDeviceReturnedPage" resultMap="deviceReturnedResultMap">
+        select * from idevelop_device_returned where is_deleted = 0
+    </select>
+    <select id="deskDeviceReturnedList" resultType="com.lnsoft.device.vo.DeviceReturnedVO">
+        select id, filing_no, apply_unit_name, accept_user_name, apply_dept_name, accept_phone,
+        accept_time, return_reason, device_return_num, is_all_returned, process_status, create_user, create_time
+        from idevelop_device_returned
+        <where>
+            is_deleted = 0
+            <if test="dto.regionCode != null and dto.regionCode != ''">
+                and region_code = #{dto.regionCode}
+            </if>
+            <if test="dto.filingNoList != null and dto.filingNoList.size() != 0">
+                AND filing_no IN
+                <foreach collection="dto.filingNoList" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+        ORDER BY create_time DESC
+    </select>
+    <select id="getPage" resultType="com.lnsoft.device.entity.DeviceReturned">
+        select idr.*
+        from idevelop_device_returned idr left join idevelop_device_returned_detail idrd on idr.id = idrd.returned_id
+        <where>
+            idr.is_deleted = 0
+            <if test="deviceReturnedDTO.deviceCode != null and deviceReturnedDTO.deviceCode != ''">
+                AND idrd.device_code LIKE CONCAT('%', #{deviceReturnedDTO.deviceCode}, '%')
+            </if>
+            <if test="deviceReturnedDTO.deviceMac != null and deviceReturnedDTO.deviceMac != ''">
+                AND idrd.device_mac LIKE CONCAT('%', #{deviceReturnedDTO.deviceMac}, '%')
+            </if>
+            <if test="deviceReturnedDTO.filingNo != null and deviceReturnedDTO.filingNo != ''">
+                AND idr.filing_no LIKE CONCAT('%', #{deviceReturnedDTO.filingNo}, '%')
+            </if>
+            <if test="deviceReturnedDTO.applyUnit != null and deviceReturnedDTO.applyUnit != ''">
+                AND idr.apply_unit = #{deviceReturnedDTO.applyUnit}
+            </if>
+            <if test="deviceReturnedDTO.applyDept != null and deviceReturnedDTO.applyDept != ''">
+                AND idr.apply_dept = #{deviceReturnedDTO.applyDept}
+            </if>
+            <if test="deviceReturnedDTO.isAuto != null and deviceReturnedDTO.isAuto != ''">
+                AND idr.is_auto = #{deviceReturnedDTO.isAuto}
+            </if>
+            <if test="deviceReturnedDTO.acceptUserName != null and deviceReturnedDTO.acceptUserName != ''">
+                AND idr.accept_user_name LIKE CONCAT('%',#{deviceReturnedDTO.acceptUserName},'%')
+            </if>
+            <if test="deviceReturnedDTO.processStatus != null and deviceReturnedDTO.processStatus != ''">
+                AND idr.process_status = #{deviceReturnedDTO.processStatus}
+            </if>
+            <if test="deviceReturnedDTO.regionCode != null and deviceReturnedDTO.regionCode != ''">
+                AND idr.region_code LIKE CONCAT(#{deviceReturnedDTO.regionCode}, '%')
+            </if>
+            <if test="deviceReturnedDTO.beginTime != null  and deviceReturnedDTO.endTime !=null ">
+                AND idr.accept_time &gt;= #{deviceReturnedDTO.beginTime}
+                AND idr.accept_time &lt;= #{deviceReturnedDTO.endTime}
+            </if>
+            GROUP BY idr.id ORDER BY idr.create_time DESC
+        </where>
+    </select>
+
+</mapper>

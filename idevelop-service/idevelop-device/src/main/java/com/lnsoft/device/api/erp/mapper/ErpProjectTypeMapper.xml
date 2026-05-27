@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.erp.mapper.ErpProjectTypeMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="erpProjectTypeResultMap" type="com.lnsoft.device.api.erp.entity.ErpProjectType">
+        <id column="project_type" property="projectType"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_dept" property="createDept"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="status" property="status"/>
+        <result column="project_desc" property="projectDesc"/>
+    </resultMap>
+
+
+    <select id="selectErpProjectTypePage" resultMap="erpProjectTypeResultMap">
+        select * from idevelop_erp_project_type where is_deleted = 0
+    </select>
+
+</mapper>

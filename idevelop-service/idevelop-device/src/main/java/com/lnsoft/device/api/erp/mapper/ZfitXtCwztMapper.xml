@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.erp.mapper.ZfitXtCwztMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="zfitXtCwztResultMap" type="com.lnsoft.device.entity.ZfitXtCwzt">
+        <id column="id" property="id"/>
+        <result column="status" property="status"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="mandt" property="mandt"/>
+        <result column="equnr" property="equnr"/>
+        <result column="i6000_bm" property="i6000Bm"/>
+        <result column="xtbm" property="xtbm"/>
+        <result column="bukrs" property="bukrs"/>
+        <result column="anlnr" property="anlnr"/>
+        <result column="eqktx" property="eqktx"/>
+        <result column="kostl" property="kostl"/>
+        <result column="kostl_t" property="kostlT"/>
+        <result column="zsb002" property="zsb002"/>
+        <result column="zsb002_t" property="zsb002T"/>
+        <result column="zsb010" property="zsb010"/>
+        <result column="zsb004" property="zsb004"/>
+        <result column="zsb004_t" property="zsb004T"/>
+        <result column="stat" property="stat"/>
+        <result column="stat_t" property="statT"/>
+        <result column="zsb005" property="zsb005"/>
+        <result column="zsb005_t" property="zsb005T"/>
+        <result column="eqart" property="eqart"/>
+        <result column="eqart_t" property="eqartT"/>
+        <result column="sbfl" property="sbfl"/>
+        <result column="sbfl_t" property="sbflT"/>
+        <result column="herst" property="herst"/>
+        <result column="herld" property="herld"/>
+        <result column="pspnr" property="pspnr"/>
+        <result column="posid" property="posid"/>
+        <result column="posid_t" property="posidT"/>
+        <result column="tplnr" property="tplnr"/>
+        <result column="tplnr_t" property="tplnrT"/>
+        <result column="zcabn_ztpm1005" property="zcabnZtpm1005"/>
+        <result column="zcabn_ztpm1006" property="zcabnZtpm1006"/>
+        <result column="inbdt" property="inbdt"/>
+        <result column="typbz" property="typbz"/>
+        <result column="serge" property="serge"/>
+        <result column="baujj" property="baujj"/>
+        <result column="baumm" property="baumm"/>
+        <result column="swerk" property="swerk"/>
+        <result column="swerk_t" property="swerkT"/>
+        <result column="swid" property="swid"/>
+        <result column="zsb011" property="zsb011"/>
+        <result column="pspid" property="pspid"/>
+        <result column="pspid_t" property="pspidT"/>
+        <result column="beber" property="beber"/>
+        <result column="zzxmlx" property="zzxmlx"/>
+        <result column="zc_yz" property="zcYz"/>
+        <result column="zc_jz" property="zcJz"/>
+        <result column="memo" property="memo"/>
+        <result column="by1" property="by1"/>
+        <result column="by2" property="by2"/>
+        <result column="by3" property="by3"/>
+        <result column="by4" property="by4"/>
+        <result column="by5" property="by5"/>
+        <result column="by6" property="by6"/>
+        <result column="by7" property="by7"/>
+        <result column="by8" property="by8"/>
+    </resultMap>
+
+
+    <select id="selectZfitXtCwztPage" resultMap="zfitXtCwztResultMap">
+        select * from idevelop_zfit_xt_cwzt where is_deleted = 0
+    </select>
+    <select id="selectData" resultType="com.lnsoft.device.api.erp.vo.ZfitXtCwztVO">
+        SELECT zzxmlx,
+        iept.project_desc AS zzxmlxT,
+        pspid,
+        pspid_t,
+        posid,
+        posid_t,
+        swerk,
+        iem.name AS swerkT
+        FROM `idevelop_zfit_xt_cwzt` izxc LEFT JOIN `idevelop_erp_project_type` iept ON izxc.zzxmlx = iept.project_type
+        LEFT JOIN `idevelop_erp_maintain` iem ON izxc.swerk = iem.code
+				where izxc.swerk &lt;&gt; '000A' and izxc.swerk &lt;&gt; '003A'
+        GROUP BY zzxmlx,pspid,posid,swerk
+    </select>
+
+</mapper>

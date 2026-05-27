@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.cmdb.mapper.CmdbUiMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="cmdbUiResultMap" type="com.lnsoft.device.api.cmdb.entity.CmdbUi">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="value" property="value"/>
+        <result column="type" property="type"/>
+        <result column="remark" property="remark"/>
+    </resultMap>
+
+
+    <select id="selectCmdbUiPage" resultMap="cmdbUiResultMap">
+        select * from idevelop_cmdb_ui where is_deleted = 0
+        <if test="param2.name!=null and param2.name!=''">
+            and name like concat('%', #{param2.name}, '%')
+        </if>
+        <if test="param2.value!=null and param2.value!=''">
+            and value like concat('%', #{param2.value}, '%')
+        </if>
+        <if test="param2.type!=null and param2.type!=''">
+            and type = #{param2.type}
+        </if>
+        <if test="param2.remark!=null and param2.remark!=''">
+            and remark like concat('%', #{param2.remark}, '%')
+        </if>
+    </select>
+
+</mapper>

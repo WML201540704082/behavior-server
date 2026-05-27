@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.warehouse.mapper.DeviceScrapMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="deviceScrapResultMap" type="com.lnsoft.device.api.warehouse.entity.DeviceScrap">
+        <id column="id" property="id"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="filing_no" property="filingNo"/>
+        <result column="apply_unit" property="applyUnit"/>
+        <result column="apply_user" property="applyUser"/>
+        <result column="apply_dept" property="applyDept"/>
+        <result column="apply_phone" property="applyPhone"/>
+        <result column="device_nameplate" property="deviceNameplate"/>
+        <result column="device_num" property="deviceNum"/>
+        <result column="device_status" property="deviceStatus"/>
+        <result column="scrap_scale" property="scrapScale"/>
+        <result column="original_value" property="originalValue"/>
+        <result column="depreciation" property="depreciation"/>
+        <result column="net_worth" property="netWorth"/>
+        <result column="scrap_time" property="scrapTime"/>
+        <result column="accessory" property="accessory"/>
+        <result column="salvage_assets" property="salvageAssets"/>
+        <result column="scrap_reason" property="scrapReason"/>
+        <result column="process_ins_id" property="processInsId"/>
+        <result column="process_status" property="processStatus"/>
+        <result column="is_scrap" property="isScrap"/>
+        <result column="erp_status" property="erpStatus"/>
+        <result column="erp_scrap_code" property="erpScrapCode"/>
+        <result column="i6000_sync_status" property="i6000SyncStatus"/>
+        <result column="i6000_status" property="i6000Status"/>
+        <result column="region_code" property="regionCode"/>
+    </resultMap>
+
+
+    <select id="selectDeviceScrapPage" resultMap="deviceScrapResultMap">
+        select * from idevelop_device_scrap where is_deleted = 0
+    </select>
+    <select id="deskDeviceScrapList" resultType="com.lnsoft.device.api.warehouse.vo.DeviceScrapVO">
+        select id, filing_no, `status`, apply_unit, apply_user_name, apply_dept_name, apply_dept, apply_phone, device_status, process_status, is_scrap, scrap_time, device_num, device_status, scrap_scale,
+        original_value, depreciation, net_worth, scrap_reason
+        from idevelop_device_scrap
+        <where>
+            is_deleted = 0
+            <if test="dto.regionCode != null and dto.regionCode != ''">
+                and region_code = #{dto.regionCode}
+            </if>
+            <if test="dto.filingNoList != null and dto.filingNoList.size() != 0">
+                AND filing_no IN
+                <foreach collection="dto.filingNoList" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+        ORDER BY create_time DESC
+    </select>
+    <select id="getPage" resultType="com.lnsoft.device.api.warehouse.entity.DeviceScrap">
+        select ids.*
+        from idevelop_device_scrap ids left join idevelop_device_scrap_list idsl on ids.id = idsl.scrap_id
+        <where>
+            ids.is_deleted = 0
+            <if test="dto.deviceCode != null and dto.deviceCode != ''">
+                AND idsl.device_code LIKE CONCAT('%', #{dto.deviceCode}, '%')
+            </if>
+            <if test="dto.filingNo != null and dto.filingNo != ''">
+                AND ids.filing_no LIKE CONCAT('%', #{dto.filingNo}, '%')
+            </if>
+            <if test="dto.applyUnit != null and dto.applyUnit != ''">
+                AND ids.apply_unit = #{dto.applyUnit}
+            </if>
+            <if test="dto.applyDept != null and dto.applyDept != ''">
+                AND ids.apply_dept = #{dto.applyDept}
+            </if>
+            <if test="dto.processStatus != null and dto.processStatus != ''">
+                AND ids.process_status = #{dto.processStatus}
+            </if>
+            <if test="dto.regionCode != null and dto.regionCode != ''">
+                AND ids.region_code LIKE CONCAT(#{dto.regionCode}, '%')
+            </if>
+            <if test="dto.beginTime != null  and dto.endTime !=null ">
+                AND ids.scrap_time &gt;= #{dto.beginTime}
+                AND ids.scrap_time &lt;= #{dto.endTime}
+            </if>
+            GROUP BY ids.id ORDER BY ids.create_time DESC
+        </where>
+    </select>
+
+</mapper>

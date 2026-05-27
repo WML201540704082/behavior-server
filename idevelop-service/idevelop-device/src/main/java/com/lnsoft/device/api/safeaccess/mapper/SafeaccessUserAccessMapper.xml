@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.safeaccess.mapper.SafeaccessUserAccessMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="safeaccessUserAccessResultMap" type="com.lnsoft.device.entity.SafeaccessUserAccess">
+        <id column="id" property="id"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="status" property="status"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_dept" property="createDept"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="company" property="company"/>
+        <result column="department" property="department"/>
+        <result column="address" property="address"/>
+        <result column="phone" property="phone"/>
+        <result column="device_id" property="deviceId"/>
+        <result column="device_type" property="deviceType"/>
+        <result column="device_code" property="deviceCode"/>
+        <result column="subnet_id" property="subnetId"/>
+        <result column="approveu_user" property="approveuUser"/>
+        <result column="approveu_password" property="approveuPassword"/>
+        <result column="mac_address" property="macAddress"/>
+        <result column="ip_address" property="ipAddress"/>
+        <result column="code" property="code"/>
+        <result column="accept_man" property="acceptMan"/>
+        <result column="accept_date" property="acceptDate"/>
+        <result column="net_in_apply_id" property="netInApplyId"/>
+        <result column="fill_man" property="fillMan"/>
+        <result column="fill_time" property="fillTime"/>
+        <result column="dept_code" property="deptCode"/>
+        <result column="mi_user" property="miUser"/>
+        <result column="mi_charge_user" property="miChargeUser"/>
+        <result column="start_time" property="startTime"/>
+        <result column="allow_days" property="allowDays"/>
+        <result column="full_username" property="fullUsername"/>
+        <result column="is802" property="is802"/>
+        <result column="is_access" property="isAccess"/>
+        <result column="fingerprint" property="fingerprint"/>
+        <result column="apply_type" property="applyType"/>
+        <result column="disable_status" property="disableStatus"/>
+        <result column="remark" property="remark"/>
+        <result column="region_code" property="regionCode"/>
+    </resultMap>
+
+    <insert id="saveEditNet">
+		INSERT INTO idevelop_safeaccess_editnet
+		(
+		ID,
+		SUBNET_OLD,
+		SUBNET_NEW,
+		old_ip,
+		new_ip,
+		create_time
+		)
+		VALUES
+		(#{id},
+		#{subnetOld},
+		#{subnetNew},
+		#{oldIp},
+		#{newIp},
+		#{createTime});
+    </insert>
+
+    <select id="findRadiusMap" resultType="java.util.Map">
+        SELECT
+	        t.*,
+	    ( SELECT o.full_name FROM sys_t_corp_shortname o WHERE o.org_no = t.company ) AS companyzw,
+	    ( SELECT b.dept_name NAME FROM idevelop_dept b WHERE b.id = t.dept_code ) AS departmentzw,
+	    ( SELECT n.type_name FROM dev_t_hardware_type n WHERE n.type_code = t.device_id ) AS device_idzw
+        FROM
+	        idevelop_safeaccess_user_access t
+        WHERE
+	        t.id = #{id}
+    </select>
+    <select id="findSubnetById" resultType="com.lnsoft.device.entity.SafeaccessSubnet">
+		SELECT
+		t.id id,
+		t.subnet_name subnetName,
+		t.broadcast_address broadcastAddress,
+		t.subnet_address subnetAddress,
+		t.subnet_gateway subnetGateway,
+		t.subnet_mask subnetMask,
+		t.address_resolution_ip addressResolutionIp,
+		t.dnsip dnsip,
+		t.dnsip2 dnsip2,
+		t.code code,
+		w.sw_name switchboard,
+		t.user_group userGroup,
+		t.vlan_id vlanId,
+		t.vlan_name vlanName,
+		i.dept_name institutionCode,
+		t.fill_date fillDate,
+		t.fill_man fillMan,
+		t.segment segment,
+		t.ip1 ip1,
+		t.location1 location1,
+		t.ip2 ip2,
+		t.location2 location2,
+		t.default_time defaultTime,
+		t.default_lease_time defaultLeaseTime,
+		t.sp_id spId,
+		t.sp_name spName,
+		t.create_time crateDate,
+		t.update_time updateDate,
+		t.is_public bak1,
+		t.bak_col2 bak2,
+		t.bak_col3 bak3
+		FROM
+		idevelop_safeaccess_subnet t
+		left join
+		idevelop_safeaccess_switche w on t.switchboard = w.id
+		left join idevelop_dept i on i.id = t.institution_code
+		where t.id = #{id}
+    </select>
+
+    <select id="getApplyTypeByDeviceNoList" resultType="java.util.Map">
+        SELECT
+        	n.operation_type,
+        	t.user_phone AS phone_no,
+        	n.device_source,
+        	n.id
+        FROM
+        	idevelop_device_operation_detail t
+        	LEFT JOIN idevelop_device_operation n ON n.id = t.operation_id
+        WHERE
+        	t.is_deleted = 0
+        	AND n.is_deleted = 0
+        	AND t.device_code = #{deviceNo,jdbcType=VARCHAR}
+        ORDER BY
+        	n.apply_date DESC
+    </select>
+
+    <select id="getEquipmentByDeviceNoAndIdList" resultType="java.util.Map">
+		select * from idevelop_device_operation_detail t
+		where
+			t.device_code = #{deviceNo,jdbcType=VARCHAR}
+		  and t.operation_no = #{applicationId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="customPage" resultType="com.lnsoft.device.dto.SafeaccessUserAccessDTO">
+        SELECT
+        ua.*,
+        unit.dept_name AS companyName,
+        dept.dept_name AS deptName,
+        ss.subnet_name AS subnetName,
+        ss.network_type_name AS networkTypeName
+        FROM
+        idevelop_safeaccess_user_access ua
+        LEFT JOIN idevelop_dept unit ON unit.id = ua.company and unit.is_deleted = 0
+        LEFT JOIN idevelop_dept dept ON dept.id = ua.department and dept.is_deleted = 0
+        LEFT JOIN idevelop_safeaccess_subnet ss ON ss.id = ua.subnet_id and ss.is_deleted = 0
+        WHERE
+        ua.is_deleted = 0
+        <if test="param.company != null  and param.company != ''">and ua.company = #{param.company}</if>
+        <if test="param.macAddress != null  and param.macAddress != ''">and ua.mac_address like concat('%',#{param.macAddress},'%')</if>
+        <if test="param.ipAddress != null  and param.ipAddress != ''">and ua.ip_address like concat('%',#{param.ipAddress},'%') </if>
+        <if test="param.deviceCode != null  and param.deviceCode != ''">and ua.device_code like
+            CONCAT('%',#{param.deviceCode},'%')
+        </if>
+        <if test="param.deviceType != null  and param.deviceType != ''">and ua.device_type = #{param.deviceType}</if>
+        <if test="param.approveuUser != null  and param.approveuUser != ''">and ua.approveu_user like concat('%',#{param.approveuUser},'%')
+        </if>
+        <if test="param.miChargeUser != null  and param.miChargeUser != ''">and ua.mi_charge_user like concat('%',#{param.miChargeUser},'%')
+        </if>
+        <if test="param.miUser != null  and param.miUser != ''">and ua.mi_user like concat('%',#{param.miUser},'%')</if>
+        <if test="param.isAccess != null  and param.isAccess != ''">and ua.is_access = #{param.isAccess}</if>
+        <if test="param.subnetId != null  and param.subnetId != ''">and ua.subnet_id = #{param.subnetId}</if>
+        <if test="param.regionCode != null  and param.regionCode != ''">and ua.region_code like
+            CONCAT(#{param.regionCode},'%')
+        </if>
+        ORDER BY
+        ua.create_time DESC
+    </select>
+
+    <select id="customGetOne" resultType="com.lnsoft.device.dto.SafeaccessUserAccessDTO">
+        SELECT
+        ua.*,
+        unit.dept_name AS companyName,
+        dept.dept_name AS deptName,
+        ss.subnet_name AS subnetName
+        FROM
+        idevelop_safeaccess_user_access ua
+        LEFT JOIN idevelop_dept unit ON unit.id = ua.company and unit.is_deleted = 0
+        LEFT JOIN idevelop_dept dept ON dept.id = ua.dept_code and dept.is_deleted = 0
+        LEFT JOIN idevelop_safeaccess_subnet ss ON ss.id = ua.subnet_id and ss.is_deleted = 0
+        WHERE
+        ua.is_deleted = 0
+        <if test="ipAddress != null  and ipAddress != ''">and ua.ip_address = #{ipAddress}</if>
+        <if test="id != null  and id != ''">and ua.id = #{id}</if>
+        <if test="regionCode != null  and regionCode != ''">and ua.region_code = #{regionCode}</if>
+    </select>
+    <select id="customList" resultType="com.lnsoft.device.dto.SafeaccessUserAccessDTO">
+        SELECT
+        ua.*,
+        unit.dept_name AS companyName,
+        dept.dept_name AS deptName,
+        ss.subnet_name AS subnetName
+        FROM
+        idevelop_safeaccess_user_access ua
+        LEFT JOIN idevelop_dept unit ON unit.id = ua.company and unit.is_deleted = 0
+        LEFT JOIN idevelop_dept dept ON dept.id = ua.dept_code and dept.is_deleted = 0
+        LEFT JOIN idevelop_safeaccess_subnet ss ON ss.id = ua.subnet_id and ss.is_deleted = 0
+        WHERE
+        ua.is_deleted = 0
+        <if test="param.company != null  and param.company != ''">and ua.company = #{param.company}</if>
+        <if test="param.macAddress != null  and param.macAddress != ''">and ua.mac_address = #{param.macAddress}</if>
+        <if test="param.ipAddress != null  and param.ipAddress != ''">and ua.ip_address like concat('%',#{param.ipAddress},'%') </if>
+        <if test="param.deviceCode != null  and param.deviceCode != ''">and ua.device_code like
+            CONCAT('%',#{param.deviceCode},'%')
+        </if>
+        <if test="param.deviceType != null  and param.deviceType != ''">and ua.device_type = #{param.deviceType}</if>
+        <if test="param.approveuUser != null  and param.approveuUser != ''">and ua.approveu_user =
+            #{param.approveuUser}
+        </if>
+        <if test="param.miChargeUser != null  and param.miChargeUser != ''">and ua.mi_charge_user =
+            #{param.miChargeUser}
+        </if>
+        <if test="param.miUser != null  and param.miUser != ''">and ua.mi_user = #{param.miUser}</if>
+        <if test="param.isAccess != null  and param.isAccess != ''">and ua.is_access = #{param.isAccess}</if>
+        <if test="param.subnetId != null  and param.subnetId != ''">and ua.subnet_id = #{param.subnetId}</if>
+        <if test="param.regionCode != null  and param.regionCode != ''">and ua.region_code like
+            CONCAT(#{param.regionCode},'%')
+        </if>
+        ORDER BY
+        ua.create_time DESC
+    </select>
+
+
+</mapper>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.warehouse.mapper.DeviceOutboundMapper">
+
+    <select id="getOutWarehouse" resultType="com.lnsoft.device.api.asset.dto.DeviceInventoryDTO">
+    SELECT warehouse_name,receive_unit,
+    count(outbound_num) as count
+    FROM `idevelop_device_outbound`
+    WHERE
+    <if test="startDate!=null and startDate !='' || endDate!=null and endDate!=''" >
+        outbound_time BETWEEN #{startDate} AND #{endDate} and
+    </if>
+    is_deleted = 0 and warehouse = #{warehouse}
+    </select>
+    <select id="getPage" resultType="com.lnsoft.device.api.warehouse.vo.DeviceOutboundVO">
+        select ido.*
+        from idevelop_device_outbound ido left join idevelop_device_outbound_detail idod on ido.id = idod.outbound_id
+        <where>
+            ido.is_deleted = 0
+            <if test="deviceOutboundDTO.deviceCode != null and deviceOutboundDTO.deviceCode != ''">
+                AND idod.device_code LIKE CONCAT('%', #{deviceOutboundDTO.deviceCode}, '%')
+            </if>
+            <if test="deviceOutboundDTO.outboundNo != null and deviceOutboundDTO.outboundNo != ''">
+                AND ido.outbound_no LIKE CONCAT('%', #{deviceOutboundDTO.outboundNo}, '%')
+            </if>
+            <if test="deviceOutboundDTO.operationNo != null and deviceOutboundDTO.operationNo != ''">
+                AND ido.operation_no LIKE CONCAT('%', #{deviceOutboundDTO.operationNo}, '%')
+            </if>
+            <if test="deviceOutboundDTO.applyNo != null and deviceOutboundDTO.applyNo != ''">
+                AND ido.apply_no LIKE CONCAT('%', #{deviceOutboundDTO.applyNo}, '%')
+            </if>
+            <if test="deviceOutboundDTO.deviceCategory != null and deviceOutboundDTO.deviceCategory != ''">
+                AND ido.device_category = #{deviceOutboundDTO.deviceCategory}
+            </if>
+            <if test="deviceOutboundDTO.deviceType != null and deviceOutboundDTO.deviceType != ''">
+                AND ido.device_type = #{deviceOutboundDTO.deviceType}
+            </if>
+            <if test="deviceOutboundDTO.regionCode != null and deviceOutboundDTO.regionCode != ''">
+                AND ido.region_code LIKE CONCAT(#{deviceOutboundDTO.regionCode}, '%')
+            </if>
+            <if test="deviceOutboundDTO.receiveUnit !=null and deviceOutboundDTO.receiveUnit != ''">
+                AND ido.receive_unit = #{deviceOutboundDTO.receiveUnit}
+            </if>
+            <if test="deviceOutboundDTO.receiveDutyDept !=null and deviceOutboundDTO.receiveDutyDept != ''">
+                AND ido.receive_duty_dept = #{deviceOutboundDTO.receiveDutyDept}
+            </if>
+            <if test="deviceOutboundDTO.beginTime!=null  || deviceOutboundDTO.endTime!=null " >
+                AND outbound_time BETWEEN #{deviceOutboundDTO.beginTime} AND #{deviceOutboundDTO.endTime}
+            </if>
+            GROUP BY ido.id ORDER BY ido.create_time DESC
+        </where>
+    </select>
+</mapper>

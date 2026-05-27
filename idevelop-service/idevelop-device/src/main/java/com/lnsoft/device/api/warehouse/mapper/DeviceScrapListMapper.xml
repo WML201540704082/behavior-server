@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lnsoft.device.api.warehouse.mapper.DeviceScrapListMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="deviceScrapListResultMap" type="com.lnsoft.device.api.warehouse.entity.DeviceScrapList">
+        <id column="id" property="id"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_dept" property="createDept"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="scrap_id" property="scrapId"/>
+        <result column="device_code" property="deviceCode"/>
+        <result column="device_name" property="deviceName"/>
+        <result column="asset_code_erp" property="assetCodeErp"/>
+        <result column="device_code_erp" property="deviceCodeErp"/>
+        <result column="factory_serial" property="factorySerial"/>
+        <result column="operated_time" property="operatedTime"/>
+        <result column="service_life" property="serviceLife"/>
+        <result column="brand" property="brand"/>
+        <result column="series" property="series"/>
+        <result column="model" property="model"/>
+        <result column="device_category" property="deviceCategory"/>
+        <result column="device_type" property="deviceType"/>
+        <result column="scrap_scale" property="scrapScale"/>
+        <result column="original_value" property="originalValue"/>
+        <result column="depreciation" property="depreciation"/>
+        <result column="net_worth" property="netWorth"/>
+    </resultMap>
+
+
+    <select id="selectDeviceScrapListPage" resultMap="deviceScrapListResultMap">
+        select * from idevelop_device_scrap_list where is_deleted = 0
+    </select>
+    <select id="getByDeviceCode" resultType="com.lnsoft.device.api.warehouse.entity.DeviceScrapList">
+        select * from idevelop_device_scrap_list where  is_deleted = 0 and device_code = #{deviceCode}
+    </select>
+
+</mapper>
