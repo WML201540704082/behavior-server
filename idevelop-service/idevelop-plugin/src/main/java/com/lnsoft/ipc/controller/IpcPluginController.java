@@ -20,10 +20,12 @@ import com.lnsoft.core.tool.utils.Func;
 import com.lnsoft.ipc.entity.IpcTerminal;
 import com.lnsoft.ipc.entity.IpcBusinessSystem;
 import com.lnsoft.ipc.entity.IpcDesktopApp;
+import com.lnsoft.ipc.entity.IpcFavoritesNav;
 import com.lnsoft.ipc.service.IIpcTerminalService;
 import com.lnsoft.ipc.service.IIpcBusinessSystemService;
 import com.lnsoft.ipc.service.IIpcDesktopAppService;
 import com.lnsoft.ipc.service.IIpcTicketService;
+import com.lnsoft.ipc.service.IIpcFavoritesNavService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import javax.validation.Valid;
@@ -47,6 +49,7 @@ public class IpcPluginController {
     private IIpcBusinessSystemService ipcBusinessSystemService;
     private IIpcDesktopAppService ipcDesktopAppService;
     private IIpcTicketService ipcTicketService;
+    private IIpcFavoritesNavService ipcFavoritesNavService;
 
     /**
      * 获取公司导航数据
@@ -84,6 +87,67 @@ public class IpcPluginController {
         List<IpcBusinessSystem> businessSystems = ipcBusinessSystemService.list(businessWrapper);
 
         return R.data(businessSystems);
+    }
+
+    /**
+     * 获取收藏导航数据
+     */
+    @GetMapping("/favoritesNav")
+    @ApiOperationSupport(order = 8)
+    @ApiOperation(value = "获取收藏导航数据", notes = "根据客户端IP获取对应的收藏导航数据，支持appName搜索")
+    public R<List<IpcFavoritesNav>> favoritesNav(@RequestParam(value = "appName", required = false) String appName) {
+        String clientIp = getClientIp();
+        if (Func.isBlank(clientIp)) {
+            return R.fail("无法获取客户端IP");
+        }
+
+        LambdaQueryWrapper<IpcFavoritesNav> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(IpcFavoritesNav::getIp, clientIp).eq(IpcFavoritesNav::getIsDeleted, 0);
+        if (Func.isNotBlank(appName)) {
+            wrapper.like(IpcFavoritesNav::getAppName, appName);
+        }
+        List<IpcFavoritesNav> favoritesNavs = ipcFavoritesNavService.list(wrapper);
+
+        return R.data(favoritesNavs);
+    }
+
+    /**
+     * 保存收藏导航
+     */
+    @PostMapping("/favoritesNav/save")
+    @ApiOperationSupport(order = 9)
+    @ApiOperation(value = "保存收藏导航", notes = "新增或修改收藏导航，自动设置当前终端IP")
+    public R saveFavoritesNav(@Valid @RequestBody IpcFavoritesNav favoritesNav) {
+        String clientIp = getClientIp();
+        if (Func.isBlank(clientIp)) {
+            return R.fail("无法获取客户端IP");
+        }
+        favoritesNav.setIp(clientIp);
+        boolean result = ipcFavoritesNavService.saveOrUpdate(favoritesNav);
+        return R.status(result);
+    }
+
+    /**
+     * 删除收藏导航
+     */
+    @PostMapping("/favoritesNav/remove")
+    @ApiOperationSupport(order = 10)
+    @ApiOperation(value = "删除收藏导航", notes = "根据id删除收藏导航，仅允许删除当前终端IP的数据")
+    public R removeFavoritesNav(@RequestBody IpcFavoritesNav favoritesNav) {
+        String clientIp = getClientIp();
+        if (Func.isBlank(clientIp)) {
+            return R.fail("无法获取客户端IP");
+        }
+
+        String id = favoritesNav.getId();
+        if (Func.isBlank(id)) {
+            return R.fail("id不能为空");
+        }
+
+        LambdaQueryWrapper<IpcFavoritesNav> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(IpcFavoritesNav::getId, id).eq(IpcFavoritesNav::getIp, clientIp);
+        boolean result = ipcFavoritesNavService.remove(wrapper);
+        return R.status(result);
     }
 
     /**
